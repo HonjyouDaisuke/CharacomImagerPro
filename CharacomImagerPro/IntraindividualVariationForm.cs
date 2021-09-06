@@ -835,7 +835,7 @@ namespace CharacomImagerPro
 				}
 			}
 			igf.SetFirstActiveCell();
-			igf.TxtCommentSet(txtComment.Text);
+			//igf.TxtCommentSet(txtComment.Text);
 			igf.Show();
 			
 		}
@@ -868,7 +868,7 @@ namespace CharacomImagerPro
 			string VerName = VersionName;
 			
 			bf.Serialize(fs, VerName);
-			bf.Serialize(fs, txtComment.Text);
+			//bf.Serialize(fs, txtComment.Text);
 			bf.Serialize(fs, features);
 			bf.Serialize(fs, dgvLegend.Rows.Count);
 			for(int i=0; i<dgvLegend.Rows.Count; i++){
@@ -938,7 +938,7 @@ namespace CharacomImagerPro
 			}
 			
 			sComment = (string)bf.Deserialize(fs);
-			txtComment.Text = sComment;
+			//txtComment.Text = sComment;
 			//panel内をきれいにする
 			for(int i=0; i<chkDeletes.Count; i++){
 				((CheckBox)chkDeletes[i]).Checked = true;
@@ -1035,15 +1035,15 @@ namespace CharacomImagerPro
 		void IntraindividualVariationFormSizeChanged(object sender, EventArgs e)
 		{
 			panel1.Width = this.Width - 300 - 20;
-			panel1.Height = this.Height - 75 - 100;
-			txtComment.Location = new Point(txtComment.Location.X, this.Height - 145);
+			panel1.Height = this.Height - 75;
+			//txtComment.Location = new Point(txtComment.Location.X, this.Height - 145);
 		}
 		#endregion
 		
 		#region パネルサイズの変更
 		void Panel1SizeChanged(object sender, EventArgs e)
 		{
-			btnMakeGraph.Location = new Point(btnMakeGraph.Location.X, this.Height - 195);
+			btnMakeGraph.Location = new Point(btnMakeGraph.Location.X, this.Height - 90);
 			dgvLegend.Height = panel1.Height - 80;
 			for(int i=0; i<GroupNum; i++){
 				((Button)btnUps[i]).Location = new Point(((Button)btnUps[i]).Location.X, panel1.Height - 50);
@@ -1496,16 +1496,17 @@ namespace CharacomImagerPro
 			
 			if(_curPageNumber == 0){
 				printingText = "";
-				printingText = txtComment.Text;
+				//printingText = txtComment.Text;
 				printingText = printingText.Replace("\r\n", "\n");
         		printingText = printingText.Replace("\r", "\n");
 			}
 			
 			//コメントを印刷
+			/**
 			if(txtComment.Text.Length > 0){
 				PrintComment(e, f, sx, x, y, MarginY, BodySY, BodyEY);
 			}
-			
+			**/
 		   	if(_curPageNumber == 0){
 				_copyNumber++;
 				if(_copyNumber < e.PageSettings.PrinterSettings.Copies){

@@ -42,6 +42,18 @@ namespace CharacomImagerPro
 		Bitmap wideBitmap;
 		double [] zoom = {4.0, 3.0, 2.0, 1.5, 1.0, 0.5};
 		private string fileName;
+		//2021.09.06 D.Honjyou
+		//重ね合わせ類似度表示のため追加
+		private ArrayList chkDeletes = new ArrayList();
+		private ArrayList txtCharas = new ArrayList();
+		private ArrayList lblCharas = new ArrayList();
+		private ArrayList btnDeletes = new ArrayList();
+		private ArrayList btnUps = new ArrayList();
+		private ArrayList btnDowns = new ArrayList();
+		private ArrayList btnLefts = new ArrayList();
+		private ArrayList btnRights = new ArrayList();
+		private ArrayList DataGridViews = new ArrayList();
+		private int GroupNum = 0;
 		//親フォームの参照
 		private MainForm mf;
 		
@@ -75,12 +87,192 @@ namespace CharacomImagerPro
 			
 			//FileNameのChanged イベントを追加
 			this.FileNameChanged += new System.EventHandler(this.OnFileNameChanged);
-			
+
+			AddControl();
+			AddControl();
+			AddControl();
+			AddControl();
+			AddControl();
+
 			//
 			// TODO: Add constructor code after the InitializeComponent() call.
 			//
 		}
-		
+
+		#region DataGridViewを追加する
+		/// <summary>
+		/// 2021.09.06 D.Honjyou
+		/// </summary>
+		void AddControl()
+		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(IntraindividualVariationForm));
+			//this.panel2.SizeChanged -= new System.EventHandler(this.Panel2SizeChanged);
+
+			#region DataGridViewを追加する
+			DataGridViewTextBoxColumn Nos = new DataGridViewTextBoxColumn();
+			DataGridViewImageColumn Images = new DataGridViewImageColumn();
+			DataGridViewTextBoxColumn Addresses = new DataGridViewTextBoxColumn();
+			DataGridViewTextBoxColumn Checks = new DataGridViewTextBoxColumn();
+			// No
+			Nos.HeaderText = "No.";
+			Nos.Name = "No";
+			Nos.SortMode = DataGridViewColumnSortMode.NotSortable;
+			Nos.Width = 30;
+			// Image
+			Images.HeaderText = "イメージ";
+			Images.ImageLayout = DataGridViewImageCellLayout.Stretch;
+			Images.Name = "Image";
+			Images.Width = 50;
+			// Address
+			Addresses.HeaderText = "ファイル名";
+			Addresses.Name = "Address";
+			Addresses.SortMode = DataGridViewColumnSortMode.NotSortable;
+			Addresses.Width = 90;
+			// Check
+			Checks.HeaderText = "類似度";
+			Checks.Name = "Check";
+			Checks.Resizable = DataGridViewTriState.True;
+			Checks.SortMode = DataGridViewColumnSortMode.NotSortable;
+			Checks.Width = 50;
+
+			DataGridView dgv = new DataGridView();
+			dgv.AllowDrop = true;
+			dgv.AllowUserToAddRows = false;
+			dgv.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			dgv.Columns.AddRange(new DataGridViewColumn[] {
+									Nos,
+									Images,
+									Addresses,
+									Checks});
+			dgv.Location = new Point(3 + GroupNum * 230 - panel1.HorizontalScroll.Value, 23 - panel1.VerticalScroll.Value);
+			dgv.Name = "dgvGroup" + (GroupNum + 1).ToString();
+			dgv.RowHeadersVisible = false;
+			dgv.RowTemplate.Height = 80;
+			dgv.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+			dgv.Size = new System.Drawing.Size(225, panel1.Height - 80);
+			dgv.TabIndex = 1;
+			//2021.09.06 ドラッグアンドドロップの時に使う
+			//dgv.DragEnter += new System.Windows.Forms.DragEventHandler(this.DgvGroupDragEnter);
+			//dgv.DragDrop += new System.Windows.Forms.DragEventHandler(this.DgvGroupDragDrop);
+			panel2.Controls.Add(dgv);
+			DataGridViews.Add(dgv);
+			#endregion
+
+			#region チェックボックスを追加する
+			CheckBox chkDelete = new CheckBox();
+			chkDelete.Text = "";
+			chkDelete.Name = "chkDelete" + (GroupNum + 1).ToString();
+			chkDelete.Size = new Size(19, 19);
+			chkDelete.Location = new Point(30 + GroupNum * 230 - panel1.HorizontalScroll.Value, 2 - panel1.VerticalScroll.Value);
+			chkDeletes.Add(chkDelete);
+			panel2.Controls.Add(chkDelete);
+			#endregion
+
+			#region テキストボックスを追加する
+			Label label = new Label();
+			label.Text = "文字種" + (GroupNum + 1).ToString();
+			label.Name = "lblChara" + (GroupNum + 1).ToString();
+			label.Size = new Size(51, 13);
+			label.Location = new Point(68 + GroupNum * 230 - panel1.HorizontalScroll.Value, 5 - panel1.VerticalScroll.Value);
+			lblCharas.Add(label);
+			panel2.Controls.Add(label);
+
+			TextBox txtChara = new TextBox();
+			txtChara.Size = new Size(50, 19);
+			txtChara.Location = new Point(125 + GroupNum * 230 - panel1.HorizontalScroll.Value, 2 - panel1.VerticalScroll.Value);
+			panel2.Controls.Add(txtChara);
+			txtCharas.Add(txtChara);
+			#endregion
+
+			#region ボタン類(上へ、削除、下へ、右へ、左へ)を追加する
+			//2013.11.10 右へ左へを追加
+			//D.Honjyou
+			Button btnUp = new Button();
+			Button btnDown = new Button();
+			Button btnDelete = new Button();
+			Button btnLeft = new Button();
+			Button btnRight = new Button();
+
+			// btnDelete
+			//btnDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnDelete.Image")));
+			btnDelete.Image = imageList1.Images[2];
+			btnDelete.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			btnDelete.Location = new System.Drawing.Point(84 + GroupNum * 230 - panel1.HorizontalScroll.Value, panel1.Height - 50 - panel1.VerticalScroll.Value);
+			btnDelete.Name = "btnDelete" + (GroupNum + 1).ToString();
+			btnDelete.Size = new System.Drawing.Size(63, 23);
+			btnDelete.TabIndex = 8;
+			btnDelete.Text = "削除";
+			btnDelete.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			btnDelete.UseVisualStyleBackColor = true;
+			btnDelete.Click += new System.EventHandler(this.BtnDeleteClick);
+			btnDeletes.Add(btnDelete);
+			// btnDown
+			//btnDown.Image = ((System.Drawing.Image)(resources.GetObject("btnDown.Image")));
+			btnDown.Image = imageList1.Images[1];
+			btnDown.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+			btnDown.Location = new System.Drawing.Point(153 + GroupNum * 230 - panel1.HorizontalScroll.Value, panel1.Height - 50 - panel1.VerticalScroll.Value);
+			btnDown.Name = "btnDown" + (GroupNum + 1).ToString();
+			btnDown.Size = new System.Drawing.Size(75, 23);
+			btnDown.TabIndex = 7;
+			btnDown.Text = "ひとつ下へ";
+			btnDown.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			btnDown.UseVisualStyleBackColor = true;
+			btnDown.Click += new System.EventHandler(this.BtnDownClick);
+			btnDowns.Add(btnDown);
+			// btnUp
+			//btnUp.Image = ((System.Drawing.Image)(resources.GetObject("btnUp.Image")));
+			btnUp.Image = imageList1.Images[0];
+			btnUp.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			btnUp.Location = new System.Drawing.Point(3 + GroupNum * 230 - panel1.HorizontalScroll.Value, panel1.Height - 50 - panel1.VerticalScroll.Value);
+			btnUp.Name = "btnUp" + (GroupNum + 1).ToString();
+			btnUp.Size = new System.Drawing.Size(75, 23);
+			btnUp.TabIndex = 6;
+			btnUp.Text = "ひとつ上へ";
+			btnUp.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			btnUp.UseVisualStyleBackColor = true;
+			btnUp.Click += new System.EventHandler(this.BtnUpClick);
+			btnUps.Add(btnUp);
+			// btnLeft
+			if (GroupNum != 0)
+			{
+				btnLeft.Image = imageList1.Images[3];
+				btnLeft.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+				btnLeft.Location = new System.Drawing.Point(3 + GroupNum * 230 - panel1.HorizontalScroll.Value, 2 - panel1.VerticalScroll.Value);
+				btnLeft.Name = "btnLeft" + (GroupNum + 1).ToString();
+				btnLeft.Size = new System.Drawing.Size(20, 20);
+				btnLeft.TabIndex = 9;
+				btnLeft.Text = "";
+				btnLeft.UseVisualStyleBackColor = true;
+				//btnLeft.Click += new System.EventHandler(this.BtnLeftClick);
+				btnLefts.Add(btnLeft);
+			}
+			/**
+			// btnRight
+			btnRight.Image = imageList1.Images[4];
+			btnRight.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			btnRight.Location = new System.Drawing.Point(207+GroupNum*230 - panel1.HorizontalScroll.Value, 2 - panel1.VerticalScroll.Value);
+			btnRight.Name = "btnRight" + (GroupNum+1).ToString();
+			btnRight.Size = new System.Drawing.Size(20, 20);
+			btnRight.TabIndex = 10;
+			btnRight.Text = "";
+			btnRight.UseVisualStyleBackColor = true;
+			btnRight.Click += new System.EventHandler(this.BtnRightClick);
+			btnRights.Add(btnRight);
+			**/
+
+			panel2.Controls.Add(btnUp);
+			panel2.Controls.Add(btnDown);
+			panel2.Controls.Add(btnDelete);
+			//if (GroupNum != 0) panel2.Controls.Add(btnLeft);
+			//panel1.Controls.Add(btnRight);
+			#endregion
+
+			GroupNum++;
+			//this.panel1.SizeChanged += new System.EventHandler(this.Panel1SizeChanged);
+
+		}
+		#endregion
+
 		#region ファイル名が変更されたら
 		void OnFileNameChanged(object sender, EventArgs e)
 		{
