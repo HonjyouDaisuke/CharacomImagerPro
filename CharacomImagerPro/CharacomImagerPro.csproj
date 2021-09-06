@@ -1,0 +1,360 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{8CF817EE-65FD-4EDC-96D7-CB2497DC8171}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>CharacomImagerPro</RootNamespace>
+    <AssemblyName>CharacomImagerPro</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SourceAnalysisOverrideSettingsFile>C:\Users\02322\AppData\Roaming\ICSharpCode/SharpDevelop3.0\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <NoStdLib>False</NoStdLib>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <ApplicationIcon>characom.ico</ApplicationIcon>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <TargetFrameworkProfile />
+    <NoWin32Manifest>False</NoWin32Manifest>
+    <SignAssembly>False</SignAssembly>
+    <DelaySign>False</DelaySign>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+    <RunCodeAnalysis>False</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <BaseAddress>4194304</BaseAddress>
+    <FileAlignment>4096</FileAlignment>
+    <Prefer32Bit>True</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
+    <StartAction>Project</StartAction>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+  <ItemGroup>
+    <Reference Include="Dustin">
+      <HintPath>Dustin.dll</HintPath>
+    </Reference>
+    <Reference Include="Dustin.Chart">
+      <HintPath>Dustin.Chart.dll</HintPath>
+    </Reference>
+    <Reference Include="Dustin.Drawing">
+      <HintPath>Dustin.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="Dustin.Graph">
+      <HintPath>Dustin.Graph.dll</HintPath>
+    </Reference>
+    <Reference Include="Dustin.Utils">
+      <HintPath>Dustin.Utils.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AllNoMessageDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AllNoMessageDialog.Designer.cs">
+      <DependentUpon>AllNoMessageDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AverageMaker.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AverageMaker.Designer.cs">
+      <DependentUpon>AverageMaker.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CharaEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CharaEditForm.Designer.cs">
+      <DependentUpon>CharaEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CharaEditFormProperties.cs" />
+    <Compile Include="CharaImageCommand.cs" />
+    <Compile Include="CharaImageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CharaImageForm.Designer.cs">
+      <DependentUpon>CharaImageForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CharaImageFormProperties.cs" />
+    <Compile Include="CheckUpClass.cs" />
+    <Compile Include="CheckUpForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CheckUpForm.Designer.cs">
+      <DependentUpon>CheckUpForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DBSaveForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DBSaveForm.Designer.cs">
+      <DependentUpon>DBSaveForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DBViewForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DBViewForm.Designer.cs">
+      <DependentUpon>DBViewForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DebugForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DebugForm.Designer.cs">
+      <DependentUpon>DebugForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FeatureClass.cs" />
+    <Compile Include="FeatureForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FeatureForm.Designer.cs">
+      <DependentUpon>FeatureForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrameDataClass.cs" />
+    <Compile Include="HaikeiDenpanForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HaikeiDenpanForm.Designer.cs">
+      <DependentUpon>HaikeiDenpanForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ImageDataClass.cs" />
+    <Compile Include="ImageEffect.cs" />
+    <Compile Include="IndividualClass.cs" />
+    <Compile Include="InputCharaForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InputCharaForm.Designer.cs">
+      <DependentUpon>InputCharaForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IntraindividualGraph.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IntraindividualGraph.Designer.cs">
+      <DependentUpon>IntraindividualGraph.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IntraindividualVariationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IntraindividualVariationForm.Designer.cs">
+      <DependentUpon>IntraindividualVariationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LapClass.cs" />
+    <Compile Include="LapForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LapForm.Designer.cs">
+      <DependentUpon>LapForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MathClass.cs" />
+    <Compile Include="MultiInputDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MultiInputDialog.Designer.cs">
+      <DependentUpon>MultiInputDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PluralCheckUp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PluralCheckUp.Designer.cs">
+      <DependentUpon>PluralCheckUp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PrintParts.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PropertyDisplay.cs" />
+    <Compile Include="RangeCompare.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RangeCompare.Designer.cs">
+      <DependentUpon>RangeCompare.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RangeCompareGraph.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RangeCompareGraph.Designer.cs">
+      <DependentUpon>RangeCompareGraph.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RecentlyClass.cs" />
+    <Compile Include="RRangeClass.cs" />
+    <Compile Include="SetupClass.cs" />
+    <Compile Include="SetupForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SetupForm.Designer.cs">
+      <DependentUpon>SetupForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StanderdImageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StanderdImageForm.Designer.cs">
+      <DependentUpon>StanderdImageForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StringImageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StringImageForm.Designer.cs">
+      <DependentUpon>StringImageForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StringLapForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StringLapForm.Designer.cs">
+      <DependentUpon>StringLapForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VersionInfoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VersionInfoForm.Designer.cs">
+      <DependentUpon>VersionInfoForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WindowListClass.cs" />
+    <Compile Include="WindowSort.cs" />
+    <Compile Include="WinTabClass.cs" />
+    <Compile Include="ZoomSelectPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ZoomSelectPanel.Designer.cs">
+      <DependentUpon>ZoomSelectPanel.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="AllNoMessageDialog.resx">
+      <DependentUpon>AllNoMessageDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AverageMaker.resx">
+      <DependentUpon>AverageMaker.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CharaEditForm.resx">
+      <DependentUpon>CharaEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CharaImageForm.resx">
+      <DependentUpon>CharaImageForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CheckUpForm.resx">
+      <DependentUpon>CheckUpForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DBSaveForm.resx">
+      <DependentUpon>DBSaveForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DBViewForm.resx">
+      <DependentUpon>DBViewForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DebugForm.resx">
+      <DependentUpon>DebugForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FeatureForm.resx">
+      <DependentUpon>FeatureForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HaikeiDenpanForm.resx">
+      <DependentUpon>HaikeiDenpanForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InputCharaForm.resx">
+      <DependentUpon>InputCharaForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IntraindividualGraph.resx">
+      <DependentUpon>IntraindividualGraph.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IntraindividualVariationForm.resx">
+      <DependentUpon>IntraindividualVariationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LapForm.resx">
+      <DependentUpon>LapForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MultiInputDialog.resx">
+      <DependentUpon>MultiInputDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PluralCheckUp.resx">
+      <DependentUpon>PluralCheckUp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RangeCompare.resx">
+      <DependentUpon>RangeCompare.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RangeCompareGraph.resx">
+      <DependentUpon>RangeCompareGraph.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SetupForm.resx">
+      <DependentUpon>SetupForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StanderdImageForm.resx">
+      <DependentUpon>StanderdImageForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StringImageForm.resx">
+      <DependentUpon>StringImageForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StringLapForm.resx">
+      <DependentUpon>StringLapForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VersionInfoForm.resx">
+      <DependentUpon>VersionInfoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ZoomSelectPanel.resx">
+      <DependentUpon>ZoomSelectPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="cross_r.cur">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pen_i.cur" />
+    <EmbeddedResource Include="pen_il.cur" />
+    <EmbeddedResource Include="pen_im.cur" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <PropertyGroup>
+    <PostBuildEvent>cd "$(SolutionDir)"
+mkdir packageTmp
+copy "$(TargetDir)\CharacomImagerPro.exe" packageTmp\.
+copy "$(TargetDir)\CharacomImagerPro.exe.config" packageTmp\.
+copy "$(TargetDir)\CharacomImagerPro.pdb" packageTmp\.
+copy "$(TargetDir)\Dustin.Utils.dll" packageTmp\.
+copy "$(TargetDir)\Dustin.Graph.dll" packageTmp\.
+copy "$(TargetDir)\Dustin.Drawing.dll" packageTmp\.
+copy "$(TargetDir)\Dustin.dll" packageTmp\.
+copy "$(TargetDir)\Dustin.Chart.dll" packageTmp\.
+PowerShell -ExecutionPolicy RemoteSigned "./makeAppUpload.ps1" -Arg1 "$(SolutionDir)\" -Arg2 "$(TargetDir)\"
+rmdir /s /q packageTmp</PostBuildEvent>
+  </PropertyGroup>
+</Project>
