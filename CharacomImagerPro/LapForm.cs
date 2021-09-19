@@ -105,9 +105,7 @@ namespace CharacomImagerPro
 
 			AddControl();
 			AddControl();
-			AddControl();
-			AddControl();
-			AddControl();
+			
 
 			//
 			// TODO: Add constructor code after the InitializeComponent() call.
@@ -306,17 +304,7 @@ namespace CharacomImagerPro
 		}
 		#endregion
 
-		#region DataGridViewに行を追加
-		void IntoDataGridViewRow(DataGridViewRow Row, Bitmap bmp, string FileName, int num)
-		{
-			Row.Height = 50;
-			Row.Cells[0].Value = num.ToString();
-			Row.Cells[1].Value = bmp;
-			Row.Cells[2].Value = Path.GetFileName(FileName);
-			//dgv[3, dgv.Rows.Count - 1].Value = imglCheck.Images[0];
-
-		}
-		#endregion
+		
 
 		#region 特徴の平均の作成
 		void GetFeatureAverage(double[] kajyuAvg, double[] kajyuViewAvg, ArrayList feature)
@@ -434,7 +422,8 @@ namespace CharacomImagerPro
 			//DataGridView用のデータを作成
 			DataGridViewRow NewRow = new DataGridViewRow();
 			NewRow.CreateCells(dgv);
-			IntoDataGridViewRow(NewRow, cif.SrcBitmapSmall, cif.FileName, dgv.Rows.Count + 1);
+			IntoDataGridView(NewRow, cif.ImageData.ProcImage, cif.ImageData.Filename, dgv.Rows.Count + 1);
+			ImageArray.Add(cif.ImageData);
 
 			
 			//特徴クラスを作成してデータを挿入
@@ -465,7 +454,7 @@ namespace CharacomImagerPro
 			//DataGridView用のデータを作成
 			DataGridViewRow NewRow = new DataGridViewRow();
 			NewRow.CreateCells(dgv);
-			IntoDataGridViewRow(NewRow, avf.SrcBmpSmall, avf.FileName, dgv.Rows.Count + 1);
+			IntoDataGridView(NewRow, avf.SrcBmpSmall, avf.FileName, dgv.Rows.Count + 1);
 			
 			//特徴クラスを作成してデータを挿入
 			FeatureClass thisFeature = new FeatureClass();
@@ -522,12 +511,12 @@ namespace CharacomImagerPro
 								DragDropProc(m_cif, (DataGridView)sender, num);
 								
 								//DataGridView用のデータを作成
-								DataGridViewRow NewRow = new DataGridViewRow();
-								NewRow.CreateCells(dgvLap);
-								IntoDataGridView(NewRow, m_cif.ImageData.ProcImage, m_cif.ImageData.Filename);
+								//DataGridViewRow NewRow = new DataGridViewRow();
+								//NewRow.CreateCells(((DataGridView)sender));
+								//IntoDataGridView(NewRow, m_cif.ImageData.ProcImage, m_cif.ImageData.Filename);
 								//コマンドを実行
-								LapDragInCommand command = new LapDragInCommand(dgvLap.Rows, NewRow, ImageArray, m_cif.ImageData);
-								undoManager.Action(command);
+								//LapDragInCommand command = new LapDragInCommand(((DataGridView)sender).Rows, NewRow, ImageArray, m_cif.ImageData);
+								//undoManager.Action(command);
 
 								CheckUndoRedo();
 
@@ -625,27 +614,35 @@ namespace CharacomImagerPro
 			}
 			return(res);
 		}
-		
+
+		//2021.09.19 D.Honjyou
+		//重ね合わせグラフのため削除
 		public void InputLapForm(CharaImageForm cif)
-		{
-			if(CheckLapList(cif.ImageData.Filename)) return;
-			//DataGridView用のデータを作成
-			DataGridViewRow NewRow = new DataGridViewRow();
-			NewRow.CreateCells(dgvLap);
-			IntoDataGridView(NewRow, cif.ImageData.ProcImage, cif.ImageData.Filename);
-				
-			//コマンドを実行
-			LapDragInCommand command = new LapDragInCommand(dgvLap.Rows, NewRow, ImageArray, cif.ImageData);
-			undoManager.Action(command);
-				
-			CheckUndoRedo();
-			//AddLapArray(cif.ImageData);
-			MakeViewBitmap();
-				
-			LapImageBox.Invalidate();
-		}
+				{
+					/****
+					if (CheckLapList(cif.ImageData.Filename)) return;
+					//DataGridView用のデータを作成
+					DataGridViewRow NewRow = new DataGridViewRow();
+					//NewRow.CreateCells(dgvLap);
+					IntoDataGridView(NewRow, cif.ImageData.ProcImage, cif.ImageData.Filename);
+						
+					//コマンドを実行
+					//LapDragInCommand command = new LapDragInCommand(dgvLap.Rows, NewRow, ImageArray, cif.ImageData);
+					//undoManager.Action(command);
+						
+					CheckUndoRedo();
+					AddLapArray(cif.ImageData);
+					MakeViewBitmap();
+						
+					LapImageBox.Invalidate();
+					**/
+				}
+
+		//2021.09.19 D.Honjyou
+		//重ね合わせグラフのため削除
 		void LapFormDragDrop(object sender, DragEventArgs e)
 		{
+			/**
 			CharaImageForm cif;
 			MultiInputDialog mid = new MultiInputDialog();
 			
@@ -656,12 +653,12 @@ namespace CharacomImagerPro
 					if(CheckLapList(cif.ImageData.Filename)) return;
 					//DataGridView用のデータを作成
 					DataGridViewRow NewRow = new DataGridViewRow();
-					NewRow.CreateCells(dgvLap);
+					//NewRow.CreateCells(dgvLap);
 					IntoDataGridView(NewRow, cif.ImageData.ProcImage, cif.ImageData.Filename);
 					
 					//コマンドを実行
-					LapDragInCommand command = new LapDragInCommand(dgvLap.Rows, NewRow, ImageArray, cif.ImageData);
-					undoManager.Action(command);
+					//LapDragInCommand command = new LapDragInCommand(dgvLap.Rows, NewRow, ImageArray, cif.ImageData);
+					//undoManager.Action(command);
 					
 					CheckUndoRedo();
 					//AddLapArray(cif.ImageData);
@@ -681,12 +678,12 @@ namespace CharacomImagerPro
 								if(!CheckLapList(m_cif.ImageData.Filename)){
 									//DataGridView用のデータを作成
 									DataGridViewRow NewRow = new DataGridViewRow();
-									NewRow.CreateCells(dgvLap);
+									//NewRow.CreateCells(dgvLap);
 									IntoDataGridView(NewRow, m_cif.ImageData.ProcImage, m_cif.ImageData.Filename);
 									
 									//コマンドを実行
-									LapDragInCommand command = new LapDragInCommand(dgvLap.Rows, NewRow, ImageArray, m_cif.ImageData);
-									undoManager.Action(command);
+									//LapDragInCommand command = new LapDragInCommand(dgvLap.Rows, NewRow, ImageArray, m_cif.ImageData);
+									//undoManager.Action(command);
 									
 									CheckUndoRedo();
 									//AddLapArray(cif.ImageData);
@@ -719,12 +716,12 @@ namespace CharacomImagerPro
 					if(!CheckLapList(m_cif.ImageData.Filename)){
 						//DataGridView用のデータを作成
 						DataGridViewRow NewRow = new DataGridViewRow();
-						NewRow.CreateCells(dgvLap);
+						//NewRow.CreateCells(dgvLap);
 						IntoDataGridView(NewRow, m_cif.ImageData.ProcImage, m_cif.ImageData.Filename);
 						
 						//コマンドを実行
-						LapDragInCommand command = new LapDragInCommand(dgvLap.Rows, NewRow, ImageArray, m_cif.ImageData);
-						undoManager.Action(command);
+						//LapDragInCommand command = new LapDragInCommand(dgvLap.Rows, NewRow, ImageArray, m_cif.ImageData);
+						//undoManager.Action(command);
 									
 						CheckUndoRedo();
 						//AddLapArray(cif.ImageData);
@@ -734,9 +731,10 @@ namespace CharacomImagerPro
 				}
 			}
 			LapImageBox.Invalidate();
+			**/
 		}
 		#endregion
-		
+
 		#region 矩形を描画
 		void DrawFrame(Bitmap bmp, ImageDataClass idc)
 		{
@@ -786,11 +784,22 @@ namespace CharacomImagerPro
 			Bitmap white_image = new Bitmap(320,320);
 			
 			imageEffect.BitmapWhitening(viewBitmap);
+
+			/**
+			for(int j=0; j<GroupNum; j++)
+            {
+				for(int i=0; i < ((DataGridView)DataGridViews[j]).RowCount; i++)
+                {
+
+                }
+				((DataGridView)DataGridViews)[1,i]
+            }
+			**/
 			for(int i=ImageArray.Count - 1; i >=0; i--){
 				idc = (ImageDataClass)ImageArray[i];
 				if(btnChara.Checked) imageEffect.BitmapImposeCopy(viewBitmap, idc.ProcImage);
-				imageEffect.BitmapImposeCopy((Bitmap)dgvLap[0, i].Value, idc.ProcImage);
-				dgvLap[1, i].Value = Path.GetFileName(idc.Filename);
+				//imageEffect.BitmapImposeCopy((Bitmap)dgvLap[0, i].Value, idc.ProcImage);
+				//dgvLap[1, i].Value = Path.GetFileName(idc.Filename);
 				if(btnDrawFrame.Checked)DrawFrame(viewBitmap, idc);
 				if(btnGraviHou.Checked || btnGraviJun.Checked)DrawGravityLine(viewBitmap, idc);
 				if(btnSyaei.Checked)DrawProjection(viewBitmap, idc);
@@ -807,14 +816,15 @@ namespace CharacomImagerPro
 		#endregion
 		
 		#region DataGridViewへの追加データを作成
-		void IntoDataGridView(DataGridViewRow dgvRow, Bitmap bmp, string FileName)
+		void IntoDataGridView(DataGridViewRow dgvRow, Bitmap bmp, string FileName, int num)
 		{
 			Bitmap inBmp = new Bitmap(bmp.Width, bmp.Height);
 			imageEffect.BitmapWhitening(inBmp);
 			imageEffect.BitmapCopy(bmp, inBmp);
 			dgvRow.Height = 80;
-			dgvRow.Cells[0].Value = inBmp;
-			dgvRow.Cells[1].Value = Path.GetFileName(FileName);
+			dgvRow.Cells[0].Value = num.ToString();
+			dgvRow.Cells[1].Value = inBmp;
+			dgvRow.Cells[2].Value = Path.GetFileName(FileName);
 		}
 		#endregion
 		
@@ -843,10 +853,49 @@ namespace CharacomImagerPro
 			e.Graphics.DrawImage(wideBitmap, 0, 0);
 		}
 		#endregion
-		
+
+		#region ひとつ上へボタン処理
+		void UpDownButtonProc(DataGridView dgv, ArrayList feature, int CurrentIndex, int NextIndex)
+		{
+			//DataGridViewを入れ替え
+			string _filename;
+			Bitmap _bmp;
+			string _r;
+
+			_bmp = (Bitmap)dgv.Rows[CurrentIndex].Cells[1].Value;
+			_filename = (string)dgv.Rows[CurrentIndex].Cells[2].Value;
+			_r = (string)dgv.Rows[CurrentIndex].Cells[3].Value;
+
+			dgv.Rows[CurrentIndex].Cells[1].Value = dgv.Rows[NextIndex].Cells[1].Value;
+			dgv.Rows[CurrentIndex].Cells[2].Value = dgv.Rows[NextIndex].Cells[2].Value;
+			dgv.Rows[CurrentIndex].Cells[3].Value = dgv.Rows[NextIndex].Cells[3].Value;
+
+			dgv.Rows[NextIndex].Cells[1].Value = _bmp;
+			dgv.Rows[NextIndex].Cells[2].Value = _filename;
+			dgv.Rows[NextIndex].Cells[3].Value = _r;
+
+			dgv.CurrentCell = dgv[0, NextIndex];
+			//featuresを入れ替え
+			FeatureClass fc = new FeatureClass();
+			fc = (FeatureClass)feature[CurrentIndex];
+			feature[CurrentIndex] = feature[NextIndex];
+			feature[NextIndex] = fc;
+		}
+		#endregion
+
 		#region ひとつ上へボタン
+		//2021.09.19 D.Honjyou
+		//重ね合わせグラフのため削除
 		void BtnUpClick(object sender, EventArgs e)
 		{
+			int num = int.Parse(((Button)sender).Name.Substring(5));
+			num = num - 1;
+			if(((DataGridView)DataGridViews[num]).CurrentRow != null){
+				if(((DataGridView)DataGridViews[num]).CurrentRow.Index > 0){
+					UpDownButtonProc((DataGridView)DataGridViews[num], (ArrayList)features[num], ((DataGridView)DataGridViews[num]).CurrentRow.Index, ((DataGridView)DataGridViews[num]).CurrentRow.Index - 1);
+				}
+			}
+		/**
 			if(dgvLap.Rows.Count > 0){
 				if(dgvLap.CurrentRow.Index > 0){
 					LapExchangeCommand command = new LapExchangeCommand(dgvLap, ImageArray, dgvLap.CurrentRow.Index, dgvLap.CurrentRow.Index - 1, 320, 320);
@@ -859,12 +908,25 @@ namespace CharacomImagerPro
 					LapImageBox.Invalidate();
 				}
 			}
+		**/
 		}
+
 		#endregion
-		
+
 		#region ひとつ下へボタン
+		//2021.09.19 D.Honjyou
+		//重ね合わせグラフのため削除
 		void BtnDownClick(object sender, EventArgs e)
 		{
+			int num = int.Parse(((Button)sender).Name.Substring(7));
+			num = num - 1;
+			if(((DataGridView)DataGridViews[num]).CurrentRow != null){
+				if(((DataGridView)DataGridViews[num]).CurrentRow.Index < ((DataGridView)DataGridViews[num]).Rows.Count - 1){
+					UpDownButtonProc((DataGridView)DataGridViews[num], (ArrayList)features[num], ((DataGridView)DataGridViews[num]).CurrentRow.Index, ((DataGridView)DataGridViews[num]).CurrentRow.Index + 1);
+				}
+			}
+			
+		/**
 			if(dgvLap.Rows.Count > 0){
 				if(dgvLap.CurrentRow.Index < dgvLap.Rows.Count - 1){
 					LapExchangeCommand command = new LapExchangeCommand(dgvLap, ImageArray, dgvLap.CurrentRow.Index, dgvLap.CurrentRow.Index + 1, 320, 320);
@@ -876,13 +938,36 @@ namespace CharacomImagerPro
 					LapImageBox.Invalidate();
 				}
 			}
+		**/
 		}
 		#endregion
+
+		#region 削除ボタン処理
+		void DeleteButtonProc(DataGridView dgv, ArrayList feature, int CurrentIndex)
+		{
+			//DataGridViewを削除
+			dgv.Rows.RemoveAt(CurrentIndex);
+			//featureを削除
+			feature.RemoveAt(CurrentIndex);
+			MakeR(feature, dgv);
+			//dgvLegendUpDownCheck(0, "");
+		}
+		#endregion
+
 		
 		#region 削除ボタン
+		//2021.09.19 D.Honjyou
+		//重ね合わせグラフのため削除
 		void BtnDeleteClick(object sender, EventArgs e)
 		{
-			if(dgvLap.Rows.Count > 0){
+			int num = int.Parse(((Button)sender).Name.Substring(9));
+			num = num - 1;
+			if (((DataGridView)DataGridViews[num]).CurrentRow != null)
+			{
+				DeleteButtonProc((DataGridView)DataGridViews[num], (ArrayList)features[num], ((DataGridView)DataGridViews[num]).CurrentRow.Index);
+			}
+			/**
+			if (dgvLap.Rows.Count > 0){
 				LapDeleteCommand command = new LapDeleteCommand(dgvLap.Rows, ImageArray, dgvLap.CurrentRow.Index);
 				undoManager.Action(command);
 				CheckUndoRedo();
@@ -891,6 +976,7 @@ namespace CharacomImagerPro
 				MakeViewBitmap();
 				LapImageBox.Invalidate();
 			}
+			**/
 		}
 		#endregion
 		
@@ -1032,6 +1118,7 @@ namespace CharacomImagerPro
 		#region 読み込み処理
 		public void OpenCCLFile()
 		{
+			/**
     		if(fileName == "" || fileName == null)return;
 			//個人内変動ファイルを開く
 			FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
@@ -1056,6 +1143,7 @@ namespace CharacomImagerPro
 			//最近使ったファイルに追加してもらう
 			//MainForm mf = (MainForm)this.MdiParent;
 			mf.AddRecentlyFile(fileName);
+			**/
 		}
 		#endregion
 
@@ -1066,7 +1154,7 @@ namespace CharacomImagerPro
 			double Min = 0.0;
 			double MinorInterval, MajorInterval;
 			double ScaleMin;
-			Min = 0.3;//GetAllMinimun();
+			Min = GetAllMinimun();
 			if (Min >= 0.95)
 			{
 				MajorInterval = 0.02;
@@ -1087,7 +1175,7 @@ namespace CharacomImagerPro
 			axis.Scale.Min = ScaleMin;
 			axis.Scale.Max = 1.001;
 			axis.Scale.Base = ScaleMin;
-			axis.Ticks.Labels.LabelFormat = "0.000";
+			axis.Ticks.Labels.LabelFormat = "0.00";
 			axis.Ticks.Labels.Interval = 1;
 			axis.Ticks.Major.LineLength = 8;
 			axis.Ticks.Major.Pen = Pens.Black;
@@ -1115,7 +1203,7 @@ namespace CharacomImagerPro
 			//	labelPoints[j] = new ST_TickLabelPoint(j, rc.Title);
 			//	j++;
 			//}
-			labelPoints[0] = new ST_TickLabelPoint(9, "");
+			labelPoints[0] = new ST_TickLabelPoint(0, "変動");
 			IAxis axis;
 
 			axis = graph.XAxis;
@@ -1125,18 +1213,86 @@ namespace CharacomImagerPro
 			axis.Ticks.Side = DusGraph.eTickSide.Bottom;
             axis.Ticks.Labels.Points.AddRange(labelPoints);
 			axis.Ticks.Labels.Font = new Font("ＭＳ 明朝", 14, FontStyle.Bold);
-			///axis.Ticks.Direction        = DusGraph.eTickDirection.Outside;
+			axis.Ticks.Direction        = DusGraph.eTickDirection.Outside;
 			axis.Grid.Major.Visible = false;
 			axis.Grid.Major.Interval = 1;
 			axis.Scale.Min = 0;
-			axis.Scale.Max = XScale - 1;
+			axis.Scale.Max = XScale;
 			axis.Scale.Base = 0;
 
 		}
 
+		static double [] GetFeatureMaxMinAve(ArrayList fet)
+        {
+			double max, min, ave, sum;
+			double [] arr = new double [3];
+			int i = 0;
+
+			max = 0.0;
+			min = 3.0;
+			sum = 0.0;
+
+			foreach (FeatureClass f in fet)
+			{
+				if (max < f.R) max = f.R;
+				if (min > f.R) min = f.R;
+				sum += f.R;
+				i++;
+				System.Diagnostics.Debug.WriteLine($"maxminave R = {f.R} R2 = {f.R2}");
+			}
+			ave = sum / i;
+
+			arr[0] = max;
+			arr[1] = min;
+			arr[2] = ave;
+
+			return (arr);
+		}
+
+		private double GetAllMinimun()
+		{
+			int j;
+			double min = 100.0;
+			for (j = 0; j < GroupNum; j++)
+			{
+				foreach (FeatureClass fcd in (ArrayList)features[j])
+				{
+					if (fcd.R < min) min = fcd.R;
+				}
+			}
+			return (min);
+		}
+
 		void MakePlotData(IGraphPainter graph)
 		{
-			/***
+			///2021.09.15　ここです！！！！
+			System.Diagnostics.Debug.WriteLine($"GroupNum = {GroupNum}");
+			for(int i=0; i<GroupNum; i++)
+            {
+				if(((ArrayList)features[i]).Count > 0) 
+				{
+					ISeriesCandleChart series;
+					double[] MaxMinAve = GetFeatureMaxMinAve((ArrayList)features[i]);
+					
+					series = graph.CreateSeries(DusGraph.ePlotType.CandleChart).asCandleChart;
+					series.NegativeBrush = new SolidBrush(Color.FromArgb(128, ((Panel)colorPanels[i]).BackColor));
+					series.PositiveBrush = new SolidBrush(Color.FromArgb(128, ((Panel)colorPanels[i]).BackColor));
+					series.BarWidth = 30;
+					series.Pen = new Pen(Color.FromArgb(128, ((Panel)colorPanels[i]).BackColor));
+
+					series.Data.Add(new ST_CandlePoint(0, MaxMinAve[1], MaxMinAve[0], MaxMinAve[1], MaxMinAve[1]));
+					graph.Series.Add(series);
+
+					System.Diagnostics.Debug.WriteLine($"max = {MaxMinAve[0]} min = {MaxMinAve[1]} ave = {MaxMinAve[2]}");
+
+				}
+
+			}
+			
+				
+
+			
+			/**
 			ISeriesCandleChart sr;      //対照資料最大最小ボックス
 										//ISeriesXYPlot  sr2;		
 			ISeriesCandleChart sr2; //対照資料生データプロット
@@ -1369,47 +1525,43 @@ namespace CharacomImagerPro
 		{
 			imageEffect.BitmapWhitening(GraphBmp);
 			
-			IGraphPainter graph = DusGraph.CreateGraph(570, 360);
+			IGraphPainter graph = DusGraph.CreateGraph(113, 400);
 
 			#region グラフエリアの設定
-			graph.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-			///graph.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+			graph.SmoothingMode = SmoothingMode.AntiAlias;
+			graph.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
 			graph.BackBrush = new LinearGradientBrush(graph.GetBounds(), Color.White, Color.LemonChiffon, LinearGradientMode.Vertical);
 			graph.Border.Pen = new Pen(Color.Gray, 1);
 			graph.PlotArea.BackBrush = new LinearGradientBrush(graph.GetBounds(), Color.LightBlue, Color.White, LinearGradientMode.Vertical);
 			graph.PlotArea.Border.Top.Pen = Pens.Transparent;
 			graph.PlotArea.Border.Right.Pen = Pens.Silver;
 			graph.PlotArea.Margin.Left = 40;
-			graph.PlotArea.Margin.Right = 160;
-			graph.PlotArea.Margin.Top = 40;
-			graph.PlotArea.Margin.Bottom = 30;
+			graph.PlotArea.Margin.Right = 0;
+			graph.PlotArea.Margin.Top = 0;
+			graph.PlotArea.Margin.Bottom = 0;
 			graph.PlotArea.InnerMargin.Left = 40;
 			graph.PlotArea.InnerMargin.Right = 40;
 			#endregion
 
 			#region 凡例の設定
+			/***
 			graph.Legend.Visible = true;
 			graph.Legend.Location = new PointF(415, 40);
 			graph.Legend.Size = new SizeF(150, 300);
 			graph.Legend.ItemArea.BaseLocation = new PointF(5, 20);
 			graph.Legend.ItemArea.ItemSize = new SizeF(140, 20);
+			***/
 			#endregion
-
 			MakeXAxis(graph);
-
 			MakeYAxis(graph);
-
 			MakePlotData(graph);
-
 			graph.Draw();
-
 			//Graphics  g = graph.CreateGraphics();
 			Graphics g = Graphics.FromImage(GraphBmp);
 			g.FillRectangle(Brushes.White, 0, 0, GraphBmp.Width, GraphBmp.Height);
 			g.DrawImage(graph.Image, 0, 0);
 
 			g.Dispose();
-
 			GraphImage.Invalidate();
 		}
 		#endregion
@@ -1629,6 +1781,7 @@ namespace CharacomImagerPro
 			y += f.Height + MarginY;
 			int bbHeight = 80;
 			int bbWidth = 80;
+			/**
 			for(int i=0; i<dgvLap.Rows.Count; i++){
 				Bitmap bb = new Bitmap(((Bitmap)dgvLap[0, i].Value).Width, ((Bitmap)dgvLap[0, i].Value).Height);
 				imageEffect.BitmapCopy((Bitmap)dgvLap[0, i].Value, bb);
@@ -1641,6 +1794,7 @@ namespace CharacomImagerPro
 				e.Graphics.DrawString((string)dgvLap[1, i].Value, f, Brushes.Black, r, sf);
 				y += bbHeight + MarginY;
 			}
+			**/
 		}
 		#endregion
 		
@@ -1674,8 +1828,8 @@ namespace CharacomImagerPro
 			//MainForm mf = (MainForm)this.MdiParent;
 			mf.RemoveWindowAtID(windowID);
 		}
-		
-		
-		#endregion
-	}
+
+
+        #endregion
+    }
 }

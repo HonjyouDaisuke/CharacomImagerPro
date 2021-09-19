@@ -63,9 +63,6 @@ namespace CharacomImagerPro
             this.menuOverAlign = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.menuClose = new System.Windows.Forms.ToolStripMenuItem();
-            this.dgvLap = new System.Windows.Forms.DataGridView();
-            this.colImage = new System.Windows.Forms.DataGridViewImageColumn();
-            this.colFileName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btnFileOpen = new System.Windows.Forms.ToolStripButton();
             this.btnFileSave = new System.Windows.Forms.ToolStripButton();
@@ -90,9 +87,6 @@ namespace CharacomImagerPro
             this.btnGraviHou = new System.Windows.Forms.ToolStripButton();
             this.btnGraviJun = new System.Windows.Forms.ToolStripButton();
             this.btnSyaei = new System.Windows.Forms.ToolStripButton();
-            this.btnUp = new System.Windows.Forms.Button();
-            this.btnDown = new System.Windows.Forms.Button();
-            this.btnDelete = new System.Windows.Forms.Button();
             this.saveImageDialog = new System.Windows.Forms.SaveFileDialog();
             this.printDoc = new System.Drawing.Printing.PrintDocument();
             this.printDlg = new System.Windows.Forms.PrintDialog();
@@ -106,9 +100,7 @@ namespace CharacomImagerPro
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LapImageBox)).BeginInit();
             this.SubMenu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvLap)).BeginInit();
             this.toolStrip1.SuspendLayout();
-            this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GraphImage)).BeginInit();
             this.SuspendLayout();
             // 
@@ -323,39 +315,6 @@ namespace CharacomImagerPro
             this.menuClose.Size = new System.Drawing.Size(207, 26);
             this.menuClose.Text = "閉じる";
             this.menuClose.Click += new System.EventHandler(this.MenuCloseClick);
-            // 
-            // dgvLap
-            // 
-            this.dgvLap.AllowUserToAddRows = false;
-            this.dgvLap.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvLap.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colImage,
-            this.colFileName});
-            this.dgvLap.Location = new System.Drawing.Point(4, 4);
-            this.dgvLap.Margin = new System.Windows.Forms.Padding(4);
-            this.dgvLap.MultiSelect = false;
-            this.dgvLap.Name = "dgvLap";
-            this.dgvLap.RowHeadersVisible = false;
-            this.dgvLap.RowHeadersWidth = 51;
-            this.dgvLap.RowTemplate.Height = 80;
-            this.dgvLap.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvLap.Size = new System.Drawing.Size(316, 352);
-            this.dgvLap.TabIndex = 1;
-            // 
-            // colImage
-            // 
-            this.colImage.HeaderText = "イメージ";
-            this.colImage.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
-            this.colImage.MinimumWidth = 6;
-            this.colImage.Name = "colImage";
-            this.colImage.Width = 80;
-            // 
-            // colFileName
-            // 
-            this.colFileName.HeaderText = "ファイル名";
-            this.colFileName.MinimumWidth = 6;
-            this.colFileName.Name = "colFileName";
-            this.colFileName.Width = 150;
             // 
             // toolStrip1
             // 
@@ -618,47 +577,6 @@ namespace CharacomImagerPro
             this.btnSyaei.ToolTipText = "射影";
             this.btnSyaei.CheckedChanged += new System.EventHandler(this.BtnSyaeiCheckedChanged);
             // 
-            // btnUp
-            // 
-            this.btnUp.Image = ((System.Drawing.Image)(resources.GetObject("btnUp.Image")));
-            this.btnUp.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnUp.Location = new System.Drawing.Point(4, 364);
-            this.btnUp.Margin = new System.Windows.Forms.Padding(4);
-            this.btnUp.Name = "btnUp";
-            this.btnUp.Size = new System.Drawing.Size(100, 29);
-            this.btnUp.TabIndex = 3;
-            this.btnUp.Text = "ひとつ上へ";
-            this.btnUp.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnUp.UseVisualStyleBackColor = true;
-            this.btnUp.Click += new System.EventHandler(this.BtnUpClick);
-            // 
-            // btnDown
-            // 
-            this.btnDown.Image = ((System.Drawing.Image)(resources.GetObject("btnDown.Image")));
-            this.btnDown.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnDown.Location = new System.Drawing.Point(220, 364);
-            this.btnDown.Margin = new System.Windows.Forms.Padding(4);
-            this.btnDown.Name = "btnDown";
-            this.btnDown.Size = new System.Drawing.Size(100, 29);
-            this.btnDown.TabIndex = 4;
-            this.btnDown.Text = "ひとつ下へ";
-            this.btnDown.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnDown.UseVisualStyleBackColor = true;
-            this.btnDown.Click += new System.EventHandler(this.BtnDownClick);
-            // 
-            // btnDelete
-            // 
-            this.btnDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnDelete.Image")));
-            this.btnDelete.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnDelete.Location = new System.Drawing.Point(112, 364);
-            this.btnDelete.Margin = new System.Windows.Forms.Padding(4);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(100, 29);
-            this.btnDelete.TabIndex = 5;
-            this.btnDelete.Text = "削除";
-            this.btnDelete.UseVisualStyleBackColor = true;
-            this.btnDelete.Click += new System.EventHandler(this.BtnDeleteClick);
-            // 
             // saveImageDialog
             // 
             this.saveImageDialog.Filter = "JPEG(*.jpeg)|*.jpeg|PNG (*.png)|*.png|GIF (*.gif)|*.gif|すべてのファイル|*.*";
@@ -700,10 +618,6 @@ namespace CharacomImagerPro
             // 
             this.panel2.AutoScroll = true;
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel2.Controls.Add(this.dgvLap);
-            this.panel2.Controls.Add(this.btnDown);
-            this.panel2.Controls.Add(this.btnUp);
-            this.panel2.Controls.Add(this.btnDelete);
             this.panel2.Location = new System.Drawing.Point(553, 31);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(678, 401);
@@ -727,6 +641,7 @@ namespace CharacomImagerPro
             this.GraphImage.Size = new System.Drawing.Size(113, 401);
             this.GraphImage.TabIndex = 7;
             this.GraphImage.TabStop = false;
+            this.GraphImage.Paint += new System.Windows.Forms.PaintEventHandler(this.GraphImagePaint);
             // 
             // LapForm
             // 
@@ -747,16 +662,13 @@ namespace CharacomImagerPro
             this.Text = "重ね合わせ";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LapFormFormClosing);
             this.Load += new System.EventHandler(this.LapFormLoad);
-            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.LapFormDragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.LapFormDragEnter);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LapImageBox)).EndInit();
             this.SubMenu.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvLap)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.GraphImage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -810,14 +722,8 @@ namespace CharacomImagerPro
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.ToolStripButton btnCopy;
-		private System.Windows.Forms.Button btnDelete;
-		private System.Windows.Forms.Button btnDown;
-		private System.Windows.Forms.Button btnUp;
 		private System.Windows.Forms.PictureBox LapImageBox;
 		private System.Windows.Forms.ToolStrip toolStrip1;
-		private System.Windows.Forms.DataGridViewTextBoxColumn colFileName;
-		private System.Windows.Forms.DataGridViewImageColumn colImage;
-		private System.Windows.Forms.DataGridView dgvLap;
 		private System.Windows.Forms.Panel panel1;
 		private System.Windows.Forms.ToolStripMenuItem CopyWindowMenuItem;
 		private System.Windows.Forms.ToolStripButton btnCopyWindow;
