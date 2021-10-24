@@ -84,7 +84,7 @@ namespace CharacomImagerPro
 			}
 		}
 		#endregion
-		
+
 		#region Bitmapをコピー
 		/// <summary>
 		/// Bitmapをコピーする。
@@ -251,6 +251,12 @@ namespace CharacomImagerPro
 		#endregion
 		
 		#region 色を比較する
+		/// <summary>
+		/// 色を比較する
+		/// </summary>
+		/// <param name="A">比較対象１（Color）</param>
+		/// <param name="B">比較対象２（Color）</param>
+		/// <returns>RGB全てが同じであればTrue　一つでも違っていればFalse　注意：A値は見ていない</returns>
 		public bool ColorCompare(Color A, Color B)
 		{
 			bool iRet = false;
@@ -383,43 +389,100 @@ namespace CharacomImagerPro
             return(GravityP);
 		}
 		#endregion
-		
+
 		#region 重心を計算する
 		public Point GetGravityPoint(Bitmap bmp)
 		{
 			// 重心を求める
-            int i, j, sum_a, sum_b;
-            Point GravityP = new Point();
-            Color c;
+			int i, j, sum_a, sum_b;
+			Point GravityP = new Point();
+			Color c;
 
+			// x軸方向の重心
+
+			sum_a = 0; sum_b = 0;
+			for (i = 0; i < bmp.Width; i++)
+			{
+				for (j = 0; j < bmp.Height; j++)
+				{
+					c = bmp.GetPixel(i, j);
+					if (c.R != Color.White.R || c.G != Color.White.G || c.B != Color.White.B)
+					{
+						sum_a += i;
+						sum_b++;
+					}
+				}
+			}
+			GravityP.X = (sum_b != 0) ? sum_a / sum_b : 0;
+
+			// y軸方向の重心
+			sum_a = 0; sum_b = 0;
+			for (i = 0; i < bmp.Width; i++)
+			{
+				for (j = 0; j < bmp.Height; j++)
+				{
+					c = bmp.GetPixel(i, j);
+					if (c.R != Color.White.R || c.G != Color.White.G || c.B != Color.White.B)
+					{
+						sum_a += j;
+						sum_b++;
+					}
+				}
+			}
+			GravityP.Y = (sum_b != 0) ? sum_a / sum_b : 0;
+
+			return (GravityP);
+		}
+		#endregion
+
+		#region Top点・Bottom点を抽出
+		/// <summary>
+		/// 2021.10.03 D.Honjyou
+		/// 頂点と底点を返す
+		/// </summary>
+		/// <param name="bmp"></param>
+		/// <returns></returns>
+		public Point [] GetTopBotomPoint(Bitmap bmp)
+		{
+			// 重心を求める
+            int i, j, sum_a, sum_b;
+            Point [] TBPoint = new Point[2];
+			int maxx, minx, maxy, miny;
+			Color c;
+
+			maxx = 0;
+			minx = 9999;
+			maxy = 0;
+			miny = 9999;
+            
             // x軸方向の重心
 
             sum_a = 0;	sum_b = 0;
-            for(i = 0; i < bmp.Width; i++){
-                for(j = 0; j < bmp.Height; j++){
-            		c = bmp.GetPixel(i, j);
-            		if(c.R != Color.White.R || c.G != Color.White.G || c.B != Color.White.B){
-                        sum_a += i;
-                        sum_b ++;
-                    }
+            for(j = 0; j < bmp.Height; j++)
+			{
+				for (i = 0; i < bmp.Width; i++)
+				{
+					c = bmp.GetPixel(i, j);
+					if (!ColorCompare(c, Color.White))
+					{
+						if (miny > j)
+						{
+							miny = j;
+							minx = i;
+						}
+						if (maxy < j)
+						{
+							maxy = j;
+							maxx = i;
+						}
+					}	
                 }
             }
-            GravityP.X = (sum_b != 0) ? sum_a / sum_b : 0;
-            
-            // y軸方向の重心
-            sum_a = 0;	sum_b = 0;
-            for(i = 0; i < bmp.Width; i++){
-                for(j = 0; j < bmp.Height; j++){
-            		c = bmp.GetPixel(i, j);
-            		if(c.R != Color.White.R || c.G != Color.White.G || c.B != Color.White.B){
-                        sum_a += j;
-                        sum_b ++;
-                    }
-                }
-            }
-            GravityP.Y = (sum_b != 0) ? sum_a / sum_b : 0;
 
-            return(GravityP);
+			TBPoint[0].X = minx;TBPoint[0].Y = miny;
+			TBPoint[1].X = maxx;TBPoint[1].Y = maxy;
+
+            return(TBPoint);
 		}
 		#endregion
 		
@@ -1069,9 +1132,45 @@ namespace CharacomImagerPro
 			}
 		}
 		#endregion
-		
+
+		#region 縦横比を算出する
+		/// <summary>
+		/// 縦横比を算出する。（出力は縦/横）
+		/// 白画素以外であれば、対象画像として算出
+		/// </summary>
+		/// <param name="bmp"></param>
+		public double GetAspect(Bitmap bmp)
+		{
+			int i, j;
+			Color GetC;
+			int minx, miny, maxx, maxy;
+
+			minx = 999;
+			miny = 999;
+			maxx = 0;
+			maxy = 0;
+
+			for (j = 0; j < bmp.Height; j++)
+			{
+				for (i = 0; i < bmp.Width; i++)
+				{
+					GetC = bmp.GetPixel(i, j);
+
+					if (ColorCompare(GetC, Color.White) != true)
+					{
+						if (maxx < i) maxx = i;
+						if (maxy < j) maxy = j;
+						if (minx > i) minx = i;
+						if (miny > j) miny = j;
+					}
+				}
+			}
+			return (((double)(maxy - miny)) / (double)(maxx - minx));
+		}
+		#endregion
+
 		#region 細線化を行う
-		
+
 		#region 細線化サーチ処理
 		public void S_search(int[,] b,int x,int y,int[,] be)
 		{

@@ -126,6 +126,7 @@ namespace CharacomImagerPro
 			DataGridViewImageColumn Images = new DataGridViewImageColumn();
 			DataGridViewTextBoxColumn Addresses = new DataGridViewTextBoxColumn();
 			DataGridViewTextBoxColumn Checks = new DataGridViewTextBoxColumn();
+			DataGridViewTextBoxColumn HandW = new DataGridViewTextBoxColumn();
 			// No
 			Nos.HeaderText = "No.";
 			Nos.Name = "No";
@@ -147,6 +148,12 @@ namespace CharacomImagerPro
 			Checks.Resizable = DataGridViewTriState.True;
 			Checks.SortMode = DataGridViewColumnSortMode.NotSortable;
 			Checks.Width = 50;
+			// 縦横比
+			HandW.HeaderText = "縦横比";
+			HandW.Name = "HandW";
+			HandW.Resizable = DataGridViewTriState.True;
+			HandW.SortMode = DataGridViewColumnSortMode.NotSortable;
+			HandW.Width = 50;
 
 			DataGridView dgv = new DataGridView();
 			dgv.AllowDrop = true;
@@ -156,13 +163,14 @@ namespace CharacomImagerPro
 									Nos,
 									Images,
 									Addresses,
-									Checks});
-			dgv.Location = new Point(3 + GroupNum * 230 - panel1.HorizontalScroll.Value, 23 - panel1.VerticalScroll.Value);
+									Checks,
+									HandW});
+			dgv.Location = new Point(3 + GroupNum * 280 - panel1.HorizontalScroll.Value, 23 - panel1.VerticalScroll.Value);
 			dgv.Name = "dgvGroup" + (GroupNum + 1).ToString();
 			dgv.RowHeadersVisible = false;
 			dgv.RowTemplate.Height = 80;
 			dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-			dgv.Size = new Size(225, panel1.Height - 80);
+			dgv.Size = new Size(275, panel1.Height - 80);
 			dgv.TabIndex = 1;
 			dgv.DragEnter += new DragEventHandler(this.DgvGroupDragEnter);
 			dgv.DragDrop += new DragEventHandler(this.DgvGroupDragDrop);
@@ -175,7 +183,7 @@ namespace CharacomImagerPro
 			chkDelete.Text = "";
 			chkDelete.Name = "chkDelete" + (GroupNum + 1).ToString();
 			chkDelete.Size = new Size(19, 19);
-			chkDelete.Location = new Point(30 + GroupNum * 230 - panel1.HorizontalScroll.Value, 2 - panel1.VerticalScroll.Value);
+			chkDelete.Location = new Point(30 + GroupNum * 280 - panel1.HorizontalScroll.Value, 2 - panel1.VerticalScroll.Value);
 			chkDeletes.Add(chkDelete);
 			panel2.Controls.Add(chkDelete);
 			#endregion
@@ -185,14 +193,14 @@ namespace CharacomImagerPro
 			label.Text = "選択色" + (GroupNum + 1).ToString();
 			label.Name = "lblChara" + (GroupNum + 1).ToString();
 			label.Size = new Size(51, 13);
-			label.Location = new Point(68 + GroupNum * 230 - panel1.HorizontalScroll.Value, 5 - panel1.VerticalScroll.Value);
+			label.Location = new Point(68 + GroupNum * 280 - panel1.HorizontalScroll.Value, 5 - panel1.VerticalScroll.Value);
 			lblCharas.Add(label);
 			panel2.Controls.Add(label);
 
 			Panel panel = new Panel();
 			panel.Name = "colorPanel" + (GroupNum + 1).ToString();
 			panel.Size = new Size(50, 19);
-			panel.Location = new Point(125 + GroupNum * 230 - panel1.HorizontalScroll.Value, 2 - panel1.VerticalScroll.Value);
+			panel.Location = new Point(125 + GroupNum * 280 - panel1.HorizontalScroll.Value, 2 - panel1.VerticalScroll.Value);
 			panel.BorderStyle = BorderStyle.FixedSingle;
 			panel2.Controls.Add(panel);
 			colorPanels.Add(panel);
@@ -211,7 +219,7 @@ namespace CharacomImagerPro
 			//btnDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnDelete.Image")));
 			btnDelete.Image = imageList1.Images[2];
 			btnDelete.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			btnDelete.Location = new System.Drawing.Point(84 + GroupNum * 230 - panel1.HorizontalScroll.Value, panel1.Height - 50 - panel1.VerticalScroll.Value);
+			btnDelete.Location = new System.Drawing.Point(84 + GroupNum * 280 - panel1.HorizontalScroll.Value, panel1.Height - 50 - panel1.VerticalScroll.Value);
 			btnDelete.Name = "btnDelete" + (GroupNum + 1).ToString();
 			btnDelete.Size = new System.Drawing.Size(63, 23);
 			btnDelete.TabIndex = 8;
@@ -224,7 +232,7 @@ namespace CharacomImagerPro
 			//btnDown.Image = ((System.Drawing.Image)(resources.GetObject("btnDown.Image")));
 			btnDown.Image = imageList1.Images[1];
 			btnDown.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-			btnDown.Location = new System.Drawing.Point(153 + GroupNum * 230 - panel1.HorizontalScroll.Value, panel1.Height - 50 - panel1.VerticalScroll.Value);
+			btnDown.Location = new System.Drawing.Point(153 + GroupNum * 280 - panel1.HorizontalScroll.Value, panel1.Height - 50 - panel1.VerticalScroll.Value);
 			btnDown.Name = "btnDown" + (GroupNum + 1).ToString();
 			btnDown.Size = new System.Drawing.Size(75, 23);
 			btnDown.TabIndex = 7;
@@ -237,7 +245,7 @@ namespace CharacomImagerPro
 			//btnUp.Image = ((System.Drawing.Image)(resources.GetObject("btnUp.Image")));
 			btnUp.Image = imageList1.Images[0];
 			btnUp.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			btnUp.Location = new System.Drawing.Point(3 + GroupNum * 230 - panel1.HorizontalScroll.Value, panel1.Height - 50 - panel1.VerticalScroll.Value);
+			btnUp.Location = new System.Drawing.Point(3 + GroupNum * 280 - panel1.HorizontalScroll.Value, panel1.Height - 50 - panel1.VerticalScroll.Value);
 			btnUp.Name = "btnUp" + (GroupNum + 1).ToString();
 			btnUp.Size = new System.Drawing.Size(75, 23);
 			btnUp.TabIndex = 6;
@@ -251,7 +259,7 @@ namespace CharacomImagerPro
 			{
 				btnLeft.Image = imageList1.Images[3];
 				btnLeft.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-				btnLeft.Location = new System.Drawing.Point(3 + GroupNum * 230 - panel1.HorizontalScroll.Value, 2 - panel1.VerticalScroll.Value);
+				btnLeft.Location = new System.Drawing.Point(3 + GroupNum * 280 - panel1.HorizontalScroll.Value, 2 - panel1.VerticalScroll.Value);
 				btnLeft.Name = "btnLeft" + (GroupNum + 1).ToString();
 				btnLeft.Size = new System.Drawing.Size(20, 20);
 				btnLeft.TabIndex = 9;
@@ -263,7 +271,7 @@ namespace CharacomImagerPro
 			// btnRight
 			btnRight.Image = imageList1.Images[4];
 			btnRight.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			btnRight.Location = new System.Drawing.Point(207+GroupNum*230 - panel1.HorizontalScroll.Value, 2 - panel1.VerticalScroll.Value);
+			btnRight.Location = new System.Drawing.Point(207+GroupNum*280 - panel1.HorizontalScroll.Value, 2 - panel1.VerticalScroll.Value);
 			btnRight.Name = "btnRight" + (GroupNum+1).ToString();
 			btnRight.Size = new System.Drawing.Size(20, 20);
 			btnRight.TabIndex = 10;
@@ -398,6 +406,7 @@ namespace CharacomImagerPro
 				{
 					dgv[0, num].Value = (num + 1).ToString();
 					dgv[3, num].Value = fc.R.ToString("F4");
+					//dgv[4, num].Value = "縦横";
 					//System.Diagnostics.Debug.WriteLine("R = " + fc.R.ToString("f4") + " : R2 = " + fc.R2.ToString("f4"));
 				}
 				num++;
@@ -482,7 +491,7 @@ namespace CharacomImagerPro
 		void DgvGroupDragDrop(object sender, DragEventArgs e)
 		{
 			int num = int.Parse(((DataGridView)sender).Name.Substring(8));
-			num = num - 1;
+			num--;
 			System.Diagnostics.Debug.WriteLine("Num=" + num.ToString());
 			if (e.Data.GetDataPresent(typeof(CharaImageForm)))
 			{
@@ -781,7 +790,8 @@ namespace CharacomImagerPro
 		{
 			//LapClass lc = new LapClass();
 			ImageDataClass idc = new ImageDataClass(320, 320);
-			Bitmap white_image = new Bitmap(320,320);
+			Bitmap white_image = new Bitmap(320, 320);
+			Bitmap srcimg = new Bitmap(320, 320);
 			
 			imageEffect.BitmapWhitening(viewBitmap);
 
@@ -797,10 +807,27 @@ namespace CharacomImagerPro
 			**/
 			for(int i=ImageArray.Count - 1; i >=0; i--){
 				idc = (ImageDataClass)ImageArray[i];
-				if(btnChara.Checked) imageEffect.BitmapImposeCopy(viewBitmap, idc.ProcImage);
+				//2021.09.25 D.Honjyou
+				//原画像重ね合わせテスト
+				//if(btnChara.Checked) imageEffect.BitmapImposeCopy(viewBitmap, idc.ProcImage);
+				if (btnChara.Checked)
+                {
+                    if (btnProc.Checked)
+                    {
+						imageEffect.BitmapImposeCopy(viewBitmap, idc.ProcImage);
+                    }
+                    else
+                    {
+						imageEffect.BitmapWhitening(srcimg);
+						imageEffect.BitmapStretchCopy(idc.SrcImageSmall, srcimg);
+						imageEffect.DotChange(srcimg, idc.DispColor);
+						imageEffect.BitmapImposeCopy(viewBitmap, srcimg);
+					}
+				}
+				
 				//imageEffect.BitmapImposeCopy((Bitmap)dgvLap[0, i].Value, idc.ProcImage);
 				//dgvLap[1, i].Value = Path.GetFileName(idc.Filename);
-				if(btnDrawFrame.Checked)DrawFrame(viewBitmap, idc);
+				if (btnDrawFrame.Checked)DrawFrame(viewBitmap, idc);
 				if(btnGraviHou.Checked || btnGraviJun.Checked)DrawGravityLine(viewBitmap, idc);
 				if(btnSyaei.Checked)DrawProjection(viewBitmap, idc);
 			}
@@ -825,6 +852,7 @@ namespace CharacomImagerPro
 			dgvRow.Cells[0].Value = num.ToString();
 			dgvRow.Cells[1].Value = inBmp;
 			dgvRow.Cells[2].Value = Path.GetFileName(FileName);
+			dgvRow.Cells[4].Value = imageEffect.GetAspect(inBmp);
 		}
 		#endregion
 		
@@ -1073,8 +1101,16 @@ namespace CharacomImagerPro
 			MakeViewBitmap();
 			LapImageBox.Invalidate();	
 		}
+        #endregion
+
+        #region 画像処理・原画像の切り替えボタンが押されたとき
+        private void btnProc_CheckedChanged(object sender, EventArgs e)
+		{
+			MakeViewBitmap();
+			LapImageBox.Invalidate();
+		}
 		#endregion
-		
+
 		#region 射影表示ボタンが変更されたとき
 		void BtnSyaeiCheckedChanged(object sender, EventArgs e)
 		{
@@ -1831,5 +1867,7 @@ namespace CharacomImagerPro
 
 
         #endregion
+
+        
     }
 }

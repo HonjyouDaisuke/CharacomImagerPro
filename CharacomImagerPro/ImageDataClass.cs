@@ -97,7 +97,14 @@ namespace CharacomImagerPro
 			set { _gravityColor = value; }
 		}
 		#endregion
-		
+
+		#region 表示色プロパティ
+		//2021.09.25 D.Honyou
+		private Color _dispColor;
+		public Color DispColor { get => _dispColor; set => _dispColor = value; }
+
+		#endregion
+
 		#region Bitmapの初期化処理
 		private void InitBitmaps()
 		{
@@ -413,10 +420,11 @@ namespace CharacomImagerPro
 			get{return this._calcA.ToString("f3");}
 			set{ }
 		}
-		#endregion
-		
-		#region 計算値の計算
-		public void FrameCalc()
+
+        #endregion
+
+        #region 計算値の計算
+        public void FrameCalc()
 		{
 			if(this.FrameData.Count < 1){
 				return;

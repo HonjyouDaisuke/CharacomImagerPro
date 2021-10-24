@@ -17,12 +17,18 @@ namespace CharacomImagerPro
 	public class FrameDataClass
 	{
 		private Point gravity;
+		private Point _topPoint;
+		private Point _bottomPoint;
+
 		public Point Gravity
   		{
     		set{this.gravity = value;}
     		get{return this.gravity;}
   		}
-  
+
+		public Point TopPoint { get => _topPoint; set => _topPoint = value; }
+		public Point BottomPoint { get => _bottomPoint; set => _bottomPoint = value; }
+
 		public int Height
 		{
 			get{return this.frame.Height;}
@@ -58,9 +64,9 @@ namespace CharacomImagerPro
 			get { return bmp; }
 			set { bmp = value; }
 		}
-		
-		
-		public FrameDataClass(int width, int height)
+
+        
+        public FrameDataClass(int width, int height)
 		{
 			bmp = new Bitmap(width, height);
 		}

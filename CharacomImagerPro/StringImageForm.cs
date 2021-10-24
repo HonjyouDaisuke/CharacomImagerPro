@@ -360,6 +360,8 @@ namespace CharacomImagerPro
 		void DrawFrame(Bitmap bmp)
 		{
 			Point BeforeP = new Point(0, 0);
+			Point BeforeTP = new Point(0, 0);
+			Point BeforeBP = new Point(0, 0); 
 			int i;
 			i=0;
 			foreach(FrameDataClass fdc in imageData.FrameData){
@@ -370,14 +372,23 @@ namespace CharacomImagerPro
 				}
 				if(btnGraviHou.Checked == true || btnGraviJun.Checked == true){
 					imageEffect.DrawFrameGravityPoint(bmp, fdc.Gravity, imageData.GravityColor);
+					//2021.10.03 D.Honjyou 頂点と底点を追加
+					imageEffect.DrawFrameGravityPoint(bmp, fdc.TopPoint, imageData.GravityColor);
+					imageEffect.DrawFrameGravityPoint(bmp, fdc.BottomPoint, imageData.GravityColor);
 				}
 				if(btnGraviHou.Checked == true){
 					imageEffect.DrawFrameGravityLine(bmp, fdc.Gravity, imageData.AllGravity, imageData.GravityColor);
 				}
 				if(btnGraviJun.Checked == true && i > 0){
 					imageEffect.DrawFrameGravityLine(bmp, fdc.Gravity, BeforeP, imageData.GravityColor);
+					//2021.10.03 D.Honjyou 頂点と底点を追加
+					imageEffect.DrawFrameGravityLine(bmp, fdc.TopPoint, BeforeTP, imageData.GravityColor);
+					imageEffect.DrawFrameGravityLine(bmp, fdc.BottomPoint, BeforeBP, imageData.GravityColor);
 				}
 				BeforeP = fdc.Gravity;
+				//2021.10.03 D.Honjyou 頂点と底点を追加
+				BeforeTP = fdc.TopPoint;
+				BeforeBP = fdc.BottomPoint;
 				i++;		
 			}
 		}
@@ -538,6 +549,11 @@ namespace CharacomImagerPro
 							//矩形データを作成
 							fdc = cef.FrameData;
 							fdc.Gravity = imageEffect.GetGravityPoint(fdc.Bmp);
+							Point [] tmp = new Point[2];
+							tmp = imageEffect.GetTopBotomPoint(fdc.Bmp);
+							System.Diagnostics.Debug.WriteLine($"最大点({tmp[1].X},{tmp[1].Y}) 最小点({tmp[0].X},{tmp[0].Y})");
+							fdc.TopPoint = tmp[0];
+							fdc.BottomPoint = tmp[1];
 							//DataGridView用のデータを作成------------------------------------------------------------
 							DataGridViewRow NewRow = new DataGridViewRow();
 							NewRow.CreateCells(dgvFrameData);
@@ -557,8 +573,10 @@ namespace CharacomImagerPro
 							y1 = imageData.AllGravity.Y;  y2 = fdc.Gravity.Y;
 							dist = Math.Sqrt((double)(((x1 - x2)*(x1 - x2)) + ((y1 - y2)*(y1 - y2))));
 							NewRow.Cells[5].Value = dist.ToString("#,0");
+							NewRow.Cells[6].Value = "(" + fdc.TopPoint.X.ToString("#,0") + ", " + fdc.TopPoint.Y.ToString("#,0") + ")";
+							NewRow.Cells[7].Value = "(" + fdc.BottomPoint.X.ToString("#,0") + ", " + fdc.BottomPoint.Y.ToString("#,0") + ")";
 							//DataGridView用のデータを作成end---------------------------------------------------------
-							
+
 							FrameMakeCommand command = new FrameMakeCommand(dgvFrameData.Rows, procBitmap, imageData, NewRow, fdc);
 							undoManager.Action(command);
 							
@@ -917,9 +935,12 @@ namespace CharacomImagerPro
 				x1 = imageData.AllGravity.X;  x2 = fdc.Gravity.X;
 				y1 = imageData.AllGravity.Y;  y2 = fdc.Gravity.Y;
 				dist = Math.Sqrt((double)(((x1 - x2)*(x1 - x2)) + ((y1 - y2)*(y1 - y2))));
-				dgvFrameData.Rows[dgvFrameData.Rows.Count - 1].Cells[5].Value = dist.ToString("#,0");			
+				dgvFrameData.Rows[dgvFrameData.Rows.Count - 1].Cells[5].Value = dist.ToString("#,0");
+				dgvFrameData.Rows[dgvFrameData.Rows.Count - 1].Cells[6].Value = "(" + fdc.TopPoint.X.ToString("#,0") + ", " + fdc.TopPoint.Y.ToString("#,0") + ")";
+				dgvFrameData.Rows[dgvFrameData.Rows.Count - 1].Cells[7].Value = "(" + fdc.BottomPoint.X.ToString("#,0") + ", " + fdc.BottomPoint.Y.ToString("#,0") + ")";
+
 			}
-			
+
 			mf.AddRecentlyFile(filename);
 			return(true);
 		}
@@ -1505,7 +1526,19 @@ namespace CharacomImagerPro
 			e.Graphics.DrawImage(resizeListBmp, x, y, resizeListBmp.Width, resizeListBmp.Height);
 			g.Dispose();
 		}
-		
+
+		#region 【メニュー】ウィンドウをコピー
+		// 2020.08.24 D.Honjyou 三崎さんからの要望により追加
+		void CopyWindowMenuItemClick(object sender, EventArgs e)
+		{
+			//フォームからスクリーンショットを撮る　
+			Bitmap clipBmp = new Bitmap(this.Width, this.Height);
+			this.DrawToBitmap(clipBmp, new Rectangle(0, 0, this.Width, this.Height));
+			Clipboard.SetImage(clipBmp);
+			clipBmp.Dispose();
+		}
+		#endregion
+
 		void BtnPrintToolClick(object sender, EventArgs e)
 		{
 			PrintMenuItemClick(sender, e);
@@ -1533,7 +1566,7 @@ namespace CharacomImagerPro
 		public LocationSize BtnCSV {
 			get { return _btnCSV; }
 		}
-		LocationSize _dgvFrame = new LocationSize(353, 362, 340, 126);
+		LocationSize _dgvFrame = new LocationSize(353, 362, 470, 126);
 		
 		public LocationSize DgvFrame {
 			get { return _dgvFrame; }

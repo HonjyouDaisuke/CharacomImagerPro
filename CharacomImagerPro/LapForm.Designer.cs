@@ -97,6 +97,7 @@ namespace CharacomImagerPro
             this.panel2 = new System.Windows.Forms.Panel();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.GraphImage = new System.Windows.Forms.PictureBox();
+            this.btnProc = new System.Windows.Forms.ToolStripButton();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LapImageBox)).BeginInit();
             this.SubMenu.SuspendLayout();
@@ -342,10 +343,11 @@ namespace CharacomImagerPro
             this.btnChara,
             this.btnGraviHou,
             this.btnGraviJun,
-            this.btnSyaei});
+            this.btnSyaei,
+            this.btnProc});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1243, 28);
+            this.toolStrip1.Size = new System.Drawing.Size(1243, 31);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -355,7 +357,7 @@ namespace CharacomImagerPro
             this.btnFileOpen.Image = ((System.Drawing.Image)(resources.GetObject("btnFileOpen.Image")));
             this.btnFileOpen.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnFileOpen.Name = "btnFileOpen";
-            this.btnFileOpen.Size = new System.Drawing.Size(29, 25);
+            this.btnFileOpen.Size = new System.Drawing.Size(29, 28);
             this.btnFileOpen.Text = "開く";
             this.btnFileOpen.Click += new System.EventHandler(this.BtnFileOpenClick);
             // 
@@ -365,14 +367,14 @@ namespace CharacomImagerPro
             this.btnFileSave.Image = ((System.Drawing.Image)(resources.GetObject("btnFileSave.Image")));
             this.btnFileSave.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnFileSave.Name = "btnFileSave";
-            this.btnFileSave.Size = new System.Drawing.Size(29, 25);
+            this.btnFileSave.Size = new System.Drawing.Size(29, 28);
             this.btnFileSave.Text = "保存";
             this.btnFileSave.Click += new System.EventHandler(this.BtnFileSaveClick);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 28);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 31);
             // 
             // btnCopy
             // 
@@ -380,7 +382,7 @@ namespace CharacomImagerPro
             this.btnCopy.Image = ((System.Drawing.Image)(resources.GetObject("btnCopy.Image")));
             this.btnCopy.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnCopy.Name = "btnCopy";
-            this.btnCopy.Size = new System.Drawing.Size(29, 25);
+            this.btnCopy.Size = new System.Drawing.Size(29, 28);
             this.btnCopy.Text = "toolStripButton1";
             this.btnCopy.ToolTipText = "コピー";
             this.btnCopy.Click += new System.EventHandler(this.BtnCopyClick);
@@ -391,7 +393,7 @@ namespace CharacomImagerPro
             this.btnCopyWindow.Image = ((System.Drawing.Image)(resources.GetObject("btnCopyWindow.Image")));
             this.btnCopyWindow.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnCopyWindow.Name = "btnCopyWindow";
-            this.btnCopyWindow.Size = new System.Drawing.Size(29, 25);
+            this.btnCopyWindow.Size = new System.Drawing.Size(29, 28);
             this.btnCopyWindow.Text = "ウィンドウをコピー";
             this.btnCopyWindow.Click += new System.EventHandler(this.BtnCopyWindowClick);
             // 
@@ -401,7 +403,7 @@ namespace CharacomImagerPro
             this.btnSave.Image = ((System.Drawing.Image)(resources.GetObject("btnSave.Image")));
             this.btnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(29, 25);
+            this.btnSave.Size = new System.Drawing.Size(29, 28);
             this.btnSave.Text = "toolStripButton2";
             this.btnSave.ToolTipText = "画像として保存";
             this.btnSave.Click += new System.EventHandler(this.BtnSaveClick);
@@ -409,7 +411,7 @@ namespace CharacomImagerPro
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 28);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 31);
             // 
             // btnUndo
             // 
@@ -417,7 +419,7 @@ namespace CharacomImagerPro
             this.btnUndo.Image = ((System.Drawing.Image)(resources.GetObject("btnUndo.Image")));
             this.btnUndo.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnUndo.Name = "btnUndo";
-            this.btnUndo.Size = new System.Drawing.Size(29, 25);
+            this.btnUndo.Size = new System.Drawing.Size(29, 28);
             this.btnUndo.Text = "toolStripButton1";
             this.btnUndo.ToolTipText = "元に戻す";
             this.btnUndo.Click += new System.EventHandler(this.BtnUndoClick);
@@ -428,7 +430,7 @@ namespace CharacomImagerPro
             this.btnRedo.Image = ((System.Drawing.Image)(resources.GetObject("btnRedo.Image")));
             this.btnRedo.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnRedo.Name = "btnRedo";
-            this.btnRedo.Size = new System.Drawing.Size(29, 25);
+            this.btnRedo.Size = new System.Drawing.Size(29, 28);
             this.btnRedo.Text = "toolStripButton2";
             this.btnRedo.ToolTipText = "やり直し";
             this.btnRedo.Click += new System.EventHandler(this.BtnRedoClick);
@@ -436,7 +438,7 @@ namespace CharacomImagerPro
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 28);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 31);
             // 
             // btnAdd
             // 
@@ -445,7 +447,7 @@ namespace CharacomImagerPro
             this.btnAdd.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(29, 25);
+            this.btnAdd.Size = new System.Drawing.Size(29, 28);
             this.btnAdd.Text = "toolStripButton1";
             // 
             // btnDel
@@ -454,13 +456,13 @@ namespace CharacomImagerPro
             this.btnDel.Image = ((System.Drawing.Image)(resources.GetObject("btnDel.Image")));
             this.btnDel.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnDel.Name = "btnDel";
-            this.btnDel.Size = new System.Drawing.Size(29, 25);
+            this.btnDel.Size = new System.Drawing.Size(29, 28);
             this.btnDel.Text = "toolStripButton2";
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 28);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 31);
             // 
             // btnPreview
             // 
@@ -468,7 +470,7 @@ namespace CharacomImagerPro
             this.btnPreview.Image = ((System.Drawing.Image)(resources.GetObject("btnPreview.Image")));
             this.btnPreview.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnPreview.Name = "btnPreview";
-            this.btnPreview.Size = new System.Drawing.Size(29, 25);
+            this.btnPreview.Size = new System.Drawing.Size(29, 28);
             this.btnPreview.Text = "toolStripButton3";
             this.btnPreview.ToolTipText = "印刷プレビュー";
             this.btnPreview.Click += new System.EventHandler(this.BtnPreviewClick);
@@ -479,7 +481,7 @@ namespace CharacomImagerPro
             this.btnPrint.Image = ((System.Drawing.Image)(resources.GetObject("btnPrint.Image")));
             this.btnPrint.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnPrint.Name = "btnPrint";
-            this.btnPrint.Size = new System.Drawing.Size(29, 25);
+            this.btnPrint.Size = new System.Drawing.Size(29, 28);
             this.btnPrint.Text = "toolStripButton4";
             this.btnPrint.ToolTipText = "印刷";
             this.btnPrint.Click += new System.EventHandler(this.BtnPrintClick);
@@ -487,7 +489,7 @@ namespace CharacomImagerPro
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 28);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 31);
             // 
             // btnZoom
             // 
@@ -495,7 +497,7 @@ namespace CharacomImagerPro
             this.btnZoom.Image = ((System.Drawing.Image)(resources.GetObject("btnZoom.Image")));
             this.btnZoom.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnZoom.Name = "btnZoom";
-            this.btnZoom.Size = new System.Drawing.Size(29, 25);
+            this.btnZoom.Size = new System.Drawing.Size(29, 28);
             this.btnZoom.Text = "toolStripButton5";
             this.btnZoom.ToolTipText = "ズーム";
             this.btnZoom.Click += new System.EventHandler(this.BtnZoomClick);
@@ -510,7 +512,7 @@ namespace CharacomImagerPro
             "100%",
             "50%"});
             this.comboZoom.Name = "comboZoom";
-            this.comboZoom.Size = new System.Drawing.Size(160, 28);
+            this.comboZoom.Size = new System.Drawing.Size(160, 31);
             this.comboZoom.ToolTipText = "倍率";
             this.comboZoom.SelectedIndexChanged += new System.EventHandler(this.ComboZoomSelectedIndexChanged);
             // 
@@ -521,7 +523,7 @@ namespace CharacomImagerPro
             this.btnDrawFrame.Image = ((System.Drawing.Image)(resources.GetObject("btnDrawFrame.Image")));
             this.btnDrawFrame.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnDrawFrame.Name = "btnDrawFrame";
-            this.btnDrawFrame.Size = new System.Drawing.Size(29, 25);
+            this.btnDrawFrame.Size = new System.Drawing.Size(29, 28);
             this.btnDrawFrame.Text = "切り出し矩形を表示";
             this.btnDrawFrame.CheckedChanged += new System.EventHandler(this.BtnDrawFrameCheckedChanged);
             // 
@@ -534,7 +536,7 @@ namespace CharacomImagerPro
             this.btnChara.Image = ((System.Drawing.Image)(resources.GetObject("btnChara.Image")));
             this.btnChara.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnChara.Name = "btnChara";
-            this.btnChara.Size = new System.Drawing.Size(29, 25);
+            this.btnChara.Size = new System.Drawing.Size(29, 28);
             this.btnChara.Text = "toolStripButton1";
             this.btnChara.ToolTipText = "文字画像の表示";
             this.btnChara.CheckedChanged += new System.EventHandler(this.BtnCharaCheckedChanged);
@@ -548,7 +550,7 @@ namespace CharacomImagerPro
             this.btnGraviHou.Image = ((System.Drawing.Image)(resources.GetObject("btnGraviHou.Image")));
             this.btnGraviHou.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnGraviHou.Name = "btnGraviHou";
-            this.btnGraviHou.Size = new System.Drawing.Size(29, 25);
+            this.btnGraviHou.Size = new System.Drawing.Size(29, 28);
             this.btnGraviHou.Text = "toolStripButton1";
             this.btnGraviHou.ToolTipText = "重心線(放射状)";
             this.btnGraviHou.CheckedChanged += new System.EventHandler(this.BtnGraviHouCheckedChanged);
@@ -560,7 +562,7 @@ namespace CharacomImagerPro
             this.btnGraviJun.Image = ((System.Drawing.Image)(resources.GetObject("btnGraviJun.Image")));
             this.btnGraviJun.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnGraviJun.Name = "btnGraviJun";
-            this.btnGraviJun.Size = new System.Drawing.Size(29, 25);
+            this.btnGraviJun.Size = new System.Drawing.Size(29, 28);
             this.btnGraviJun.Text = "toolStripButton2";
             this.btnGraviJun.ToolTipText = "重心線(連結)";
             this.btnGraviJun.CheckedChanged += new System.EventHandler(this.BtnGraviJunCheckedChanged);
@@ -572,7 +574,7 @@ namespace CharacomImagerPro
             this.btnSyaei.Image = ((System.Drawing.Image)(resources.GetObject("btnSyaei.Image")));
             this.btnSyaei.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnSyaei.Name = "btnSyaei";
-            this.btnSyaei.Size = new System.Drawing.Size(29, 25);
+            this.btnSyaei.Size = new System.Drawing.Size(29, 28);
             this.btnSyaei.Text = "toolStripButton1";
             this.btnSyaei.ToolTipText = "射影";
             this.btnSyaei.CheckedChanged += new System.EventHandler(this.BtnSyaeiCheckedChanged);
@@ -642,6 +644,21 @@ namespace CharacomImagerPro
             this.GraphImage.TabIndex = 7;
             this.GraphImage.TabStop = false;
             this.GraphImage.Paint += new System.Windows.Forms.PaintEventHandler(this.GraphImagePaint);
+            // 
+            // btnProc
+            // 
+            this.btnProc.Checked = true;
+            this.btnProc.CheckOnClick = true;
+            this.btnProc.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.btnProc.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnProc.Image = ((System.Drawing.Image)(resources.GetObject("btnProc.Image")));
+            this.btnProc.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnProc.Name = "btnProc";
+            this.btnProc.RightToLeftAutoMirrorImage = true;
+            this.btnProc.Size = new System.Drawing.Size(29, 28);
+            this.btnProc.Text = "原画像・処理画像切り替え";
+            this.btnProc.ToolTipText = "原画像・処理画像切り替え";
+            this.btnProc.CheckedChanged += new System.EventHandler(this.btnProc_CheckedChanged);
             // 
             // LapForm
             // 
@@ -733,5 +750,6 @@ namespace CharacomImagerPro
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.PictureBox GraphImage;
+        private System.Windows.Forms.ToolStripButton btnProc;
     }
 }

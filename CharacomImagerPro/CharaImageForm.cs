@@ -484,6 +484,7 @@ namespace CharacomImagerPro
 			imageEffect.BitmapCopy(srcBitmapSmall, imageData.SrcImageSmall);
 			imageEffect.BitmapCopy(viewBitmap, imageData.ViewImage);
 			imageEffect.BitmapCopy(procBitmap, imageData.ProcImage);
+			imageData.DispColor = dispColor;
 			imageData.Filename = this.FileName;
 			if(mf != null){
 				mf.UpdateLapForm();

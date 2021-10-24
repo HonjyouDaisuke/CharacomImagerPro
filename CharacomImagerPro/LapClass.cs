@@ -23,14 +23,20 @@ namespace CharacomImagerPro
 			get { return bmp; }
 			set { bmp = value; }
 		}
-		
+
+		private Bitmap srcBmp;
+		private double r;
+
 		private string fileName;		
 		public string FileName {
 			get { return fileName; }
 			set { fileName = value; }
 		}
-		
-		public void BitmapInsert(Bitmap b)
+
+        public Bitmap SrcBmp { get => srcBmp; set => srcBmp = value; }
+        public double R { get => r; set => r = value; }
+
+        public void BitmapInsert(Bitmap b)
 		{
 			bmp = new Bitmap(b.Width, b.Height);
 			imageEffect.BitmapWhitening(bmp);
