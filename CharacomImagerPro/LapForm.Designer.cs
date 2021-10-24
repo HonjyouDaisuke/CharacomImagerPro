@@ -87,6 +87,7 @@ namespace CharacomImagerPro
             this.btnGraviHou = new System.Windows.Forms.ToolStripButton();
             this.btnGraviJun = new System.Windows.Forms.ToolStripButton();
             this.btnSyaei = new System.Windows.Forms.ToolStripButton();
+            this.btnProc = new System.Windows.Forms.ToolStripButton();
             this.saveImageDialog = new System.Windows.Forms.SaveFileDialog();
             this.printDoc = new System.Drawing.Printing.PrintDocument();
             this.printDlg = new System.Windows.Forms.PrintDialog();
@@ -97,22 +98,24 @@ namespace CharacomImagerPro
             this.panel2 = new System.Windows.Forms.Panel();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.GraphImage = new System.Windows.Forms.PictureBox();
-            this.btnProc = new System.Windows.Forms.ToolStripButton();
+            this.GraphImage2 = new System.Windows.Forms.PictureBox();
+            this.lblR = new System.Windows.Forms.Label();
+            this.lblWH = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LapImageBox)).BeginInit();
             this.SubMenu.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GraphImage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.GraphImage2)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.AutoScroll = true;
             this.panel1.Controls.Add(this.LapImageBox);
-            this.panel1.Location = new System.Drawing.Point(0, 32);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4);
+            this.panel1.Location = new System.Drawing.Point(0, 26);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(427, 400);
+            this.panel1.Size = new System.Drawing.Size(320, 320);
             this.panel1.TabIndex = 0;
             // 
             // LapImageBox
@@ -120,7 +123,6 @@ namespace CharacomImagerPro
             this.LapImageBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.LapImageBox.ContextMenuStrip = this.SubMenu;
             this.LapImageBox.Location = new System.Drawing.Point(0, 0);
-            this.LapImageBox.Margin = new System.Windows.Forms.Padding(4);
             this.LapImageBox.Name = "LapImageBox";
             this.LapImageBox.Size = new System.Drawing.Size(320, 320);
             this.LapImageBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -152,13 +154,13 @@ namespace CharacomImagerPro
             this.toolStripMenuItem3,
             this.menuClose});
             this.SubMenu.Name = "SubMenu";
-            this.SubMenu.Size = new System.Drawing.Size(208, 398);
+            this.SubMenu.Size = new System.Drawing.Size(179, 398);
             // 
             // menuFileOpen
             // 
             this.menuFileOpen.Image = ((System.Drawing.Image)(resources.GetObject("menuFileOpen.Image")));
             this.menuFileOpen.Name = "menuFileOpen";
-            this.menuFileOpen.Size = new System.Drawing.Size(207, 26);
+            this.menuFileOpen.Size = new System.Drawing.Size(178, 26);
             this.menuFileOpen.Text = "開く";
             this.menuFileOpen.Click += new System.EventHandler(this.MenuFileOpenClick);
             // 
@@ -166,20 +168,20 @@ namespace CharacomImagerPro
             // 
             this.menuFileSave.Image = ((System.Drawing.Image)(resources.GetObject("menuFileSave.Image")));
             this.menuFileSave.Name = "menuFileSave";
-            this.menuFileSave.Size = new System.Drawing.Size(207, 26);
+            this.menuFileSave.Size = new System.Drawing.Size(178, 26);
             this.menuFileSave.Text = "保存";
             this.menuFileSave.Click += new System.EventHandler(this.MenuFileSaveClick);
             // 
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(204, 6);
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(175, 6);
             // 
             // menuCopy
             // 
             this.menuCopy.Image = ((System.Drawing.Image)(resources.GetObject("menuCopy.Image")));
             this.menuCopy.Name = "menuCopy";
-            this.menuCopy.Size = new System.Drawing.Size(207, 26);
+            this.menuCopy.Size = new System.Drawing.Size(178, 26);
             this.menuCopy.Text = "コピー";
             this.menuCopy.Click += new System.EventHandler(this.MenuCopyClick);
             // 
@@ -187,7 +189,7 @@ namespace CharacomImagerPro
             // 
             this.CopyWindowMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("CopyWindowMenuItem.Image")));
             this.CopyWindowMenuItem.Name = "CopyWindowMenuItem";
-            this.CopyWindowMenuItem.Size = new System.Drawing.Size(207, 26);
+            this.CopyWindowMenuItem.Size = new System.Drawing.Size(178, 26);
             this.CopyWindowMenuItem.Text = "ウィンドウをコピー";
             this.CopyWindowMenuItem.Click += new System.EventHandler(this.CopyWindowMenuItemClick);
             // 
@@ -195,20 +197,20 @@ namespace CharacomImagerPro
             // 
             this.menuSaveImage.Image = ((System.Drawing.Image)(resources.GetObject("menuSaveImage.Image")));
             this.menuSaveImage.Name = "menuSaveImage";
-            this.menuSaveImage.Size = new System.Drawing.Size(207, 26);
+            this.menuSaveImage.Size = new System.Drawing.Size(178, 26);
             this.menuSaveImage.Text = "画像として保存";
             this.menuSaveImage.Click += new System.EventHandler(this.MenuSaveImageClick);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(204, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(175, 6);
             // 
             // menuUndo
             // 
             this.menuUndo.Image = ((System.Drawing.Image)(resources.GetObject("menuUndo.Image")));
             this.menuUndo.Name = "menuUndo";
-            this.menuUndo.Size = new System.Drawing.Size(207, 26);
+            this.menuUndo.Size = new System.Drawing.Size(178, 26);
             this.menuUndo.Text = "元に戻す";
             this.menuUndo.Click += new System.EventHandler(this.MenuUndoClick);
             // 
@@ -216,20 +218,20 @@ namespace CharacomImagerPro
             // 
             this.menuRedo.Image = ((System.Drawing.Image)(resources.GetObject("menuRedo.Image")));
             this.menuRedo.Name = "menuRedo";
-            this.menuRedo.Size = new System.Drawing.Size(207, 26);
+            this.menuRedo.Size = new System.Drawing.Size(178, 26);
             this.menuRedo.Text = "やり直し";
             this.menuRedo.Click += new System.EventHandler(this.MenuRedoClick);
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(204, 6);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(175, 6);
             // 
             // menuPreview
             // 
             this.menuPreview.Image = ((System.Drawing.Image)(resources.GetObject("menuPreview.Image")));
             this.menuPreview.Name = "menuPreview";
-            this.menuPreview.Size = new System.Drawing.Size(207, 26);
+            this.menuPreview.Size = new System.Drawing.Size(178, 26);
             this.menuPreview.Text = "印刷プレビュー";
             this.menuPreview.Click += new System.EventHandler(this.MenuPreviewClick);
             // 
@@ -237,7 +239,7 @@ namespace CharacomImagerPro
             // 
             this.menuPrint.Image = ((System.Drawing.Image)(resources.GetObject("menuPrint.Image")));
             this.menuPrint.Name = "menuPrint";
-            this.menuPrint.Size = new System.Drawing.Size(207, 26);
+            this.menuPrint.Size = new System.Drawing.Size(178, 26);
             this.menuPrint.Text = "印刷";
             this.menuPrint.Click += new System.EventHandler(this.MenuPrintClick);
             // 
@@ -245,20 +247,20 @@ namespace CharacomImagerPro
             // 
             this.menuPageSetup.Image = ((System.Drawing.Image)(resources.GetObject("menuPageSetup.Image")));
             this.menuPageSetup.Name = "menuPageSetup";
-            this.menuPageSetup.Size = new System.Drawing.Size(207, 26);
+            this.menuPageSetup.Size = new System.Drawing.Size(178, 26);
             this.menuPageSetup.Text = "ページ設定";
             this.menuPageSetup.Click += new System.EventHandler(this.MenuPageSetupClick);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(204, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(175, 6);
             // 
             // menuZoom
             // 
             this.menuZoom.Image = ((System.Drawing.Image)(resources.GetObject("menuZoom.Image")));
             this.menuZoom.Name = "menuZoom";
-            this.menuZoom.Size = new System.Drawing.Size(207, 26);
+            this.menuZoom.Size = new System.Drawing.Size(178, 26);
             this.menuZoom.Text = "ズーム";
             this.menuZoom.Click += new System.EventHandler(this.MenuZoomClick);
             // 
@@ -266,7 +268,7 @@ namespace CharacomImagerPro
             // 
             this.menuNewWindow.Image = ((System.Drawing.Image)(resources.GetObject("menuNewWindow.Image")));
             this.menuNewWindow.Name = "menuNewWindow";
-            this.menuNewWindow.Size = new System.Drawing.Size(207, 26);
+            this.menuNewWindow.Size = new System.Drawing.Size(178, 26);
             this.menuNewWindow.Text = "新しいウィンドウを開く";
             this.menuNewWindow.Click += new System.EventHandler(this.MenuNewWindowClick);
             // 
@@ -277,14 +279,14 @@ namespace CharacomImagerPro
             this.menuLRAlign,
             this.menuOverAlign});
             this.menuLayout.Name = "menuLayout";
-            this.menuLayout.Size = new System.Drawing.Size(207, 26);
+            this.menuLayout.Size = new System.Drawing.Size(178, 26);
             this.menuLayout.Text = "整列";
             // 
             // menuUpDownAlign
             // 
             this.menuUpDownAlign.Image = ((System.Drawing.Image)(resources.GetObject("menuUpDownAlign.Image")));
             this.menuUpDownAlign.Name = "menuUpDownAlign";
-            this.menuUpDownAlign.Size = new System.Drawing.Size(202, 26);
+            this.menuUpDownAlign.Size = new System.Drawing.Size(162, 22);
             this.menuUpDownAlign.Text = "上下に並べて表示";
             this.menuUpDownAlign.Click += new System.EventHandler(this.MenuUpDownAlignClick);
             // 
@@ -292,7 +294,7 @@ namespace CharacomImagerPro
             // 
             this.menuLRAlign.Image = ((System.Drawing.Image)(resources.GetObject("menuLRAlign.Image")));
             this.menuLRAlign.Name = "menuLRAlign";
-            this.menuLRAlign.Size = new System.Drawing.Size(202, 26);
+            this.menuLRAlign.Size = new System.Drawing.Size(162, 22);
             this.menuLRAlign.Text = "左右に並べて表示";
             this.menuLRAlign.Click += new System.EventHandler(this.MenuLRAlignClick);
             // 
@@ -300,20 +302,20 @@ namespace CharacomImagerPro
             // 
             this.menuOverAlign.Image = ((System.Drawing.Image)(resources.GetObject("menuOverAlign.Image")));
             this.menuOverAlign.Name = "menuOverAlign";
-            this.menuOverAlign.Size = new System.Drawing.Size(202, 26);
+            this.menuOverAlign.Size = new System.Drawing.Size(162, 22);
             this.menuOverAlign.Text = "重ねて表示";
             this.menuOverAlign.Click += new System.EventHandler(this.MenuOverAlignClick);
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(204, 6);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(175, 6);
             // 
             // menuClose
             // 
             this.menuClose.Image = ((System.Drawing.Image)(resources.GetObject("menuClose.Image")));
             this.menuClose.Name = "menuClose";
-            this.menuClose.Size = new System.Drawing.Size(207, 26);
+            this.menuClose.Size = new System.Drawing.Size(178, 26);
             this.menuClose.Text = "閉じる";
             this.menuClose.Click += new System.EventHandler(this.MenuCloseClick);
             // 
@@ -347,7 +349,7 @@ namespace CharacomImagerPro
             this.btnProc});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1243, 31);
+            this.toolStrip1.Size = new System.Drawing.Size(1060, 27);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -357,7 +359,7 @@ namespace CharacomImagerPro
             this.btnFileOpen.Image = ((System.Drawing.Image)(resources.GetObject("btnFileOpen.Image")));
             this.btnFileOpen.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnFileOpen.Name = "btnFileOpen";
-            this.btnFileOpen.Size = new System.Drawing.Size(29, 28);
+            this.btnFileOpen.Size = new System.Drawing.Size(24, 24);
             this.btnFileOpen.Text = "開く";
             this.btnFileOpen.Click += new System.EventHandler(this.BtnFileOpenClick);
             // 
@@ -367,14 +369,14 @@ namespace CharacomImagerPro
             this.btnFileSave.Image = ((System.Drawing.Image)(resources.GetObject("btnFileSave.Image")));
             this.btnFileSave.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnFileSave.Name = "btnFileSave";
-            this.btnFileSave.Size = new System.Drawing.Size(29, 28);
+            this.btnFileSave.Size = new System.Drawing.Size(24, 24);
             this.btnFileSave.Text = "保存";
             this.btnFileSave.Click += new System.EventHandler(this.BtnFileSaveClick);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 31);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 27);
             // 
             // btnCopy
             // 
@@ -382,7 +384,7 @@ namespace CharacomImagerPro
             this.btnCopy.Image = ((System.Drawing.Image)(resources.GetObject("btnCopy.Image")));
             this.btnCopy.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnCopy.Name = "btnCopy";
-            this.btnCopy.Size = new System.Drawing.Size(29, 28);
+            this.btnCopy.Size = new System.Drawing.Size(24, 24);
             this.btnCopy.Text = "toolStripButton1";
             this.btnCopy.ToolTipText = "コピー";
             this.btnCopy.Click += new System.EventHandler(this.BtnCopyClick);
@@ -393,7 +395,7 @@ namespace CharacomImagerPro
             this.btnCopyWindow.Image = ((System.Drawing.Image)(resources.GetObject("btnCopyWindow.Image")));
             this.btnCopyWindow.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnCopyWindow.Name = "btnCopyWindow";
-            this.btnCopyWindow.Size = new System.Drawing.Size(29, 28);
+            this.btnCopyWindow.Size = new System.Drawing.Size(24, 24);
             this.btnCopyWindow.Text = "ウィンドウをコピー";
             this.btnCopyWindow.Click += new System.EventHandler(this.BtnCopyWindowClick);
             // 
@@ -403,7 +405,7 @@ namespace CharacomImagerPro
             this.btnSave.Image = ((System.Drawing.Image)(resources.GetObject("btnSave.Image")));
             this.btnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(29, 28);
+            this.btnSave.Size = new System.Drawing.Size(24, 24);
             this.btnSave.Text = "toolStripButton2";
             this.btnSave.ToolTipText = "画像として保存";
             this.btnSave.Click += new System.EventHandler(this.BtnSaveClick);
@@ -411,7 +413,7 @@ namespace CharacomImagerPro
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 31);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 27);
             // 
             // btnUndo
             // 
@@ -419,7 +421,7 @@ namespace CharacomImagerPro
             this.btnUndo.Image = ((System.Drawing.Image)(resources.GetObject("btnUndo.Image")));
             this.btnUndo.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnUndo.Name = "btnUndo";
-            this.btnUndo.Size = new System.Drawing.Size(29, 28);
+            this.btnUndo.Size = new System.Drawing.Size(24, 24);
             this.btnUndo.Text = "toolStripButton1";
             this.btnUndo.ToolTipText = "元に戻す";
             this.btnUndo.Click += new System.EventHandler(this.BtnUndoClick);
@@ -430,7 +432,7 @@ namespace CharacomImagerPro
             this.btnRedo.Image = ((System.Drawing.Image)(resources.GetObject("btnRedo.Image")));
             this.btnRedo.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnRedo.Name = "btnRedo";
-            this.btnRedo.Size = new System.Drawing.Size(29, 28);
+            this.btnRedo.Size = new System.Drawing.Size(24, 24);
             this.btnRedo.Text = "toolStripButton2";
             this.btnRedo.ToolTipText = "やり直し";
             this.btnRedo.Click += new System.EventHandler(this.BtnRedoClick);
@@ -438,7 +440,7 @@ namespace CharacomImagerPro
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 31);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 27);
             // 
             // btnAdd
             // 
@@ -447,7 +449,7 @@ namespace CharacomImagerPro
             this.btnAdd.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(29, 28);
+            this.btnAdd.Size = new System.Drawing.Size(24, 24);
             this.btnAdd.Text = "toolStripButton1";
             // 
             // btnDel
@@ -456,13 +458,13 @@ namespace CharacomImagerPro
             this.btnDel.Image = ((System.Drawing.Image)(resources.GetObject("btnDel.Image")));
             this.btnDel.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnDel.Name = "btnDel";
-            this.btnDel.Size = new System.Drawing.Size(29, 28);
+            this.btnDel.Size = new System.Drawing.Size(24, 24);
             this.btnDel.Text = "toolStripButton2";
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 31);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 27);
             // 
             // btnPreview
             // 
@@ -470,7 +472,7 @@ namespace CharacomImagerPro
             this.btnPreview.Image = ((System.Drawing.Image)(resources.GetObject("btnPreview.Image")));
             this.btnPreview.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnPreview.Name = "btnPreview";
-            this.btnPreview.Size = new System.Drawing.Size(29, 28);
+            this.btnPreview.Size = new System.Drawing.Size(24, 24);
             this.btnPreview.Text = "toolStripButton3";
             this.btnPreview.ToolTipText = "印刷プレビュー";
             this.btnPreview.Click += new System.EventHandler(this.BtnPreviewClick);
@@ -481,7 +483,7 @@ namespace CharacomImagerPro
             this.btnPrint.Image = ((System.Drawing.Image)(resources.GetObject("btnPrint.Image")));
             this.btnPrint.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnPrint.Name = "btnPrint";
-            this.btnPrint.Size = new System.Drawing.Size(29, 28);
+            this.btnPrint.Size = new System.Drawing.Size(24, 24);
             this.btnPrint.Text = "toolStripButton4";
             this.btnPrint.ToolTipText = "印刷";
             this.btnPrint.Click += new System.EventHandler(this.BtnPrintClick);
@@ -489,7 +491,7 @@ namespace CharacomImagerPro
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 31);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 27);
             // 
             // btnZoom
             // 
@@ -497,7 +499,7 @@ namespace CharacomImagerPro
             this.btnZoom.Image = ((System.Drawing.Image)(resources.GetObject("btnZoom.Image")));
             this.btnZoom.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnZoom.Name = "btnZoom";
-            this.btnZoom.Size = new System.Drawing.Size(29, 28);
+            this.btnZoom.Size = new System.Drawing.Size(24, 24);
             this.btnZoom.Text = "toolStripButton5";
             this.btnZoom.ToolTipText = "ズーム";
             this.btnZoom.Click += new System.EventHandler(this.BtnZoomClick);
@@ -512,7 +514,7 @@ namespace CharacomImagerPro
             "100%",
             "50%"});
             this.comboZoom.Name = "comboZoom";
-            this.comboZoom.Size = new System.Drawing.Size(160, 31);
+            this.comboZoom.Size = new System.Drawing.Size(121, 27);
             this.comboZoom.ToolTipText = "倍率";
             this.comboZoom.SelectedIndexChanged += new System.EventHandler(this.ComboZoomSelectedIndexChanged);
             // 
@@ -523,7 +525,7 @@ namespace CharacomImagerPro
             this.btnDrawFrame.Image = ((System.Drawing.Image)(resources.GetObject("btnDrawFrame.Image")));
             this.btnDrawFrame.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnDrawFrame.Name = "btnDrawFrame";
-            this.btnDrawFrame.Size = new System.Drawing.Size(29, 28);
+            this.btnDrawFrame.Size = new System.Drawing.Size(24, 24);
             this.btnDrawFrame.Text = "切り出し矩形を表示";
             this.btnDrawFrame.CheckedChanged += new System.EventHandler(this.BtnDrawFrameCheckedChanged);
             // 
@@ -536,7 +538,7 @@ namespace CharacomImagerPro
             this.btnChara.Image = ((System.Drawing.Image)(resources.GetObject("btnChara.Image")));
             this.btnChara.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnChara.Name = "btnChara";
-            this.btnChara.Size = new System.Drawing.Size(29, 28);
+            this.btnChara.Size = new System.Drawing.Size(24, 24);
             this.btnChara.Text = "toolStripButton1";
             this.btnChara.ToolTipText = "文字画像の表示";
             this.btnChara.CheckedChanged += new System.EventHandler(this.BtnCharaCheckedChanged);
@@ -550,7 +552,7 @@ namespace CharacomImagerPro
             this.btnGraviHou.Image = ((System.Drawing.Image)(resources.GetObject("btnGraviHou.Image")));
             this.btnGraviHou.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnGraviHou.Name = "btnGraviHou";
-            this.btnGraviHou.Size = new System.Drawing.Size(29, 28);
+            this.btnGraviHou.Size = new System.Drawing.Size(24, 24);
             this.btnGraviHou.Text = "toolStripButton1";
             this.btnGraviHou.ToolTipText = "重心線(放射状)";
             this.btnGraviHou.CheckedChanged += new System.EventHandler(this.BtnGraviHouCheckedChanged);
@@ -562,7 +564,7 @@ namespace CharacomImagerPro
             this.btnGraviJun.Image = ((System.Drawing.Image)(resources.GetObject("btnGraviJun.Image")));
             this.btnGraviJun.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnGraviJun.Name = "btnGraviJun";
-            this.btnGraviJun.Size = new System.Drawing.Size(29, 28);
+            this.btnGraviJun.Size = new System.Drawing.Size(24, 24);
             this.btnGraviJun.Text = "toolStripButton2";
             this.btnGraviJun.ToolTipText = "重心線(連結)";
             this.btnGraviJun.CheckedChanged += new System.EventHandler(this.BtnGraviJunCheckedChanged);
@@ -574,10 +576,25 @@ namespace CharacomImagerPro
             this.btnSyaei.Image = ((System.Drawing.Image)(resources.GetObject("btnSyaei.Image")));
             this.btnSyaei.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnSyaei.Name = "btnSyaei";
-            this.btnSyaei.Size = new System.Drawing.Size(29, 28);
+            this.btnSyaei.Size = new System.Drawing.Size(24, 24);
             this.btnSyaei.Text = "toolStripButton1";
             this.btnSyaei.ToolTipText = "射影";
             this.btnSyaei.CheckedChanged += new System.EventHandler(this.BtnSyaeiCheckedChanged);
+            // 
+            // btnProc
+            // 
+            this.btnProc.Checked = true;
+            this.btnProc.CheckOnClick = true;
+            this.btnProc.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.btnProc.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnProc.Image = ((System.Drawing.Image)(resources.GetObject("btnProc.Image")));
+            this.btnProc.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnProc.Name = "btnProc";
+            this.btnProc.RightToLeftAutoMirrorImage = true;
+            this.btnProc.Size = new System.Drawing.Size(24, 24);
+            this.btnProc.Text = "原画像・処理画像切り替え";
+            this.btnProc.ToolTipText = "原画像・処理画像切り替え";
+            this.btnProc.CheckedChanged += new System.EventHandler(this.btnProc_CheckedChanged);
             // 
             // saveImageDialog
             // 
@@ -620,9 +637,10 @@ namespace CharacomImagerPro
             // 
             this.panel2.AutoScroll = true;
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel2.Location = new System.Drawing.Point(553, 31);
+            this.panel2.Location = new System.Drawing.Point(504, 25);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(678, 401);
+            this.panel2.Size = new System.Drawing.Size(545, 322);
             this.panel2.TabIndex = 6;
             // 
             // imageList1
@@ -638,41 +656,58 @@ namespace CharacomImagerPro
             // GraphImage
             // 
             this.GraphImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.GraphImage.Location = new System.Drawing.Point(434, 31);
+            this.GraphImage.Location = new System.Drawing.Point(326, 25);
+            this.GraphImage.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.GraphImage.Name = "GraphImage";
-            this.GraphImage.Size = new System.Drawing.Size(113, 401);
+            this.GraphImage.Size = new System.Drawing.Size(85, 304);
             this.GraphImage.TabIndex = 7;
             this.GraphImage.TabStop = false;
             this.GraphImage.Paint += new System.Windows.Forms.PaintEventHandler(this.GraphImagePaint);
             // 
-            // btnProc
+            // GraphImage2
             // 
-            this.btnProc.Checked = true;
-            this.btnProc.CheckOnClick = true;
-            this.btnProc.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.btnProc.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnProc.Image = ((System.Drawing.Image)(resources.GetObject("btnProc.Image")));
-            this.btnProc.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnProc.Name = "btnProc";
-            this.btnProc.RightToLeftAutoMirrorImage = true;
-            this.btnProc.Size = new System.Drawing.Size(29, 28);
-            this.btnProc.Text = "原画像・処理画像切り替え";
-            this.btnProc.ToolTipText = "原画像・処理画像切り替え";
-            this.btnProc.CheckedChanged += new System.EventHandler(this.btnProc_CheckedChanged);
+            this.GraphImage2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.GraphImage2.Location = new System.Drawing.Point(415, 25);
+            this.GraphImage2.Margin = new System.Windows.Forms.Padding(2);
+            this.GraphImage2.Name = "GraphImage2";
+            this.GraphImage2.Size = new System.Drawing.Size(85, 304);
+            this.GraphImage2.TabIndex = 8;
+            this.GraphImage2.TabStop = false;
+            this.GraphImage2.Paint += new System.Windows.Forms.PaintEventHandler(this.GraphImage2_Paint);
+            // 
+            // lblR
+            // 
+            this.lblR.AutoSize = true;
+            this.lblR.Location = new System.Drawing.Point(336, 331);
+            this.lblR.Name = "lblR";
+            this.lblR.Size = new System.Drawing.Size(65, 12);
+            this.lblR.TabIndex = 9;
+            this.lblR.Text = "類似度変動";
+            // 
+            // lblWH
+            // 
+            this.lblWH.AutoSize = true;
+            this.lblWH.Location = new System.Drawing.Point(423, 331);
+            this.lblWH.Name = "lblWH";
+            this.lblWH.Size = new System.Drawing.Size(65, 12);
+            this.lblWH.TabIndex = 10;
+            this.lblWH.Text = "縦横比変動";
             // 
             // LapForm
             // 
             this.AllowDrop = true;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1243, 451);
+            this.ClientSize = new System.Drawing.Size(1060, 347);
+            this.Controls.Add(this.lblWH);
+            this.Controls.Add(this.lblR);
+            this.Controls.Add(this.GraphImage2);
             this.Controls.Add(this.GraphImage);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "LapForm";
@@ -687,6 +722,7 @@ namespace CharacomImagerPro
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GraphImage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.GraphImage2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -751,5 +787,8 @@ namespace CharacomImagerPro
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.PictureBox GraphImage;
         private System.Windows.Forms.ToolStripButton btnProc;
+        private System.Windows.Forms.PictureBox GraphImage2;
+        private System.Windows.Forms.Label lblR;
+        private System.Windows.Forms.Label lblWH;
     }
 }

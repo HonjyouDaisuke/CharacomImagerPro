@@ -19,7 +19,7 @@ namespace CharacomImagerPro
 		private Point gravity;
 		private Point _topPoint;
 		private Point _bottomPoint;
-
+		
 		public Point Gravity
   		{
     		set{this.gravity = value;}

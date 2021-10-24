@@ -19,6 +19,7 @@ namespace CharacomImagerPro
 	{
 		//プロパティ
 		Bitmap srcBitmap;
+		ImageEffect _ie;
 		public Bitmap SrcBitmap {
 			get { return srcBitmap; }
 			set { srcBitmap = value; }
@@ -59,7 +60,13 @@ namespace CharacomImagerPro
 			get { return r2; }
 			set { r2 = value; }
 		}
-		
+
+		public double Ratio
+		{
+			get { return (_ie.GetAspect(srcBitmap)); }
+		}
+
+
 		string fileName;		
 		public string FileName {
 			get { return fileName; }
@@ -68,6 +75,7 @@ namespace CharacomImagerPro
 		
 		public FeatureClass()
 		{
+			_ie = new ImageEffect();
 		}
 	}
 }

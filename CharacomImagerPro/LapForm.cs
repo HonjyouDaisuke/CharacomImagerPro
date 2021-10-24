@@ -64,6 +64,7 @@ namespace CharacomImagerPro
 
 		//個人内変動グラフ用
 		Bitmap GraphBmp = new Bitmap(113, 400);
+		Bitmap GraphBmp2 = new Bitmap(113, 400);
 
 
 		public string FileName {
@@ -1208,6 +1209,7 @@ namespace CharacomImagerPro
 			}
 			ScaleMin = Math.Floor(Min / MinorInterval) * MinorInterval;
 			axis = graph.YAxis;
+			
 			axis.Scale.Min = ScaleMin;
 			axis.Scale.Max = 1.001;
 			axis.Scale.Base = ScaleMin;
@@ -1309,7 +1311,6 @@ namespace CharacomImagerPro
 				{
 					ISeriesCandleChart series;
 					double[] MaxMinAve = GetFeatureMaxMinAve((ArrayList)features[i]);
-					
 					series = graph.CreateSeries(DusGraph.ePlotType.CandleChart).asCandleChart;
 					series.NegativeBrush = new SolidBrush(Color.FromArgb(128, ((Panel)colorPanels[i]).BackColor));
 					series.PositiveBrush = new SolidBrush(Color.FromArgb(128, ((Panel)colorPanels[i]).BackColor));
@@ -1324,10 +1325,10 @@ namespace CharacomImagerPro
 				}
 
 			}
-			
-				
 
-			
+
+			#region	削除予定
+
 			/**
 			ISeriesCandleChart sr;      //対照資料最大最小ボックス
 										//ISeriesXYPlot  sr2;		
@@ -1556,7 +1557,403 @@ namespace CharacomImagerPro
 				}
 			}
 			***/
+			#endregion
 		}
+
+		// 2021.10.24 D.Honjyou
+		// 縦横比グラフ用のグラフ作成を追加
+		void MakeYAxis2(IGraphPainter graph)
+		{
+			IAxis axis;
+			double MinorInterval, MajorInterval;
+			double[] MaxMinAve = GetAllRatioMaxMinAve(features);
+			if (MaxMinAve[1] >= 0.95)
+			{
+				MajorInterval = 0.02;
+				MinorInterval = 0.01;
+			}
+			else if (MaxMinAve[1] >= 0.9)
+			{
+				MajorInterval = 0.025;
+				MinorInterval = 0.025;
+			}
+			else
+			{
+				MajorInterval = 0.05;
+				MinorInterval = 0.05;
+			}
+			
+			axis = graph.YAxis;
+			axis.Scale.Min = MaxMinAve[1] - 0.1;
+			axis.Scale.Max = MaxMinAve[0] + 0.1;
+			//axis.Scale.Base = MaxMinAve[1];
+			axis.Ticks.Labels.LabelFormat = "0.00";
+			axis.Ticks.Labels.Interval = 1;
+			axis.Ticks.Major.LineLength = 8;
+			axis.Ticks.Major.Pen = Pens.Black;
+			axis.Ticks.Major.Interval = MajorInterval;
+			axis.Ticks.Minor.Visible = true;
+			axis.Ticks.Minor.Interval = MinorInterval;
+			axis.Grid.Major.Visible = true;
+			axis.Grid.Major.Interval = MajorInterval;
+			axis.Grid.Minor.Visible = true;
+			axis.Grid.Minor.Interval = MinorInterval;
+
+		}
+
+
+		void MakeXAxis2(IGraphPainter graph)
+		{
+			int XScale;
+			XScale = 1;//_referene.Charas.Count;
+
+			ST_TickLabelPoint[] labelPoints = new ST_TickLabelPoint[XScale];
+			int j = 0;
+
+			//foreach (RRangeClass rc in _referene.Charas)
+			//{
+			//	labelPoints[j] = new ST_TickLabelPoint(j, rc.Title);
+			//	j++;
+			//}
+			labelPoints[0] = new ST_TickLabelPoint(0, "縦横比");
+			IAxis axis;
+
+			axis = graph.XAxis;
+			axis.Ticks.Labels.LabelFormat = "0";
+			axis.Ticks.Labels.Interval = 1;
+			axis.Ticks.Major.Interval = 1;
+			axis.Ticks.Side = DusGraph.eTickSide.Bottom;
+			axis.Ticks.Labels.Points.AddRange(labelPoints);
+			axis.Ticks.Labels.Font = new Font("ＭＳ 明朝", 14, FontStyle.Bold);
+			axis.Ticks.Direction = DusGraph.eTickDirection.Outside;
+			axis.Grid.Major.Visible = false;
+			axis.Grid.Major.Interval = 1;
+			axis.Scale.Min = 0;
+			axis.Scale.Max = XScale;
+			axis.Scale.Base = 0;
+
+		}
+
+		static double[] GetRatioMaxMinAve(ArrayList fet)
+		{
+			double max, min, ave, sum;
+			double[] arr = new double[3];
+			int i = 0;
+
+			max = 0.0;
+			min = 9999.0;
+			sum = 0.0;
+
+			foreach (FeatureClass f in fet)
+			{
+				
+				if (max < f.Ratio) max = f.Ratio;
+				if (min > f.Ratio) min = f.Ratio;
+				sum += f.Ratio;
+				i++;
+				System.Diagnostics.Debug.WriteLine($"maxminave Ratio = {f.Ratio}");
+			}
+			ave = sum / i;
+
+			arr[0] = max;
+			arr[1] = min;
+			arr[2] = ave;
+
+			return (arr);
+		}
+
+		private double[] GetAllRatioMaxMinAve(ArrayList fet)
+		{
+			double max, min, ave, sum;
+			double[] arr = new double[3];
+			int i = 0;
+
+			max = 0.0;
+			min = 9999.0;
+			sum = 0.0;
+			
+			int j;
+			for (j = 0; j < GroupNum; j++)
+			{
+				foreach (FeatureClass fcd in (ArrayList)fet[j])
+				{
+					if (max < fcd.Ratio) max = fcd.Ratio;
+					if (min > fcd.Ratio) min = fcd.Ratio;
+					sum += fcd.Ratio;
+					i++;
+					System.Diagnostics.Debug.WriteLine($"縦横比 Ratio = {fcd.Ratio} ({fcd.SrcBitmap.Width}/{fcd.SrcBitmap.Height}");
+
+				}
+			}
+
+			ave = sum / i;
+
+			arr[0] = max;
+			arr[1] = min;
+			arr[2] = ave;
+
+			return (arr);
+		}
+
+		void MakePlotData2(IGraphPainter graph)
+		{
+			///2021.09.15　ここです！！！！
+			System.Diagnostics.Debug.WriteLine($"GroupNum = {GroupNum}");
+			for (int i = 0; i < GroupNum; i++)
+			{
+				if (((ArrayList)features[i]).Count > 0)
+				{
+					ISeriesCandleChart series;
+					double[] MaxMinAve = GetRatioMaxMinAve((ArrayList)features[i]);
+					series = graph.CreateSeries(DusGraph.ePlotType.CandleChart).asCandleChart;
+					series.NegativeBrush = new SolidBrush(Color.FromArgb(128, ((Panel)colorPanels[i]).BackColor));
+					series.PositiveBrush = new SolidBrush(Color.FromArgb(128, ((Panel)colorPanels[i]).BackColor));
+					series.BarWidth = 30;
+					series.Pen = new Pen(Color.FromArgb(128, ((Panel)colorPanels[i]).BackColor));
+
+					series.Data.Add(new ST_CandlePoint(0, MaxMinAve[1], MaxMinAve[0], MaxMinAve[1], MaxMinAve[1]));
+					graph.Series.Add(series);
+
+					System.Diagnostics.Debug.WriteLine($"max = {MaxMinAve[0]} min = {MaxMinAve[1]} ave = {MaxMinAve[2]}");
+
+				}
+
+			}
+
+
+			#region	削除予定
+
+			/**
+			ISeriesCandleChart sr;      //対照資料最大最小ボックス
+										//ISeriesXYPlot  sr2;		
+			ISeriesCandleChart sr2; //対照資料生データプロット
+			ISeriesXYPlot sr3;          //対照資料平均値プロット
+			ISeriesCandleChart sr4; //対照資料平均除外生データプロット
+			double max, min;
+			Color c;
+			Pen linePen = new Pen(Color.Blue, 2);
+
+			//対照資料
+			if (cmbReferenceColor.SelectedIndex < 0)
+			{
+				c = Color.Red;
+			}
+			else
+			{
+				c = setup.DisplayColor[cmbReferenceColor.SelectedIndex];
+			}
+			sr = graph.CreateSeries(DusGraph.ePlotType.CandleChart).asCandleChart;
+			sr.NegativeBrush = new SolidBrush(Color.FromArgb(128, c));
+			sr.PositiveBrush = new SolidBrush(Color.FromArgb(128, c));
+			sr.BarWidth = 30;
+			sr.Pen = new Pen(c);
+			sr3 = graph.CreateSeries(DusGraph.ePlotType.Line).asXYPlot;
+			if (chkReferenceAve.Checked)
+			{
+				//平均グラフを作成
+				sr3.Mark.Visible = true;
+				sr3.Mark.Type = DusGraph.ePlotMarkType.Star;
+				sr3.Mark.Brush = new SolidBrush(c);
+				sr3.Mark.Width = 8;
+				sr3.Mark.Height = 8;
+				sr3.Title = _referene.Title;
+				//sr2.Mark.NumCorners = 8;
+
+			}
+
+			int i = 0;
+			foreach (RRangeClass rc in _referene.Charas)
+			{
+
+				//最大最少を表示
+				if (rc.MinR != 500.0 || rc.MaxR != 0.00)
+				{
+					min = rc.MinR;
+					max = rc.MaxR;
+					// new ST_CandlePoint( Ｘ値, 始値, 終値, 高値, 安値 )
+					sr.Data.Add(new ST_CandlePoint(i, min, max, min, min));
+				}
+				sr2 = graph.CreateSeries(DusGraph.ePlotType.CandleChart).asCandleChart;
+				sr2.BarWidth = 3;
+				sr2.Pen = new Pen(c, 3);
+				//平均グラフにプロットを挿入
+				if (chkReferenceAve.Checked)
+				{
+					linePen = new Pen(c, 2);
+					linePen.DashStyle = DashStyle.Solid;
+					sr3.Mark.Border.Pen = new Pen(c, 1);
+					sr3.asLine.Pen = linePen;
+					sr3.Data.Add(new ST_PlotPoint(i, rc.AveR2));
+				}
+				foreach (double R in rc.ItemsR)
+				{
+					sr2.Data.Add(new ST_CandlePoint(i, R, R, R, R));
+				}
+				i++;
+				
+			}
+			//if(chkReferenceRange.Checked == true) graph.Series.Add( sr );
+			//if (chkReferenceAve.Checked) graph.Series.Add(sr3);
+
+			/****
+			if (chkReferenceData.Checked)
+			{
+				//
+				// 三崎さんからの要望により、キャンドルグラフに変更 2012.06.05
+				// →三崎さんからの要望により、平均除外をプロットするに変更 2013.11.04
+				// 
+				//R2グラフを作成
+				for (i = 0; i < _referene.MaxLength; i++)
+				{
+					sr4 = graph.CreateSeries(DusGraph.ePlotType.CandleChart).asCandleChart;
+					int j = 0;
+					foreach (RRangeClass rc in _referene.Charas)
+					{
+						if (i < rc.ItemsR2.Count)
+						{
+							//sr4.Title = rc.DocumentTitles[i].ToString() + "(平均除外)";
+							//c = (Color)rc.CharaColors[i];
+							//sr4.Data.Add( new ST_PlotPoint(j, (double)rc.ItemsR2[i]) );
+							sr4.Data.Add(new ST_CandlePoint(j, (double)rc.ItemsR2[i], (double)rc.ItemsR2[i], (double)rc.ItemsR2[i], (double)rc.ItemsR2[i]));
+						}
+						j++;
+					}
+					sr4.BarWidth = 3;
+					sr4.Pen = new Pen(c, 3);
+
+					
+					graph.Series.Add(sr4);
+				}
+			}
+
+			if (chkReferenceRange.Checked)
+			{
+				sr = graph.CreateSeries(DusGraph.ePlotType.CandleChart).asCandleChart;
+				sr.NegativeBrush = new SolidBrush(Color.FromArgb(64, c));
+				sr.PositiveBrush = new SolidBrush(Color.FromArgb(64, c));
+				sr.BarWidth = 30;
+				sr.Pen = new Pen(c);
+				i = 0;
+				foreach (RRangeClass rc in _referene.Charas)
+				{
+					if (rc.MinR2 != 500.0 || rc.MaxR2 != 0.0)
+					{
+						min = rc.MinR2;
+						max = rc.MaxR2;
+						// new ST_CandlePoint( Ｘ値, 始値, 終値, 高値, 安値 )
+						sr.Data.Add(new ST_CandlePoint(i, min, max, min, min));
+					}
+					i++;
+				}
+				graph.Series.Add(sr);
+			}
+			//鑑定資料
+			//平均のグラフ設定
+			if (cmbJudgeColor.SelectedIndex < 0)
+			{
+				c = Color.Red;
+			}
+			else
+			{
+				c = setup.DisplayColor[cmbJudgeColor.SelectedIndex];
+			}
+			//if(cmbJudgeColor.Text == ""){
+			//	c = Color.Blue;
+			//}else{
+			//	c = GetColorFromName(cmbJudgeColor.Text);
+			//}
+			//c = Color.DarkGoldenrod;
+			if (chkJudgeAve.Checked)
+			{
+				sr3 = graph.CreateSeries(DusGraph.ePlotType.Line).asXYPlot;
+				sr3.Mark.Visible = true;
+				sr3.Mark.Type = DusGraph.ePlotMarkType.Star;
+				sr3.Mark.Brush = new SolidBrush(c);
+				sr3.Mark.Width = 8;
+				sr3.Mark.Height = 8;
+				sr3.Title = "鑑定資料平均";
+				sr3.Mark.Border.Pen = new Pen(c, 1);
+				linePen = new Pen(c, 2);
+				linePen.DashStyle = DashStyle.Dot;
+				sr3.asLine.Pen = linePen;
+				//平均のグラフプロット
+				i = 0;
+				foreach (RRangeClass rrc in _judge.Charas)
+				{
+					//平均グラフにプロットを挿入
+					sr3.Data.Add(new ST_PlotPoint(i, rrc.AveR));
+					i++;
+				}
+			}
+			if (chkJudgeAve.Checked) graph.Series.Add(sr3);
+			//最大最小ボックスをプロット
+			if (chkJudgeRange.Checked == true)
+			{
+				sr = graph.CreateSeries(DusGraph.ePlotType.CandleChart).asCandleChart;
+				sr.NegativeBrush = new SolidBrush(Color.FromArgb(128, c));
+				sr.PositiveBrush = new SolidBrush(Color.FromArgb(128, c));
+				sr.BarWidth = 30;
+				sr.Pen = new Pen(c);
+				i = 0;
+				foreach (RRangeClass rc in _judge.Charas)
+				{
+					if (rc.MinR != 500.0 && rc.MaxR != 0.0)
+					{
+						min = rc.MinR;
+						max = rc.MaxR;
+						// new ST_CandlePoint( Ｘ値, 始値, 終値, 高値, 安値 )
+						sr.Data.Add(new ST_CandlePoint(i, min, max, min, min));
+					}
+					i++;
+				}
+				graph.Series.Add(sr);
+			}
+
+			//生データをプロット
+			if (chkJudgeData.Checked)
+			{
+				for (i = 0; i < _judge.MaxLength; i++)
+				{
+					sr3 = graph.CreateSeries(DusGraph.ePlotType.Line).asXYPlot;
+					foreach (RRangeClass rrc in _judge.Charas)
+					{
+						if (rrc.ItemsR.Count > i)
+						{
+							sr3.Title = (string)rrc.DocumentTitles[i];
+							c = (Color)rrc.CharaColors[i];
+							//System.Diagnostics.Debug.WriteLine(c.ToString());
+							sr3.Mark.Brush = new SolidBrush(c);
+							sr3.Mark.Border.Pen = new Pen(c, 1);
+							sr3.asLine.Pen = new Pen(c, 2);
+						}
+					}
+					sr3.Mark.Visible = true;
+					sr3.Mark.Type = DusGraph.ePlotMarkType.Star;
+					sr3.Mark.Brush = new SolidBrush(c);
+					sr3.Mark.Width = 8;
+					sr3.Mark.Height = 8;
+
+					//sr3.Title = (string)((RRangeClass)_judge.Charas[0]).DocumentTitles[i];
+					sr3.Mark.Border.Pen = new Pen(c, 1);
+					sr3.asLine.Pen = new Pen(c, 2);
+
+					int j = 0;
+					foreach (RRangeClass rrc in _judge.Charas)
+					{
+						if (i < rrc.ItemsR.Count)
+						{
+							sr3.Data.Add(new ST_PlotPoint(j, (double)rrc.ItemsR[i]));
+							//System.Diagnostics.Debug.WriteLine(rrc.ItemsR[i].ToString());
+						}
+						j++;
+					}
+					graph.Series.Add(sr3);
+				}
+			}
+			***/
+			#endregion
+		}
+
 		void MakeGraph()
 		{
 			imageEffect.BitmapWhitening(GraphBmp);
@@ -1598,7 +1995,48 @@ namespace CharacomImagerPro
 			g.DrawImage(graph.Image, 0, 0);
 
 			g.Dispose();
+
+			imageEffect.BitmapWhitening(GraphBmp2);
+
+			IGraphPainter graph2 = DusGraph.CreateGraph(113, 400);
+
+			#region グラフエリアの設定
+			graph2.SmoothingMode = SmoothingMode.AntiAlias;
+			graph2.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+			graph2.BackBrush = new LinearGradientBrush(graph2.GetBounds(), Color.White, Color.LemonChiffon, LinearGradientMode.Vertical);
+			graph2.Border.Pen = new Pen(Color.Gray, 1);
+			graph2.PlotArea.BackBrush = new LinearGradientBrush(graph2.GetBounds(), Color.LightBlue, Color.White, LinearGradientMode.Vertical);
+			graph2.PlotArea.Border.Top.Pen = Pens.Transparent;
+			graph2.PlotArea.Border.Right.Pen = Pens.Silver;
+			graph2.PlotArea.Margin.Left = 40;
+			graph2.PlotArea.Margin.Right = 0;
+			graph2.PlotArea.Margin.Top = 0;
+			graph2.PlotArea.Margin.Bottom = 0;
+			graph2.PlotArea.InnerMargin.Left = 40;
+			graph2.PlotArea.InnerMargin.Right = 40;
+			#endregion
+
+			#region 凡例の設定
+			/***
+			graph.Legend.Visible = true;
+			graph.Legend.Location = new PointF(415, 40);
+			graph.Legend.Size = new SizeF(150, 300);
+			graph.Legend.ItemArea.BaseLocation = new PointF(5, 20);
+			graph.Legend.ItemArea.ItemSize = new SizeF(140, 20);
+			***/
+			#endregion
+			MakeXAxis2(graph2);
+			MakeYAxis2(graph2);
+			MakePlotData2(graph2);
+			graph2.Draw();
+			g = graph.CreateGraphics();
+			g = Graphics.FromImage(GraphBmp2);
+			g.FillRectangle(Brushes.White, 0, 0, GraphBmp2.Width, GraphBmp2.Height);
+			g.DrawImage(graph2.Image, 0, 0);
+
+			g.Dispose();
 			GraphImage.Invalidate();
+			GraphImage2.Invalidate();
 		}
 		#endregion
 
@@ -1607,6 +2045,12 @@ namespace CharacomImagerPro
 		{
 			e.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
 			e.Graphics.DrawImage(GraphBmp, 0, 0, GraphImage.Width, GraphImage.Height);
+		}
+
+		private void GraphImage2_Paint(object sender, PaintEventArgs e)
+		{
+			e.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+			e.Graphics.DrawImage(GraphBmp2, 0, 0, GraphImage2.Width, GraphImage2.Height);
 		}
 		#endregion
 
@@ -1864,6 +2308,7 @@ namespace CharacomImagerPro
 			//MainForm mf = (MainForm)this.MdiParent;
 			mf.RemoveWindowAtID(windowID);
 		}
+
 
 
         #endregion
