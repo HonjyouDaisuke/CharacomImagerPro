@@ -101,19 +101,22 @@ namespace CharacomImagerPro
             this.GraphImage2 = new System.Windows.Forms.PictureBox();
             this.lblR = new System.Windows.Forms.Label();
             this.lblWH = new System.Windows.Forms.Label();
+            this.statusStripMain = new System.Windows.Forms.StatusStrip();
+            this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LapImageBox)).BeginInit();
             this.SubMenu.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GraphImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GraphImage2)).BeginInit();
+            this.statusStripMain.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.AutoScroll = true;
             this.panel1.Controls.Add(this.LapImageBox);
-            this.panel1.Location = new System.Drawing.Point(0, 26);
+            this.panel1.Location = new System.Drawing.Point(0, 27);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(320, 320);
             this.panel1.TabIndex = 0;
@@ -638,7 +641,7 @@ namespace CharacomImagerPro
             this.panel2.AutoScroll = true;
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel2.Location = new System.Drawing.Point(504, 25);
-            this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(545, 322);
             this.panel2.TabIndex = 6;
@@ -657,7 +660,7 @@ namespace CharacomImagerPro
             // 
             this.GraphImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.GraphImage.Location = new System.Drawing.Point(326, 25);
-            this.GraphImage.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.GraphImage.Margin = new System.Windows.Forms.Padding(2);
             this.GraphImage.Name = "GraphImage";
             this.GraphImage.Size = new System.Drawing.Size(85, 304);
             this.GraphImage.TabIndex = 7;
@@ -693,12 +696,29 @@ namespace CharacomImagerPro
             this.lblWH.TabIndex = 10;
             this.lblWH.Text = "縦横比変動";
             // 
+            // statusStripMain
+            // 
+            this.statusStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripProgressBar1});
+            this.statusStripMain.Location = new System.Drawing.Point(0, 349);
+            this.statusStripMain.Name = "statusStripMain";
+            this.statusStripMain.Size = new System.Drawing.Size(1060, 22);
+            this.statusStripMain.TabIndex = 11;
+            this.statusStripMain.Text = "statusStrip1";
+            // 
+            // toolStripProgressBar1
+            // 
+            this.toolStripProgressBar1.Name = "toolStripProgressBar1";
+            this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 16);
+            this.toolStripProgressBar1.Visible = false;
+            // 
             // LapForm
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1060, 347);
+            this.ClientSize = new System.Drawing.Size(1060, 371);
+            this.Controls.Add(this.statusStripMain);
             this.Controls.Add(this.lblWH);
             this.Controls.Add(this.lblR);
             this.Controls.Add(this.GraphImage2);
@@ -723,6 +743,8 @@ namespace CharacomImagerPro
             this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GraphImage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.GraphImage2)).EndInit();
+            this.statusStripMain.ResumeLayout(false);
+            this.statusStripMain.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -790,5 +812,7 @@ namespace CharacomImagerPro
         private System.Windows.Forms.PictureBox GraphImage2;
         private System.Windows.Forms.Label lblR;
         private System.Windows.Forms.Label lblWH;
+        private System.Windows.Forms.StatusStrip statusStripMain;
+        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
     }
 }
