@@ -106,8 +106,10 @@ namespace CharacomImagerPro
 
 			AddControl();
 			features.Add(new ArrayList());
+			ImageArray.Add(new ArrayList());
 			AddControl();
 			features.Add(new ArrayList());
+			ImageArray.Add(new ArrayList());
 
 
 			//
@@ -436,7 +438,7 @@ namespace CharacomImagerPro
 			DataGridViewRow NewRow = new DataGridViewRow();
 			NewRow.CreateCells(dgv);
 			//IntoDataGridView(NewRow, cif.ImageData.ProcImage, cif.ImageData.Filename, dgv.Rows.Count + 1);
-			ImageArray.Add(cif.ImageData);
+			((ArrayList)ImageArray[num]).Add(cif.ImageData);
 
 
 			//特徴クラスを作成してデータを挿入
@@ -492,13 +494,13 @@ namespace CharacomImagerPro
 
 			thisFeature.SrcBitmap = avf.SrcBmpSmall;
 			thisFeature.FileName = avf.FileName;
-
+			
 			//コマンドマネージャへ
 			//CheckUpDragInCommand command = new CheckUpDragInCommand(dgv.Rows, NewRow, feature[num], thisFeature);
 			//undoManager.Action(command);
-			
-			((ArrayList)features[num]).Add(thisFeature);
 
+			((ArrayList)features[num]).Add(thisFeature);
+			
 			MakeR((ArrayList)features[num]);
 
 			IntoDataGridView(NewRow, avf.SrcBmpSmall, avf.FileName, (ArrayList)features[num], dgv.Rows.Count + 1);
@@ -518,6 +520,8 @@ namespace CharacomImagerPro
 				if (mid.DialogResult == DialogResult.Yes)
 				{
 					DragDropProc((CharaImageForm)e.Data.GetData(typeof(CharaImageForm)), (DataGridView)sender, num);
+					PutRewriteR((DataGridView)DataGridViews[num], (ArrayList)features[num]);
+
 				}
 				else if (mid.DialogResult == DialogResult.No)
 				{
@@ -562,6 +566,7 @@ namespace CharacomImagerPro
 					LapImageBox.Invalidate();
 					MakeGraph();
 					GraphImage.Invalidate();
+					PutRewriteR((DataGridView)DataGridViews[num], (ArrayList)features[num]);
 					toolStripProgressBar1.Value = 0;
 					toolStripProgressBar1.Visible = false;
 					/***
@@ -690,24 +695,39 @@ namespace CharacomImagerPro
 		public void MakeViewBitmap()
 		{
 			//LapClass lc = new LapClass();
-			ImageDataClass idc = new ImageDataClass(320, 320);
 			Bitmap white_image = new Bitmap(320, 320);
 			Bitmap srcimg = new Bitmap(320, 320);
 
 			imageEffect.BitmapWhitening(viewBitmap);
 
-			/***
 			for(int j=0; j<GroupNum; j++)
             {
-				for(int i=0; i < ((ArrayList)features[j]).Count; i++)
+				for(int i=0; i < ((ArrayList)ImageArray[j]).Count; i++)
                 {
-					
-					FeatureClass fc = 
-					
-                }
-				((DataGridView)DataGridViews)[1,i]
+
+					ImageDataClass idc = (ImageDataClass)((ArrayList)ImageArray[j])[i];
+                    if (btnChara.Checked)
+                    {
+                        if (btnProc.Checked)
+                        {
+							imageEffect.BitmapImposeCopy(viewBitmap, idc.ProcImage);
+						}
+						else
+						{
+							imageEffect.BitmapWhitening(srcimg);
+							imageEffect.BitmapStretchCopy(idc.SrcImageSmall, srcimg);
+							imageEffect.DotChange(srcimg, idc.DispColor);
+							imageEffect.BitmapImposeCopy(viewBitmap, srcimg);
+						}
+					}
+					if (btnDrawFrame.Checked) DrawFrame(viewBitmap, idc);
+					if (btnGraviHou.Checked || btnGraviJun.Checked) DrawGravityLine(viewBitmap, idc);
+					if (btnSyaei.Checked) DrawProjection(viewBitmap, idc);
+
+				}
             }
-			**/
+			
+			/**
 			for (int i = ImageArray.Count - 1; i >= 0; i--) {
 				idc = (ImageDataClass)ImageArray[i];
 				//2021.09.25 D.Honjyou
@@ -734,14 +754,7 @@ namespace CharacomImagerPro
 				if (btnGraviHou.Checked || btnGraviJun.Checked) DrawGravityLine(viewBitmap, idc);
 				if (btnSyaei.Checked) DrawProjection(viewBitmap, idc);
 			}
-		}
-		#endregion
-
-		#region 重ね合わせリストへ追加
-		void AddLapArray(ImageDataClass imageData)
-		{
-			ImageArray.Add(imageData);
-			//IntoDataGridView(dgvLap.Rows, imageData.ProcImage, imageData.Filename);
+			**/
 		}
 		#endregion
 
@@ -824,6 +837,7 @@ namespace CharacomImagerPro
 					DataGridViews.RemoveAt(i);
 					//特徴データを削除
 					features.RemoveAt(i);
+					ImageArray.RemoveAt(i);
 
 					//ボタン類を削除
 					((Button)btnUps[btnUps.Count - 1]).Dispose();
@@ -944,12 +958,15 @@ namespace CharacomImagerPro
 		#endregion
 
 		#region 削除ボタン処理
-		void DeleteButtonProc(DataGridView dgv, ArrayList feature, int CurrentIndex)
+		void DeleteButtonProc(DataGridView dgv, ArrayList feature, ArrayList images, int CurrentIndex)
 		{
 			//DataGridViewを削除
 			dgv.Rows.RemoveAt(CurrentIndex);
 			//featureを削除
 			feature.RemoveAt(CurrentIndex);
+			//2021.10.31 ImageArrayを削除
+			images.RemoveAt(CurrentIndex);
+			//類似度作り直し
 			MakeR(feature);
 			//dgvLegendUpDownCheck(0, "");
 		}
@@ -964,7 +981,7 @@ namespace CharacomImagerPro
 			num = num - 1;
 			if (((DataGridView)DataGridViews[num]).CurrentRow != null)
 			{
-				DeleteButtonProc((DataGridView)DataGridViews[num], (ArrayList)features[num], ((DataGridView)DataGridViews[num]).CurrentRow.Index);
+				DeleteButtonProc((DataGridView)DataGridViews[num], (ArrayList)features[num], (ArrayList)ImageArray[num], ((DataGridView)DataGridViews[num]).CurrentRow.Index);
 			}
 			/**
 			if (dgvLap.Rows.Count > 0){
@@ -1171,22 +1188,23 @@ namespace CharacomImagerPro
 			}
 			
 			GroupNum = 0;
-			System.Diagnostics.Debug.WriteLine($"FeaturesNum={GroupNum}");
+			System.Diagnostics.Debug.WriteLine($"FeaturesNum={features.Count} ImageArrayNum={ImageArray.Count}");
 			for(int i = 0; i < features.Count; i++)
             {
-				System.Diagnostics.Debug.WriteLine($"AddControl {i}, featuresCount={features.Count}");
+				System.Diagnostics.Debug.WriteLine($"AddControl {i}, featuresCount={((ArrayList)features[i]).Count} ImageArrayCount={((ArrayList)ImageArray[i]).Count}");
 				AddControl();
 				int n = 1;
 
 				//DataGridView用のデータを作成
 				foreach (FeatureClass fc in (ArrayList)features[i])
 				{
+					System.Diagnostics.Debug.WriteLine($"AddRow Group={i}, num={n}");
 					DataGridViewRow NewRow = new DataGridViewRow();
 					NewRow.CreateCells((DataGridView)DataGridViews[i]);
-					IntoDataGridView(NewRow, fc.SrcBitmap, Path.GetFileName(fc.FileName), (ArrayList)features[i], n);
+					IntoDataGridView(NewRow, ((ImageDataClass)((ArrayList)ImageArray[i])[n-1]).ProcImage, Path.GetFileName(fc.FileName), (ArrayList)features[i], n);
 					((DataGridView)DataGridViews[i]).Rows.Add(NewRow);
 					((Panel)colorPanels[i]).BackColor = fc.ViewColor;
-					System.Diagnostics.Debug.WriteLine($"AddRow {((DataGridView)DataGridViews[i]).Rows.Count}");
+					
 					n++;
 				}
 
@@ -1872,6 +1890,7 @@ namespace CharacomImagerPro
         {
 			AddControl();
 			features.Add(new ArrayList());
+			ImageArray.Add(new ArrayList());
 
 			MakeViewBitmap();
 			LapImageBox.Invalidate();
