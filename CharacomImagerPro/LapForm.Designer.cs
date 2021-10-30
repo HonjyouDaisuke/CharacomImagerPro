@@ -454,6 +454,7 @@ namespace CharacomImagerPro
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(24, 24);
             this.btnAdd.Text = "toolStripButton1";
+            this.btnAdd.Click += new System.EventHandler(this.dgvAddBtnClick);
             // 
             // btnDel
             // 
@@ -463,6 +464,7 @@ namespace CharacomImagerPro
             this.btnDel.Name = "btnDel";
             this.btnDel.Size = new System.Drawing.Size(24, 24);
             this.btnDel.Text = "toolStripButton2";
+            this.btnDel.Click += new System.EventHandler(this.dgvDelBtnClick);
             // 
             // toolStripSeparator5
             // 
@@ -734,7 +736,6 @@ namespace CharacomImagerPro
             this.Text = "重ね合わせ";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LapFormFormClosing);
             this.Load += new System.EventHandler(this.LapFormLoad);
-            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.LapFormDragEnter);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LapImageBox)).EndInit();

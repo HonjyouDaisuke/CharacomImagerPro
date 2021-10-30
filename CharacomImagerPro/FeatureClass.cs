@@ -72,7 +72,14 @@ namespace CharacomImagerPro
 			get { return fileName; }
 			set { fileName = value; }
 		}
-		
+
+		Color viewColor;
+		public Color ViewColor
+		{
+			get { return viewColor; }
+			set { viewColor = value; }
+		}
+
 		public FeatureClass()
 		{
 			_ie = new ImageEffect();

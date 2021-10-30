@@ -2136,7 +2136,7 @@ namespace CharacomImagerPro
 			
 			foreach(Form child in this.MdiChildren){
 				if(child.Name == "CharaImageForm"){
-					lpf.InputLapForm((CharaImageForm)child);
+					//lpf.InputLapForm((CharaImageForm)child);
 					//System.Diagnostics.Debug.WriteLine("インプット");
 				}
 			}

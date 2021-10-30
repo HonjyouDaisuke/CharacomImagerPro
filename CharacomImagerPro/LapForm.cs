@@ -105,7 +105,9 @@ namespace CharacomImagerPro
 			this.FileNameChanged += new System.EventHandler(this.OnFileNameChanged);
 
 			AddControl();
+			features.Add(new ArrayList());
 			AddControl();
+			features.Add(new ArrayList());
 
 
 			//
@@ -287,7 +289,7 @@ namespace CharacomImagerPro
 			//if (GroupNum != 0) panel2.Controls.Add(btnLeft);
 			//panel1.Controls.Add(btnRight);
 			#endregion
-			features.Add(new ArrayList());
+			//features.Add(new ArrayList());
 			GroupNum++;
 			//this.panel1.SizeChanged += new System.EventHandler(this.Panel1SizeChanged);
 
@@ -365,7 +367,7 @@ namespace CharacomImagerPro
 		#endregion
 
 		#region 類似度を作成
-		void MakeR(ArrayList feature, DataGridView dgv)
+		void MakeR(ArrayList feature)
 		{
 			double[] kajyuAvg = new double[256];
 			double[] kajyuViewAvg = new double[256];
@@ -402,7 +404,7 @@ namespace CharacomImagerPro
 				}
 				fc.R = R;
 				fc.R2 = R2;
-
+				/**
 				if (dgv.Rows.Count > num)
 				{
 					dgv[0, num].Value = (num + 1).ToString();
@@ -410,6 +412,7 @@ namespace CharacomImagerPro
 					//dgv[4, num].Value = "縦横";
 					//System.Diagnostics.Debug.WriteLine("R = " + fc.R.ToString("f4") + " : R2 = " + fc.R2.ToString("f4"));
 				}
+				**/
 				num++;
 			}
 		}
@@ -432,7 +435,7 @@ namespace CharacomImagerPro
 			//DataGridView用のデータを作成
 			DataGridViewRow NewRow = new DataGridViewRow();
 			NewRow.CreateCells(dgv);
-			IntoDataGridView(NewRow, cif.ImageData.ProcImage, cif.ImageData.Filename, dgv.Rows.Count + 1);
+			//IntoDataGridView(NewRow, cif.ImageData.ProcImage, cif.ImageData.Filename, dgv.Rows.Count + 1);
 			ImageArray.Add(cif.ImageData);
 
 
@@ -443,29 +446,41 @@ namespace CharacomImagerPro
 
 			thisFeature.SrcBitmap = cif.SrcBitmapSmall;
 			thisFeature.FileName = cif.FileName;
+			thisFeature.ViewColor = cif.dispColor;
 
 			//コマンドマネージャへ
 			//CheckUpDragInCommand command = new CheckUpDragInCommand(dgv.Rows, NewRow, feature[num], thisFeature);
 			//undoManager.Action(command);
-			dgv.Rows.Add(NewRow);
-
+			
 			System.Diagnostics.Debug.WriteLine(int.Parse(dgv.Name.Substring(8)).ToString());
 			((ArrayList)features[num]).Add(thisFeature);
 
 			System.Diagnostics.Debug.WriteLine("特徴[" + num.ToString() + "]の個数は" + ((ArrayList)features[num]).Count.ToString());
-			MakeR((ArrayList)features[num], dgv);
+			MakeR((ArrayList)features[num]);
 			System.Diagnostics.Debug.WriteLine("ColorNo = " + mf.Setup.GetColorNo(cif.dispColor.Name).ToString());
 			System.Diagnostics.Debug.WriteLine("Title = " + cif.Text);
+			IntoDataGridView(NewRow, cif.ImageData.ProcImage, cif.ImageData.Filename, (ArrayList)features[num], dgv.Rows.Count + 1);
+			dgv.Rows.Add(NewRow);
+
 			//dgvLegendUpDownCheck(mf.Setup.GetColorNo(cif.dispColor.Name), System.IO.Path.GetFileNameWithoutExtension(cif.FileName));
 		}
+        #endregion
+
+        void PutRewriteR(DataGridView dgv, ArrayList fcs)
+        {
+			for(int i=0; i<fcs.Count; i++)
+            {
+				dgv.Rows[i].Cells[3].Value = ((FeatureClass)fcs[i]).R;
+            }
+			
+        }
 
 		void DragDropAverage(AverageMaker avf, DataGridView dgv, int num)
 		{
 			//DataGridView用のデータを作成
 			DataGridViewRow NewRow = new DataGridViewRow();
 			NewRow.CreateCells(dgv);
-			IntoDataGridView(NewRow, avf.SrcBmpSmall, avf.FileName, dgv.Rows.Count + 1);
-
+			
 			//特徴クラスを作成してデータを挿入
 			FeatureClass thisFeature = new FeatureClass();
 			for (int i = 0; i < thisFeature.Kajyu.Length; i++)
@@ -481,11 +496,13 @@ namespace CharacomImagerPro
 			//コマンドマネージャへ
 			//CheckUpDragInCommand command = new CheckUpDragInCommand(dgv.Rows, NewRow, feature[num], thisFeature);
 			//undoManager.Action(command);
-			dgv.Rows.Add(NewRow);
-
+			
 			((ArrayList)features[num]).Add(thisFeature);
 
-			MakeR((ArrayList)features[num], dgv);
+			MakeR((ArrayList)features[num]);
+
+			IntoDataGridView(NewRow, avf.SrcBmpSmall, avf.FileName, (ArrayList)features[num], dgv.Rows.Count + 1);
+			dgv.Rows.Add(NewRow);
 
 			//dgvLegendUpDownCheck(0, "");
 		}
@@ -553,25 +570,21 @@ namespace CharacomImagerPro
 						CharaImageForm m_cif;
 						m_cif = (CharaImageForm)mf.MdiChildren[s.ID];
 						//System.Diagnostics.Debug.WriteLine("WindowName = " + m_cif.Text);
-
 						if (!CheckLapList(m_cif.ImageData.Filename))
 						{
 							//DataGridView用のデータを作成
 							DataGridViewRow NewRow = new DataGridViewRow();
 							NewRow.CreateCells(dgvLap);
 							IntoDataGridView(NewRow, m_cif.ImageData.ProcImage, m_cif.ImageData.Filename);
-
 							//コマンドを実行
 							LapDragInCommand command = new LapDragInCommand(dgvLap.Rows, NewRow, ImageArray, m_cif.ImageData);
 							undoManager.Action(command);
-
 							CheckUndoRedo();
 							//AddLapArray(cif.ImageData);
 							MakeViewBitmap();
 							System.Diagnostics.Debug.WriteLine(m_cif.Text);
 						}
 					}
-
 					***/
 
 
@@ -632,126 +645,6 @@ namespace CharacomImagerPro
 			return (res);
 		}
 
-		//2021.09.19 D.Honjyou
-		//重ね合わせグラフのため削除
-		public void InputLapForm(CharaImageForm cif)
-		{
-			/****
-			if (CheckLapList(cif.ImageData.Filename)) return;
-			//DataGridView用のデータを作成
-			DataGridViewRow NewRow = new DataGridViewRow();
-			//NewRow.CreateCells(dgvLap);
-			IntoDataGridView(NewRow, cif.ImageData.ProcImage, cif.ImageData.Filename);
-
-			//コマンドを実行
-			//LapDragInCommand command = new LapDragInCommand(dgvLap.Rows, NewRow, ImageArray, cif.ImageData);
-			//undoManager.Action(command);
-
-			CheckUndoRedo();
-			AddLapArray(cif.ImageData);
-			MakeViewBitmap();
-
-			LapImageBox.Invalidate();
-			**/
-		}
-
-		//2021.09.19 D.Honjyou
-		//重ね合わせグラフのため削除
-		void LapFormDragDrop(object sender, DragEventArgs e)
-		{
-			/**
-			CharaImageForm cif;
-			MultiInputDialog mid = new MultiInputDialog();
-			
-			mid.ShowDialog();
-			if( mid.DialogResult == DialogResult.Yes ){
-				if(e.Data.GetDataPresent(typeof(CharaImageForm))){
-					cif = (CharaImageForm)e.Data.GetData(typeof(CharaImageForm));
-					if(CheckLapList(cif.ImageData.Filename)) return;
-					//DataGridView用のデータを作成
-					DataGridViewRow NewRow = new DataGridViewRow();
-					//NewRow.CreateCells(dgvLap);
-					IntoDataGridView(NewRow, cif.ImageData.ProcImage, cif.ImageData.Filename);
-					
-					//コマンドを実行
-					//LapDragInCommand command = new LapDragInCommand(dgvLap.Rows, NewRow, ImageArray, cif.ImageData);
-					//undoManager.Action(command);
-					
-					CheckUndoRedo();
-					//AddLapArray(cif.ImageData);
-					MakeViewBitmap();
-				}
-			}else if( mid.DialogResult == DialogResult.No){
-				if(e.Data.GetDataPresent(typeof(CharaImageForm))){
-					cif = (CharaImageForm)e.Data.GetData(typeof(CharaImageForm));
-					//System.Diagnostics.Debug.WriteLine("Window個数="+mf.MdiChildren.Length.ToString());
-					foreach (Form cdif in mf.MdiChildren) {
-						if(cdif.Name == "CharaImageForm"){
-							//System.Diagnostics.Debug.WriteLine("WindowName = " + cdif.Text);
-							if(cif.Left == cdif.Left){
-								CharaImageForm m_cif;
-								m_cif = (CharaImageForm)cdif;
-								
-								if(!CheckLapList(m_cif.ImageData.Filename)){
-									//DataGridView用のデータを作成
-									DataGridViewRow NewRow = new DataGridViewRow();
-									//NewRow.CreateCells(dgvLap);
-									IntoDataGridView(NewRow, m_cif.ImageData.ProcImage, m_cif.ImageData.Filename);
-									
-									//コマンドを実行
-									//LapDragInCommand command = new LapDragInCommand(dgvLap.Rows, NewRow, ImageArray, m_cif.ImageData);
-									//undoManager.Action(command);
-									
-									CheckUndoRedo();
-									//AddLapArray(cif.ImageData);
-									MakeViewBitmap();
-									System.Diagnostics.Debug.WriteLine(m_cif.Text);
-								}
-							}
-						}
-					}
-				}
-			}else if( mid.DialogResult == DialogResult.OK){
-				List<WindowSort> winList = new List<WindowSort>(new WindowSort[0] );
-				int i=0;
-				//現在画面に表示されている、子ウィンドウから、CharaImageFormをすべてWindowSortに入れる。
-				foreach (Form cdif in mf.MdiChildren) {
-					if(cdif.Name == "CharaImageForm"){
-						winList.Add(new WindowSort(i, cdif.Left, cdif.Top, cdif.Name, cdif.Text));
-					}
-					i++;
-				}
-								
-				//比較関数を指定してソート
-				winList.Sort(CompareWindow);
-								
-				foreach (WindowSort s in winList) {
-					CharaImageForm m_cif;
-					m_cif = (CharaImageForm)mf.MdiChildren[s.ID];
-					//System.Diagnostics.Debug.WriteLine("WindowName = " + m_cif.Text);
-					
-					if(!CheckLapList(m_cif.ImageData.Filename)){
-						//DataGridView用のデータを作成
-						DataGridViewRow NewRow = new DataGridViewRow();
-						//NewRow.CreateCells(dgvLap);
-						IntoDataGridView(NewRow, m_cif.ImageData.ProcImage, m_cif.ImageData.Filename);
-						
-						//コマンドを実行
-						//LapDragInCommand command = new LapDragInCommand(dgvLap.Rows, NewRow, ImageArray, m_cif.ImageData);
-						//undoManager.Action(command);
-									
-						CheckUndoRedo();
-						//AddLapArray(cif.ImageData);
-						MakeViewBitmap();
-						System.Diagnostics.Debug.WriteLine(m_cif.Text);
-					}
-				}
-			}
-			LapImageBox.Invalidate();
-			**/
-		}
-		#endregion
-
 		#region 矩形を描画
 		void DrawFrame(Bitmap bmp, ImageDataClass idc)
 		{
@@ -803,12 +696,14 @@ namespace CharacomImagerPro
 
 			imageEffect.BitmapWhitening(viewBitmap);
 
-			/**
+			/***
 			for(int j=0; j<GroupNum; j++)
             {
-				for(int i=0; i < ((DataGridView)DataGridViews[j]).RowCount; i++)
+				for(int i=0; i < ((ArrayList)features[j]).Count; i++)
                 {
-
+					
+					FeatureClass fc = 
+					
                 }
 				((DataGridView)DataGridViews)[1,i]
             }
@@ -851,7 +746,7 @@ namespace CharacomImagerPro
 		#endregion
 
 		#region DataGridViewへの追加データを作成
-		void IntoDataGridView(DataGridViewRow dgvRow, Bitmap bmp, string FileName, int num)
+		void IntoDataGridView(DataGridViewRow dgvRow, Bitmap bmp, string FileName, ArrayList fcs, int num)
 		{
 			Bitmap inBmp = new Bitmap(bmp.Width, bmp.Height);
 			imageEffect.BitmapWhitening(inBmp);
@@ -860,7 +755,9 @@ namespace CharacomImagerPro
 			dgvRow.Cells[0].Value = num.ToString();
 			dgvRow.Cells[1].Value = inBmp;
 			dgvRow.Cells[2].Value = Path.GetFileName(FileName);
-			dgvRow.Cells[4].Value = imageEffect.GetAspect(inBmp);
+			dgvRow.Cells[3].Value = ((FeatureClass)fcs[num-1]).R;
+			dgvRow.Cells[4].Value = ((FeatureClass)fcs[num-1]).Ratio;
+
 		}
 		#endregion
 
@@ -890,6 +787,70 @@ namespace CharacomImagerPro
 		}
 		#endregion
 
+		#region DataGridViewを削除する
+		void DeleteControl()
+		{
+			if (GroupNum < 1) return;
+			int i, j;
+
+			for (i = GroupNum - 1; i >= 0; i--)
+			{
+				if (((CheckBox)chkDeletes[i]).Checked == true)
+				{
+					//MessageBox.Show( i.ToString() );
+					for (j = GroupNum - 1; j > i; j--)
+					{
+						//そこから後ろのchk,lbl,txt,dgvを左に移動
+						((CheckBox)chkDeletes[j]).Location = ((CheckBox)chkDeletes[j - 1]).Location;
+						((Label)lblCharas[j]).Location = ((Label)lblCharas[j - 1]).Location;
+						((Panel)colorPanels[j]).Location = ((Panel)colorPanels[j - 1]).Location;
+						((DataGridView)DataGridViews[j]).Location = ((DataGridView)DataGridViews[j - 1]).Location;
+						//Name,Textをひとつずつ右のものに変更
+						((CheckBox)chkDeletes[j]).Name = ((CheckBox)chkDeletes[j - 1]).Name;
+						((Label)lblCharas[j]).Name = ((Label)lblCharas[j - 1]).Name;
+						((Label)lblCharas[j]).Text = ((Label)lblCharas[j - 1]).Text;
+						((Panel)colorPanels[j]).Name = ((Panel)colorPanels[j - 1]).Name;
+						((DataGridView)DataGridViews[j]).Name = ((DataGridView)DataGridViews[j - 1]).Name;
+
+					}
+					//もともとの位置のchk,lbl,txt,dgvを削除
+					((CheckBox)chkDeletes[i]).Dispose();
+					chkDeletes.RemoveAt(i);
+					((Label)lblCharas[i]).Dispose();
+					lblCharas.RemoveAt(i);
+					((Panel)colorPanels[i]).Dispose();
+					colorPanels.RemoveAt(i);
+					((DataGridView)DataGridViews[i]).Dispose();
+					DataGridViews.RemoveAt(i);
+					//特徴データを削除
+					features.RemoveAt(i);
+
+					//ボタン類を削除
+					((Button)btnUps[btnUps.Count - 1]).Dispose();
+					btnUps.RemoveAt(btnUps.Count - 1);
+					((Button)btnDowns[btnDowns.Count - 1]).Dispose();
+					btnDowns.RemoveAt(btnDowns.Count - 1);
+					((Button)btnDeletes[btnDeletes.Count - 1]).Dispose();
+					btnDeletes.RemoveAt(btnDeletes.Count - 1);
+					if (btnLefts.Count > 0)
+					{
+						((Button)btnLefts[btnLefts.Count - 1]).Dispose();
+						btnLefts.RemoveAt(btnLefts.Count - 1);
+					}
+					//((Button)btnRights[btnRights.Count - 1]).Dispose();
+					//btnRights.RemoveAt(btnRights.Count - 1);
+
+					GroupNum--;
+				}
+			}
+
+			MakeViewBitmap();
+			LapImageBox.Invalidate();
+			MakeGraph();
+			GraphImage.Invalidate();
+		}
+		#endregion
+
 		#region ひとつ上へボタン処理
 		void UpDownButtonProc(DataGridView dgv, ArrayList feature, int CurrentIndex, int NextIndex)
 		{
@@ -897,18 +858,22 @@ namespace CharacomImagerPro
 			string _filename;
 			Bitmap _bmp;
 			string _r;
+			string _ratio;
 
 			_bmp = (Bitmap)dgv.Rows[CurrentIndex].Cells[1].Value;
-			_filename = (string)dgv.Rows[CurrentIndex].Cells[2].Value;
-			_r = (string)dgv.Rows[CurrentIndex].Cells[3].Value;
+			_filename = dgv.Rows[CurrentIndex].Cells[2].Value.ToString();
+			_r = dgv.Rows[CurrentIndex].Cells[3].Value.ToString();
+			_ratio = dgv.Rows[CurrentIndex].Cells[4].Value.ToString();
 
 			dgv.Rows[CurrentIndex].Cells[1].Value = dgv.Rows[NextIndex].Cells[1].Value;
 			dgv.Rows[CurrentIndex].Cells[2].Value = dgv.Rows[NextIndex].Cells[2].Value;
 			dgv.Rows[CurrentIndex].Cells[3].Value = dgv.Rows[NextIndex].Cells[3].Value;
+			dgv.Rows[CurrentIndex].Cells[4].Value = dgv.Rows[NextIndex].Cells[4].Value;
 
 			dgv.Rows[NextIndex].Cells[1].Value = _bmp;
 			dgv.Rows[NextIndex].Cells[2].Value = _filename;
 			dgv.Rows[NextIndex].Cells[3].Value = _r;
+			dgv.Rows[NextIndex].Cells[4].Value = _ratio;
 
 			dgv.CurrentCell = dgv[0, NextIndex];
 			//featuresを入れ替え
@@ -985,11 +950,10 @@ namespace CharacomImagerPro
 			dgv.Rows.RemoveAt(CurrentIndex);
 			//featureを削除
 			feature.RemoveAt(CurrentIndex);
-			MakeR(feature, dgv);
+			MakeR(feature);
 			//dgvLegendUpDownCheck(0, "");
 		}
 		#endregion
-
 
 		#region 削除ボタン
 		//2021.09.19 D.Honjyou
@@ -1067,14 +1031,14 @@ namespace CharacomImagerPro
 		}
 		#endregion
 
-		#region ズーム
+		#region ズームボタン
 		void BtnZoomClick(object sender, EventArgs e)
 		{
 			MenuZoomClick(sender, e);
 		}
 		#endregion
 
-		#region ズーム
+		#region ズームコンボボックス
 		void ComboZoomSelectedIndexChanged(object sender, EventArgs e)
 		{
 			LapImageBox.Invalidate();
@@ -1174,15 +1138,64 @@ namespace CharacomImagerPro
 			ImageArray = (ArrayList)bf.Deserialize(fs);
 			features = (ArrayList)bf.Deserialize(fs);
 
-			int j;
-			for (j = 0; j < features.Count; j++)
+			fs.Close();
+			fs.Dispose();
+
+			
+			//2021.10.26 D.Honjyou
+			//重ね合せのDataGridViewを一旦削除
+			for (int i = GroupNum - 1; i >= 0; i--)
 			{
-				foreach (FeatureClass fc in (ArrayList)features[j])
+				//もともとの位置のchk,lbl,txt,dgvを削除
+				((CheckBox)chkDeletes[i]).Dispose();
+				chkDeletes.RemoveAt(i);
+				((Label)lblCharas[i]).Dispose();
+				lblCharas.RemoveAt(i);
+				((Panel)colorPanels[i]).Dispose();
+				colorPanels.RemoveAt(i);
+				((DataGridView)DataGridViews[i]).Dispose();
+				DataGridViews.RemoveAt(i);
+				
+				//ボタン類を削除
+				((Button)btnUps[i]).Dispose();
+				btnUps.RemoveAt(i);
+				((Button)btnDowns[i]).Dispose();
+				btnDowns.RemoveAt(i);
+				((Button)btnDeletes[i]).Dispose();
+				btnDeletes.RemoveAt(i);
+				
+				//((Button)btnRights[btnRights.Count - 1]).Dispose();
+				//btnRights.RemoveAt(btnRights.Count - 1);
+
+				GroupNum--;
+			}
+			
+			GroupNum = 0;
+			System.Diagnostics.Debug.WriteLine($"FeaturesNum={GroupNum}");
+			for(int i = 0; i < features.Count; i++)
+            {
+				System.Diagnostics.Debug.WriteLine($"AddControl {i}, featuresCount={features.Count}");
+				AddControl();
+				int n = 1;
+
+				//DataGridView用のデータを作成
+				foreach (FeatureClass fc in (ArrayList)features[i])
 				{
-					System.Diagnostics.Debug.WriteLine($"{fc.FileName} ->R:{fc.R},Ratio:{fc.Ratio}");
+					DataGridViewRow NewRow = new DataGridViewRow();
+					NewRow.CreateCells((DataGridView)DataGridViews[i]);
+					IntoDataGridView(NewRow, fc.SrcBitmap, Path.GetFileName(fc.FileName), (ArrayList)features[i], n);
+					((DataGridView)DataGridViews[i]).Rows.Add(NewRow);
+					((Panel)colorPanels[i]).BackColor = fc.ViewColor;
+					System.Diagnostics.Debug.WriteLine($"AddRow {((DataGridView)DataGridViews[i]).Rows.Count}");
+					n++;
 				}
+
 			}
 
+			MakeViewBitmap();
+			LapImageBox.Invalidate();
+			MakeGraph();
+			GraphImage.Invalidate();
 			/****
 			dgvLap.Rows.Clear();
 			
@@ -1344,239 +1357,6 @@ namespace CharacomImagerPro
 				}
 
 			}
-
-
-			#region	削除予定
-
-			/**
-			ISeriesCandleChart sr;      //対照資料最大最小ボックス
-										//ISeriesXYPlot  sr2;		
-			ISeriesCandleChart sr2; //対照資料生データプロット
-			ISeriesXYPlot sr3;          //対照資料平均値プロット
-			ISeriesCandleChart sr4; //対照資料平均除外生データプロット
-			double max, min;
-			Color c;
-			Pen linePen = new Pen(Color.Blue, 2);
-
-			//対照資料
-			if (cmbReferenceColor.SelectedIndex < 0)
-			{
-				c = Color.Red;
-			}
-			else
-			{
-				c = setup.DisplayColor[cmbReferenceColor.SelectedIndex];
-			}
-			sr = graph.CreateSeries(DusGraph.ePlotType.CandleChart).asCandleChart;
-			sr.NegativeBrush = new SolidBrush(Color.FromArgb(128, c));
-			sr.PositiveBrush = new SolidBrush(Color.FromArgb(128, c));
-			sr.BarWidth = 30;
-			sr.Pen = new Pen(c);
-			sr3 = graph.CreateSeries(DusGraph.ePlotType.Line).asXYPlot;
-			if (chkReferenceAve.Checked)
-			{
-				//平均グラフを作成
-				sr3.Mark.Visible = true;
-				sr3.Mark.Type = DusGraph.ePlotMarkType.Star;
-				sr3.Mark.Brush = new SolidBrush(c);
-				sr3.Mark.Width = 8;
-				sr3.Mark.Height = 8;
-				sr3.Title = _referene.Title;
-				//sr2.Mark.NumCorners = 8;
-
-			}
-
-			int i = 0;
-			foreach (RRangeClass rc in _referene.Charas)
-			{
-
-				//最大最少を表示
-				if (rc.MinR != 500.0 || rc.MaxR != 0.00)
-				{
-					min = rc.MinR;
-					max = rc.MaxR;
-					// new ST_CandlePoint( Ｘ値, 始値, 終値, 高値, 安値 )
-					sr.Data.Add(new ST_CandlePoint(i, min, max, min, min));
-				}
-				sr2 = graph.CreateSeries(DusGraph.ePlotType.CandleChart).asCandleChart;
-				sr2.BarWidth = 3;
-				sr2.Pen = new Pen(c, 3);
-				//平均グラフにプロットを挿入
-				if (chkReferenceAve.Checked)
-				{
-					linePen = new Pen(c, 2);
-					linePen.DashStyle = DashStyle.Solid;
-					sr3.Mark.Border.Pen = new Pen(c, 1);
-					sr3.asLine.Pen = linePen;
-					sr3.Data.Add(new ST_PlotPoint(i, rc.AveR2));
-				}
-				foreach (double R in rc.ItemsR)
-				{
-					sr2.Data.Add(new ST_CandlePoint(i, R, R, R, R));
-				}
-				i++;
-				
-			}
-			//if(chkReferenceRange.Checked == true) graph.Series.Add( sr );
-			//if (chkReferenceAve.Checked) graph.Series.Add(sr3);
-
-			/****
-			if (chkReferenceData.Checked)
-			{
-				//
-				// 三崎さんからの要望により、キャンドルグラフに変更 2012.06.05
-				// →三崎さんからの要望により、平均除外をプロットするに変更 2013.11.04
-				// 
-				//R2グラフを作成
-				for (i = 0; i < _referene.MaxLength; i++)
-				{
-					sr4 = graph.CreateSeries(DusGraph.ePlotType.CandleChart).asCandleChart;
-					int j = 0;
-					foreach (RRangeClass rc in _referene.Charas)
-					{
-						if (i < rc.ItemsR2.Count)
-						{
-							//sr4.Title = rc.DocumentTitles[i].ToString() + "(平均除外)";
-							//c = (Color)rc.CharaColors[i];
-							//sr4.Data.Add( new ST_PlotPoint(j, (double)rc.ItemsR2[i]) );
-							sr4.Data.Add(new ST_CandlePoint(j, (double)rc.ItemsR2[i], (double)rc.ItemsR2[i], (double)rc.ItemsR2[i], (double)rc.ItemsR2[i]));
-						}
-						j++;
-					}
-					sr4.BarWidth = 3;
-					sr4.Pen = new Pen(c, 3);
-
-					
-					graph.Series.Add(sr4);
-				}
-			}
-
-			if (chkReferenceRange.Checked)
-			{
-				sr = graph.CreateSeries(DusGraph.ePlotType.CandleChart).asCandleChart;
-				sr.NegativeBrush = new SolidBrush(Color.FromArgb(64, c));
-				sr.PositiveBrush = new SolidBrush(Color.FromArgb(64, c));
-				sr.BarWidth = 30;
-				sr.Pen = new Pen(c);
-				i = 0;
-				foreach (RRangeClass rc in _referene.Charas)
-				{
-					if (rc.MinR2 != 500.0 || rc.MaxR2 != 0.0)
-					{
-						min = rc.MinR2;
-						max = rc.MaxR2;
-						// new ST_CandlePoint( Ｘ値, 始値, 終値, 高値, 安値 )
-						sr.Data.Add(new ST_CandlePoint(i, min, max, min, min));
-					}
-					i++;
-				}
-				graph.Series.Add(sr);
-			}
-			//鑑定資料
-			//平均のグラフ設定
-			if (cmbJudgeColor.SelectedIndex < 0)
-			{
-				c = Color.Red;
-			}
-			else
-			{
-				c = setup.DisplayColor[cmbJudgeColor.SelectedIndex];
-			}
-			//if(cmbJudgeColor.Text == ""){
-			//	c = Color.Blue;
-			//}else{
-			//	c = GetColorFromName(cmbJudgeColor.Text);
-			//}
-			//c = Color.DarkGoldenrod;
-			if (chkJudgeAve.Checked)
-			{
-				sr3 = graph.CreateSeries(DusGraph.ePlotType.Line).asXYPlot;
-				sr3.Mark.Visible = true;
-				sr3.Mark.Type = DusGraph.ePlotMarkType.Star;
-				sr3.Mark.Brush = new SolidBrush(c);
-				sr3.Mark.Width = 8;
-				sr3.Mark.Height = 8;
-				sr3.Title = "鑑定資料平均";
-				sr3.Mark.Border.Pen = new Pen(c, 1);
-				linePen = new Pen(c, 2);
-				linePen.DashStyle = DashStyle.Dot;
-				sr3.asLine.Pen = linePen;
-				//平均のグラフプロット
-				i = 0;
-				foreach (RRangeClass rrc in _judge.Charas)
-				{
-					//平均グラフにプロットを挿入
-					sr3.Data.Add(new ST_PlotPoint(i, rrc.AveR));
-					i++;
-				}
-			}
-			if (chkJudgeAve.Checked) graph.Series.Add(sr3);
-			//最大最小ボックスをプロット
-			if (chkJudgeRange.Checked == true)
-			{
-				sr = graph.CreateSeries(DusGraph.ePlotType.CandleChart).asCandleChart;
-				sr.NegativeBrush = new SolidBrush(Color.FromArgb(128, c));
-				sr.PositiveBrush = new SolidBrush(Color.FromArgb(128, c));
-				sr.BarWidth = 30;
-				sr.Pen = new Pen(c);
-				i = 0;
-				foreach (RRangeClass rc in _judge.Charas)
-				{
-					if (rc.MinR != 500.0 && rc.MaxR != 0.0)
-					{
-						min = rc.MinR;
-						max = rc.MaxR;
-						// new ST_CandlePoint( Ｘ値, 始値, 終値, 高値, 安値 )
-						sr.Data.Add(new ST_CandlePoint(i, min, max, min, min));
-					}
-					i++;
-				}
-				graph.Series.Add(sr);
-			}
-
-			//生データをプロット
-			if (chkJudgeData.Checked)
-			{
-				for (i = 0; i < _judge.MaxLength; i++)
-				{
-					sr3 = graph.CreateSeries(DusGraph.ePlotType.Line).asXYPlot;
-					foreach (RRangeClass rrc in _judge.Charas)
-					{
-						if (rrc.ItemsR.Count > i)
-						{
-							sr3.Title = (string)rrc.DocumentTitles[i];
-							c = (Color)rrc.CharaColors[i];
-							//System.Diagnostics.Debug.WriteLine(c.ToString());
-							sr3.Mark.Brush = new SolidBrush(c);
-							sr3.Mark.Border.Pen = new Pen(c, 1);
-							sr3.asLine.Pen = new Pen(c, 2);
-						}
-					}
-					sr3.Mark.Visible = true;
-					sr3.Mark.Type = DusGraph.ePlotMarkType.Star;
-					sr3.Mark.Brush = new SolidBrush(c);
-					sr3.Mark.Width = 8;
-					sr3.Mark.Height = 8;
-
-					//sr3.Title = (string)((RRangeClass)_judge.Charas[0]).DocumentTitles[i];
-					sr3.Mark.Border.Pen = new Pen(c, 1);
-					sr3.asLine.Pen = new Pen(c, 2);
-
-					int j = 0;
-					foreach (RRangeClass rrc in _judge.Charas)
-					{
-						if (i < rrc.ItemsR.Count)
-						{
-							sr3.Data.Add(new ST_PlotPoint(j, (double)rrc.ItemsR[i]));
-							//System.Diagnostics.Debug.WriteLine(rrc.ItemsR[i].ToString());
-						}
-						j++;
-					}
-					graph.Series.Add(sr3);
-				}
-			}
-			***/
-			#endregion
 		}
 
 		// 2021.10.24 D.Honjyou
@@ -1739,241 +1519,9 @@ namespace CharacomImagerPro
 
 			}
 
-
-			#region	削除予定
-
-			/**
-			ISeriesCandleChart sr;      //対照資料最大最小ボックス
-										//ISeriesXYPlot  sr2;		
-			ISeriesCandleChart sr2; //対照資料生データプロット
-			ISeriesXYPlot sr3;          //対照資料平均値プロット
-			ISeriesCandleChart sr4; //対照資料平均除外生データプロット
-			double max, min;
-			Color c;
-			Pen linePen = new Pen(Color.Blue, 2);
-
-			//対照資料
-			if (cmbReferenceColor.SelectedIndex < 0)
-			{
-				c = Color.Red;
-			}
-			else
-			{
-				c = setup.DisplayColor[cmbReferenceColor.SelectedIndex];
-			}
-			sr = graph.CreateSeries(DusGraph.ePlotType.CandleChart).asCandleChart;
-			sr.NegativeBrush = new SolidBrush(Color.FromArgb(128, c));
-			sr.PositiveBrush = new SolidBrush(Color.FromArgb(128, c));
-			sr.BarWidth = 30;
-			sr.Pen = new Pen(c);
-			sr3 = graph.CreateSeries(DusGraph.ePlotType.Line).asXYPlot;
-			if (chkReferenceAve.Checked)
-			{
-				//平均グラフを作成
-				sr3.Mark.Visible = true;
-				sr3.Mark.Type = DusGraph.ePlotMarkType.Star;
-				sr3.Mark.Brush = new SolidBrush(c);
-				sr3.Mark.Width = 8;
-				sr3.Mark.Height = 8;
-				sr3.Title = _referene.Title;
-				//sr2.Mark.NumCorners = 8;
-
-			}
-
-			int i = 0;
-			foreach (RRangeClass rc in _referene.Charas)
-			{
-
-				//最大最少を表示
-				if (rc.MinR != 500.0 || rc.MaxR != 0.00)
-				{
-					min = rc.MinR;
-					max = rc.MaxR;
-					// new ST_CandlePoint( Ｘ値, 始値, 終値, 高値, 安値 )
-					sr.Data.Add(new ST_CandlePoint(i, min, max, min, min));
-				}
-				sr2 = graph.CreateSeries(DusGraph.ePlotType.CandleChart).asCandleChart;
-				sr2.BarWidth = 3;
-				sr2.Pen = new Pen(c, 3);
-				//平均グラフにプロットを挿入
-				if (chkReferenceAve.Checked)
-				{
-					linePen = new Pen(c, 2);
-					linePen.DashStyle = DashStyle.Solid;
-					sr3.Mark.Border.Pen = new Pen(c, 1);
-					sr3.asLine.Pen = linePen;
-					sr3.Data.Add(new ST_PlotPoint(i, rc.AveR2));
-				}
-				foreach (double R in rc.ItemsR)
-				{
-					sr2.Data.Add(new ST_CandlePoint(i, R, R, R, R));
-				}
-				i++;
-				
-			}
-			//if(chkReferenceRange.Checked == true) graph.Series.Add( sr );
-			//if (chkReferenceAve.Checked) graph.Series.Add(sr3);
-
-			/****
-			if (chkReferenceData.Checked)
-			{
-				//
-				// 三崎さんからの要望により、キャンドルグラフに変更 2012.06.05
-				// →三崎さんからの要望により、平均除外をプロットするに変更 2013.11.04
-				// 
-				//R2グラフを作成
-				for (i = 0; i < _referene.MaxLength; i++)
-				{
-					sr4 = graph.CreateSeries(DusGraph.ePlotType.CandleChart).asCandleChart;
-					int j = 0;
-					foreach (RRangeClass rc in _referene.Charas)
-					{
-						if (i < rc.ItemsR2.Count)
-						{
-							//sr4.Title = rc.DocumentTitles[i].ToString() + "(平均除外)";
-							//c = (Color)rc.CharaColors[i];
-							//sr4.Data.Add( new ST_PlotPoint(j, (double)rc.ItemsR2[i]) );
-							sr4.Data.Add(new ST_CandlePoint(j, (double)rc.ItemsR2[i], (double)rc.ItemsR2[i], (double)rc.ItemsR2[i], (double)rc.ItemsR2[i]));
-						}
-						j++;
-					}
-					sr4.BarWidth = 3;
-					sr4.Pen = new Pen(c, 3);
-
-					
-					graph.Series.Add(sr4);
-				}
-			}
-
-			if (chkReferenceRange.Checked)
-			{
-				sr = graph.CreateSeries(DusGraph.ePlotType.CandleChart).asCandleChart;
-				sr.NegativeBrush = new SolidBrush(Color.FromArgb(64, c));
-				sr.PositiveBrush = new SolidBrush(Color.FromArgb(64, c));
-				sr.BarWidth = 30;
-				sr.Pen = new Pen(c);
-				i = 0;
-				foreach (RRangeClass rc in _referene.Charas)
-				{
-					if (rc.MinR2 != 500.0 || rc.MaxR2 != 0.0)
-					{
-						min = rc.MinR2;
-						max = rc.MaxR2;
-						// new ST_CandlePoint( Ｘ値, 始値, 終値, 高値, 安値 )
-						sr.Data.Add(new ST_CandlePoint(i, min, max, min, min));
-					}
-					i++;
-				}
-				graph.Series.Add(sr);
-			}
-			//鑑定資料
-			//平均のグラフ設定
-			if (cmbJudgeColor.SelectedIndex < 0)
-			{
-				c = Color.Red;
-			}
-			else
-			{
-				c = setup.DisplayColor[cmbJudgeColor.SelectedIndex];
-			}
-			//if(cmbJudgeColor.Text == ""){
-			//	c = Color.Blue;
-			//}else{
-			//	c = GetColorFromName(cmbJudgeColor.Text);
-			//}
-			//c = Color.DarkGoldenrod;
-			if (chkJudgeAve.Checked)
-			{
-				sr3 = graph.CreateSeries(DusGraph.ePlotType.Line).asXYPlot;
-				sr3.Mark.Visible = true;
-				sr3.Mark.Type = DusGraph.ePlotMarkType.Star;
-				sr3.Mark.Brush = new SolidBrush(c);
-				sr3.Mark.Width = 8;
-				sr3.Mark.Height = 8;
-				sr3.Title = "鑑定資料平均";
-				sr3.Mark.Border.Pen = new Pen(c, 1);
-				linePen = new Pen(c, 2);
-				linePen.DashStyle = DashStyle.Dot;
-				sr3.asLine.Pen = linePen;
-				//平均のグラフプロット
-				i = 0;
-				foreach (RRangeClass rrc in _judge.Charas)
-				{
-					//平均グラフにプロットを挿入
-					sr3.Data.Add(new ST_PlotPoint(i, rrc.AveR));
-					i++;
-				}
-			}
-			if (chkJudgeAve.Checked) graph.Series.Add(sr3);
-			//最大最小ボックスをプロット
-			if (chkJudgeRange.Checked == true)
-			{
-				sr = graph.CreateSeries(DusGraph.ePlotType.CandleChart).asCandleChart;
-				sr.NegativeBrush = new SolidBrush(Color.FromArgb(128, c));
-				sr.PositiveBrush = new SolidBrush(Color.FromArgb(128, c));
-				sr.BarWidth = 30;
-				sr.Pen = new Pen(c);
-				i = 0;
-				foreach (RRangeClass rc in _judge.Charas)
-				{
-					if (rc.MinR != 500.0 && rc.MaxR != 0.0)
-					{
-						min = rc.MinR;
-						max = rc.MaxR;
-						// new ST_CandlePoint( Ｘ値, 始値, 終値, 高値, 安値 )
-						sr.Data.Add(new ST_CandlePoint(i, min, max, min, min));
-					}
-					i++;
-				}
-				graph.Series.Add(sr);
-			}
-
-			//生データをプロット
-			if (chkJudgeData.Checked)
-			{
-				for (i = 0; i < _judge.MaxLength; i++)
-				{
-					sr3 = graph.CreateSeries(DusGraph.ePlotType.Line).asXYPlot;
-					foreach (RRangeClass rrc in _judge.Charas)
-					{
-						if (rrc.ItemsR.Count > i)
-						{
-							sr3.Title = (string)rrc.DocumentTitles[i];
-							c = (Color)rrc.CharaColors[i];
-							//System.Diagnostics.Debug.WriteLine(c.ToString());
-							sr3.Mark.Brush = new SolidBrush(c);
-							sr3.Mark.Border.Pen = new Pen(c, 1);
-							sr3.asLine.Pen = new Pen(c, 2);
-						}
-					}
-					sr3.Mark.Visible = true;
-					sr3.Mark.Type = DusGraph.ePlotMarkType.Star;
-					sr3.Mark.Brush = new SolidBrush(c);
-					sr3.Mark.Width = 8;
-					sr3.Mark.Height = 8;
-
-					//sr3.Title = (string)((RRangeClass)_judge.Charas[0]).DocumentTitles[i];
-					sr3.Mark.Border.Pen = new Pen(c, 1);
-					sr3.asLine.Pen = new Pen(c, 2);
-
-					int j = 0;
-					foreach (RRangeClass rrc in _judge.Charas)
-					{
-						if (i < rrc.ItemsR.Count)
-						{
-							sr3.Data.Add(new ST_PlotPoint(j, (double)rrc.ItemsR[i]));
-							//System.Diagnostics.Debug.WriteLine(rrc.ItemsR[i].ToString());
-						}
-						j++;
-					}
-					graph.Series.Add(sr3);
-				}
-			}
-			***/
-			#endregion
 		}
 
-		void MakeGraph()
+        void MakeGraph()
 		{
 			imageEffect.BitmapWhitening(GraphBmp);
 			
@@ -2280,20 +1828,7 @@ namespace CharacomImagerPro
 			y += f.Height + MarginY;
 			int bbHeight = 80;
 			int bbWidth = 80;
-			/**
-			for(int i=0; i<dgvLap.Rows.Count; i++){
-				Bitmap bb = new Bitmap(((Bitmap)dgvLap[0, i].Value).Width, ((Bitmap)dgvLap[0, i].Value).Height);
-				imageEffect.BitmapCopy((Bitmap)dgvLap[0, i].Value, bb);
-				imageEffect.BitmapDrawFrame(bb);
-				e.Graphics.DrawImage(bb, x + b.Width + MarginX, y, bbWidth, bbHeight);
-				RectangleF r = new RectangleF(x + b.Width + MarginX + bbWidth + MarginX, y, ex - (x + b.Width + MarginX + bbWidth + MarginX), bbHeight);
-				StringFormat sf = new StringFormat();
-				sf.Alignment = StringAlignment.Near;
-				sf.LineAlignment = StringAlignment.Center;
-				e.Graphics.DrawString((string)dgvLap[1, i].Value, f, Brushes.Black, r, sf);
-				y += bbHeight + MarginY;
-			}
-			**/
+			
 		}
 		#endregion
 		
@@ -2330,8 +1865,28 @@ namespace CharacomImagerPro
 
 
 
+
         #endregion
 
-        
+        private void dgvAddBtnClick(object sender, EventArgs e)
+        {
+			AddControl();
+			features.Add(new ArrayList());
+
+			MakeViewBitmap();
+			LapImageBox.Invalidate();
+			MakeGraph();
+			GraphImage.Invalidate();
+		}
+
+        private void dgvDelBtnClick(object sender, EventArgs e)
+        {
+			DeleteControl();
+
+			MakeViewBitmap();
+			LapImageBox.Invalidate();
+			MakeGraph();
+			GraphImage.Invalidate();
+		}
     }
 }
