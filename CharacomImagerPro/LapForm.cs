@@ -697,10 +697,20 @@ namespace CharacomImagerPro
 			//LapClass lc = new LapClass();
 			Bitmap white_image = new Bitmap(320, 320);
 			Bitmap srcimg = new Bitmap(320, 320);
-
+			int MaxCalcNum = 0;
 			imageEffect.BitmapWhitening(viewBitmap);
 
-			for(int j=0; j<GroupNum; j++)
+			for (int i=0; i<GroupNum; i++)
+            {
+				MaxCalcNum += ((ArrayList)ImageArray[i]).Count;
+            }
+
+			toolStripProgressBar1.Minimum = 0;
+			toolStripProgressBar1.Maximum = MaxCalcNum;
+			toolStripProgressBar1.Value = 0;
+			toolStripProgressBar1.Visible = true;
+
+			for (int j=0; j<GroupNum; j++)
             {
 				for(int i=0; i < ((ArrayList)ImageArray[j]).Count; i++)
                 {
@@ -723,38 +733,12 @@ namespace CharacomImagerPro
 					if (btnDrawFrame.Checked) DrawFrame(viewBitmap, idc);
 					if (btnGraviHou.Checked || btnGraviJun.Checked) DrawGravityLine(viewBitmap, idc);
 					if (btnSyaei.Checked) DrawProjection(viewBitmap, idc);
-
+					toolStripProgressBar1.Value += 1;
 				}
             }
-			
-			/**
-			for (int i = ImageArray.Count - 1; i >= 0; i--) {
-				idc = (ImageDataClass)ImageArray[i];
-				//2021.09.25 D.Honjyou
-				//原画像重ね合わせテスト
-				//if(btnChara.Checked) imageEffect.BitmapImposeCopy(viewBitmap, idc.ProcImage);
-				if (btnChara.Checked)
-				{
-					if (btnProc.Checked)
-					{
-						imageEffect.BitmapImposeCopy(viewBitmap, idc.ProcImage);
-					}
-					else
-					{
-						imageEffect.BitmapWhitening(srcimg);
-						imageEffect.BitmapStretchCopy(idc.SrcImageSmall, srcimg);
-						imageEffect.DotChange(srcimg, idc.DispColor);
-						imageEffect.BitmapImposeCopy(viewBitmap, srcimg);
-					}
-				}
 
-				//imageEffect.BitmapImposeCopy((Bitmap)dgvLap[0, i].Value, idc.ProcImage);
-				//dgvLap[1, i].Value = Path.GetFileName(idc.Filename);
-				if (btnDrawFrame.Checked) DrawFrame(viewBitmap, idc);
-				if (btnGraviHou.Checked || btnGraviJun.Checked) DrawGravityLine(viewBitmap, idc);
-				if (btnSyaei.Checked) DrawProjection(viewBitmap, idc);
-			}
-			**/
+			toolStripProgressBar1.Value = 0;
+			toolStripProgressBar1.Visible = false;
 		}
 		#endregion
 
@@ -1188,10 +1172,8 @@ namespace CharacomImagerPro
 			}
 			
 			GroupNum = 0;
-			System.Diagnostics.Debug.WriteLine($"FeaturesNum={features.Count} ImageArrayNum={ImageArray.Count}");
 			for(int i = 0; i < features.Count; i++)
             {
-				System.Diagnostics.Debug.WriteLine($"AddControl {i}, featuresCount={((ArrayList)features[i]).Count} ImageArrayCount={((ArrayList)ImageArray[i]).Count}");
 				AddControl();
 				int n = 1;
 
@@ -1214,23 +1196,10 @@ namespace CharacomImagerPro
 			LapImageBox.Invalidate();
 			MakeGraph();
 			GraphImage.Invalidate();
-			/****
-			dgvLap.Rows.Clear();
-			
-			foreach(ImageDataClass idc in ImageArray){
-				//DataGridView用のデータを作成
-				DataGridViewRow NewRow = new DataGridViewRow();
-				NewRow.CreateCells(dgvLap);
-				IntoDataGridView(NewRow, idc.ProcImage, idc.Filename);
-				dgvLap.Rows.Add(NewRow);
-			}
-			MakeViewBitmap();
-			LapImageBox.Invalidate();
-			
 			//最近使ったファイルに追加してもらう
 			//MainForm mf = (MainForm)this.MdiParent;
 			mf.AddRecentlyFile(fileName);
-			****/
+			
 		}
 		#endregion
 
