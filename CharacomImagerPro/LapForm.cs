@@ -1340,7 +1340,21 @@ namespace CharacomImagerPro
 					graph.Series.Add(series);
 
 					System.Diagnostics.Debug.WriteLine($"max = {MaxMinAve[0]} min = {MaxMinAve[1]} ave = {MaxMinAve[2]}");
-
+					//2021.12.28 D.Honjyou
+					//重ね合わせグラフにプロットを追加
+					foreach (FeatureClass f in (ArrayList)features[i])
+					{
+						ISeriesXYPlot sr = graph.CreateSeries(DusGraph.ePlotType.Line).asXYPlot;
+						sr.Mark.Visible = true;
+						sr.Mark.Type = DusGraph.ePlotMarkType.Circle;
+						sr.Mark.Border.Visible = false;
+						sr.Mark.Border.Pen = new Pen(f.ViewColor, 2);
+						sr.Mark.Width = 8;
+						sr.Mark.Height = 8;
+						sr.Mark.Brush = new SolidBrush(f.ViewColor);
+						sr.Data.Add(new ST_PlotPoint(0, f.R));
+						graph.Series.Add(sr);
+					}
 				}
 
 			}
@@ -1368,10 +1382,23 @@ namespace CharacomImagerPro
 				MajorInterval = 0.05;
 				MinorInterval = 0.05;
 			}
+
+			double a, b, axi;
+
+			a = Math.Abs(MaxMinAve[0] - 1.0);
+			b = Math.Abs(1.0 - MaxMinAve[1]);
+
+			axi = a;
+			if (a > b) axi = a;
+			if (b > a) axi = b;
 			
 			axis = graph.YAxis;
-			axis.Scale.Min = MaxMinAve[1] - 0.1;
-			axis.Scale.Max = MaxMinAve[0] + 0.1;
+			//axis.Scale.Min = MaxMinAve[1] - 0.1;
+			//axis.Scale.Max = MaxMinAve[0] + 0.1;
+			axis.Scale.Min = 1.0 - axi - 0.01;
+			axis.Scale.Max = axi + 1.01;
+
+			System.Diagnostics.Debug.WriteLine($"Scale ---> a = {a}, b = {b}, axi = {axi}");
 			//axis.Scale.Base = MaxMinAve[1];
 			axis.Ticks.Labels.LabelFormat = "0.00";
 			axis.Ticks.Labels.Interval = 1;
@@ -1501,7 +1528,23 @@ namespace CharacomImagerPro
 					graph.Series.Add(series);
 
 					System.Diagnostics.Debug.WriteLine($"max = {MaxMinAve[0]} min = {MaxMinAve[1]} ave = {MaxMinAve[2]}");
-
+					
+					//2021.12.28 D.Honjyou
+					//重ね合わせグラフにプロットを追加
+					foreach (FeatureClass f in (ArrayList)features[i])
+                    {
+						ISeriesXYPlot sr = graph.CreateSeries(DusGraph.ePlotType.Line).asXYPlot;
+						sr.Mark.Visible = true;
+						sr.Mark.Type = DusGraph.ePlotMarkType.Circle;
+						sr.Mark.Border.Visible = false;
+						sr.Mark.Border.Pen = new Pen(f.ViewColor, 2);
+						sr.Mark.Width = 8;
+						sr.Mark.Height = 8;
+						sr.Mark.Brush = new SolidBrush(f.ViewColor);
+						sr.Data.Add(new ST_PlotPoint(0, f.Ratio));
+						graph.Series.Add(sr);
+					}
+					
 				}
 
 			}
@@ -1876,5 +1919,38 @@ namespace CharacomImagerPro
 			MakeGraph();
 			GraphImage.Invalidate();
 		}
+
+		#region ウィンドウサイズの変更
+		//2021.12.28 D.Honjyou
+		//ウィンドウのリサイズに対応
+		private void LapForm_SizeChanged(object sender, EventArgs e)
+        {
+			panel2.Width = this.Width - 504 - 25;
+			panel2.Height = this.Height - 65 - 25;
+			GraphImage.Height = this.Height - 113 - 25;
+			GraphImage2.Height = this.Height - 113 - 25;
+			lblR.Top = this.Height - 78;
+			lblWH.Top = this.Height - 78;
+			lblRBottom.Top = this.Height - 95;
+			lblWHBottom.Top = this.Height - 95;
+			GraphImage.Invalidate();
+			GraphImage2.Invalidate();
+		}
+		#endregion
+
+		#region パネルサイズの変更
+		//2021.12.28 D.Honjyou
+		//ウィンドウのリサイズに対応
+		private void panel2_SizeChanged(object sender, EventArgs e)
+        {
+			for (int i = 0; i < GroupNum; i++)
+			{
+				((Button)btnUps[i]).Location = new Point(((Button)btnUps[i]).Location.X, panel2.Height - 50);
+				((Button)btnDowns[i]).Location = new Point(((Button)btnDowns[i]).Location.X, panel2.Height - 50);
+				((Button)btnDeletes[i]).Location = new Point(((Button)btnDeletes[i]).Location.X, panel2.Height - 50);
+				((DataGridView)DataGridViews[i]).Height = panel2.Height - 80;
+			}
+		}
+        #endregion
     }
 }

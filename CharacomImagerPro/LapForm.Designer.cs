@@ -103,6 +103,10 @@ namespace CharacomImagerPro
             this.lblWH = new System.Windows.Forms.Label();
             this.statusStripMain = new System.Windows.Forms.StatusStrip();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
+            this.lblWHTop = new System.Windows.Forms.Label();
+            this.lblWHBottom = new System.Windows.Forms.Label();
+            this.lblRTop = new System.Windows.Forms.Label();
+            this.lblRBottom = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LapImageBox)).BeginInit();
             this.SubMenu.SuspendLayout();
@@ -645,8 +649,9 @@ namespace CharacomImagerPro
             this.panel2.Location = new System.Drawing.Point(504, 25);
             this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(545, 322);
+            this.panel2.Size = new System.Drawing.Size(545, 320);
             this.panel2.TabIndex = 6;
+            this.panel2.SizeChanged += new System.EventHandler(this.panel2_SizeChanged);
             // 
             // imageList1
             // 
@@ -661,10 +666,10 @@ namespace CharacomImagerPro
             // GraphImage
             // 
             this.GraphImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.GraphImage.Location = new System.Drawing.Point(326, 25);
+            this.GraphImage.Location = new System.Drawing.Point(326, 41);
             this.GraphImage.Margin = new System.Windows.Forms.Padding(2);
             this.GraphImage.Name = "GraphImage";
-            this.GraphImage.Size = new System.Drawing.Size(85, 304);
+            this.GraphImage.Size = new System.Drawing.Size(85, 272);
             this.GraphImage.TabIndex = 7;
             this.GraphImage.TabStop = false;
             this.GraphImage.Paint += new System.Windows.Forms.PaintEventHandler(this.GraphImagePaint);
@@ -672,10 +677,10 @@ namespace CharacomImagerPro
             // GraphImage2
             // 
             this.GraphImage2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.GraphImage2.Location = new System.Drawing.Point(415, 25);
+            this.GraphImage2.Location = new System.Drawing.Point(415, 41);
             this.GraphImage2.Margin = new System.Windows.Forms.Padding(2);
             this.GraphImage2.Name = "GraphImage2";
-            this.GraphImage2.Size = new System.Drawing.Size(85, 304);
+            this.GraphImage2.Size = new System.Drawing.Size(85, 272);
             this.GraphImage2.TabIndex = 8;
             this.GraphImage2.TabStop = false;
             this.GraphImage2.Paint += new System.Windows.Forms.PaintEventHandler(this.GraphImage2_Paint);
@@ -683,7 +688,7 @@ namespace CharacomImagerPro
             // lblR
             // 
             this.lblR.AutoSize = true;
-            this.lblR.Location = new System.Drawing.Point(336, 331);
+            this.lblR.Location = new System.Drawing.Point(336, 332);
             this.lblR.Name = "lblR";
             this.lblR.Size = new System.Drawing.Size(65, 12);
             this.lblR.TabIndex = 9;
@@ -714,12 +719,56 @@ namespace CharacomImagerPro
             this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 16);
             this.toolStripProgressBar1.Visible = false;
             // 
+            // lblWHTop
+            // 
+            this.lblWHTop.AutoSize = true;
+            this.lblWHTop.Font = new System.Drawing.Font("MS UI Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.lblWHTop.Location = new System.Drawing.Point(461, 28);
+            this.lblWHTop.Name = "lblWHTop";
+            this.lblWHTop.Size = new System.Drawing.Size(27, 11);
+            this.lblWHTop.TabIndex = 0;
+            this.lblWHTop.Text = "縦長";
+            // 
+            // lblWHBottom
+            // 
+            this.lblWHBottom.AutoSize = true;
+            this.lblWHBottom.Font = new System.Drawing.Font("MS UI Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.lblWHBottom.Location = new System.Drawing.Point(461, 315);
+            this.lblWHBottom.Name = "lblWHBottom";
+            this.lblWHBottom.Size = new System.Drawing.Size(27, 11);
+            this.lblWHBottom.TabIndex = 12;
+            this.lblWHBottom.Text = "横長";
+            // 
+            // lblRTop
+            // 
+            this.lblRTop.AutoSize = true;
+            this.lblRTop.Font = new System.Drawing.Font("MS UI Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.lblRTop.Location = new System.Drawing.Point(368, 27);
+            this.lblRTop.Name = "lblRTop";
+            this.lblRTop.Size = new System.Drawing.Size(25, 11);
+            this.lblRTop.TabIndex = 13;
+            this.lblRTop.Text = "近い";
+            // 
+            // lblRBottom
+            // 
+            this.lblRBottom.AutoSize = true;
+            this.lblRBottom.Font = new System.Drawing.Font("MS UI Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.lblRBottom.Location = new System.Drawing.Point(368, 315);
+            this.lblRBottom.Name = "lblRBottom";
+            this.lblRBottom.Size = new System.Drawing.Size(25, 11);
+            this.lblRBottom.TabIndex = 14;
+            this.lblRBottom.Text = "遠い";
+            // 
             // LapForm
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1060, 371);
+            this.Controls.Add(this.lblRBottom);
+            this.Controls.Add(this.lblRTop);
+            this.Controls.Add(this.lblWHBottom);
+            this.Controls.Add(this.lblWHTop);
             this.Controls.Add(this.statusStripMain);
             this.Controls.Add(this.lblWH);
             this.Controls.Add(this.lblR);
@@ -728,14 +777,13 @@ namespace CharacomImagerPro
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.panel1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "LapForm";
             this.Text = "重ね合わせ";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LapFormFormClosing);
             this.Load += new System.EventHandler(this.LapFormLoad);
+            this.SizeChanged += new System.EventHandler(this.LapForm_SizeChanged);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LapImageBox)).EndInit();
@@ -815,5 +863,9 @@ namespace CharacomImagerPro
         private System.Windows.Forms.Label lblWH;
         private System.Windows.Forms.StatusStrip statusStripMain;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
+        private System.Windows.Forms.Label lblWHTop;
+        private System.Windows.Forms.Label lblWHBottom;
+        private System.Windows.Forms.Label lblRTop;
+        private System.Windows.Forms.Label lblRBottom;
     }
 }
