@@ -392,7 +392,7 @@ namespace CharacomImagerPro
             this.btnCopy.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnCopy.Name = "btnCopy";
             this.btnCopy.Size = new System.Drawing.Size(24, 24);
-            this.btnCopy.Text = "toolStripButton1";
+            this.btnCopy.Text = "コピー";
             this.btnCopy.ToolTipText = "コピー";
             this.btnCopy.Click += new System.EventHandler(this.BtnCopyClick);
             // 
@@ -413,7 +413,7 @@ namespace CharacomImagerPro
             this.btnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(24, 24);
-            this.btnSave.Text = "toolStripButton2";
+            this.btnSave.Text = "画像として保存";
             this.btnSave.ToolTipText = "画像として保存";
             this.btnSave.Click += new System.EventHandler(this.BtnSaveClick);
             // 
@@ -457,7 +457,7 @@ namespace CharacomImagerPro
             this.btnAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(24, 24);
-            this.btnAdd.Text = "toolStripButton1";
+            this.btnAdd.Text = "列を追加";
             this.btnAdd.Click += new System.EventHandler(this.dgvAddBtnClick);
             // 
             // btnDel
@@ -467,7 +467,7 @@ namespace CharacomImagerPro
             this.btnDel.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnDel.Name = "btnDel";
             this.btnDel.Size = new System.Drawing.Size(24, 24);
-            this.btnDel.Text = "toolStripButton2";
+            this.btnDel.Text = "列を削除";
             this.btnDel.Click += new System.EventHandler(this.dgvDelBtnClick);
             // 
             // toolStripSeparator5
@@ -482,7 +482,7 @@ namespace CharacomImagerPro
             this.btnPreview.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnPreview.Name = "btnPreview";
             this.btnPreview.Size = new System.Drawing.Size(24, 24);
-            this.btnPreview.Text = "toolStripButton3";
+            this.btnPreview.Text = "印刷プレビュー";
             this.btnPreview.ToolTipText = "印刷プレビュー";
             this.btnPreview.Click += new System.EventHandler(this.BtnPreviewClick);
             // 
@@ -493,7 +493,7 @@ namespace CharacomImagerPro
             this.btnPrint.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new System.Drawing.Size(24, 24);
-            this.btnPrint.Text = "toolStripButton4";
+            this.btnPrint.Text = "印刷";
             this.btnPrint.ToolTipText = "印刷";
             this.btnPrint.Click += new System.EventHandler(this.BtnPrintClick);
             // 

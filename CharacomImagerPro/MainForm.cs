@@ -600,9 +600,9 @@ namespace CharacomImagerPro
 			int count;
 			//すべて消す
 			count = WindowMenuItems.DropDownItems.Count;
-			if(count > 4){
-				for(i=0; i<count - 4; i++){
-					this.WindowMenuItems.DropDownItems.RemoveAt(4);
+			if(count > 6){
+				for(i=0; i<count - 6; i++){
+					this.WindowMenuItems.DropDownItems.RemoveAt(6);
 				}
 			}
 			
@@ -2182,7 +2182,155 @@ namespace CharacomImagerPro
 			
 			clipBmp.Dispose();
 		}
-		
+
 		#endregion
-	}
+
+		public struct DropWindows
+		{
+			public int Index;
+			public int Count;
+			public int Left;
+		}
+		/// <summary>
+		/// 2022.03.21 D.Honjyou
+		/// ウィンドウの整列（少ない順）
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void menuAscendingOrder_Click(object sender, EventArgs e)
+        {
+			List<List<Form>> cForms = new List<List<Form>>();
+
+			//数える
+			foreach (Form f in this.MdiChildren)
+			{
+				if (cForms.Count < 1)
+				{
+					List<Form> ac = new List<Form>();
+					ac.Add(f);
+					cForms.Add(ac);
+				}
+				else
+				{
+					Boolean bCheck = false;
+					foreach (var c in cForms)
+					{
+						if (c.Count > 0)
+						{
+							if (((Form)c[0]).Left == f.Left)
+							{
+								System.Diagnostics.Debug.WriteLine($"c-add c.count = {c.Count} left = {f.Left}");
+								c.Add(f);
+								bCheck = true;
+							}
+						}
+					}
+					if (bCheck == false)
+					{
+						System.Diagnostics.Debug.WriteLine($"ac-add cform.count = {cForms.Count} left = {f.Left}");
+						List<Form> ac = new List<Form>();
+						ac.Add(f);
+						cForms.Add(ac);
+					}
+				}
+			}
+
+			List<DropWindows> cCount = new List<DropWindows>();
+			List<int> cLeft = new List<int>();
+
+			int i = 0;
+			foreach (var c in cForms)
+			{
+				System.Diagnostics.Debug.WriteLine($"before  i = {i} c.count = {c.Count} left= {c[0].Left}"); 
+				cCount.Add(new DropWindows { Index = i, Count = c.Count, Left = c[0].Left });
+				cLeft.Add(c[0].Left);
+				i++;
+			}
+			cLeft.Sort();
+			cCount.Sort((a, b) => a.Count - b.Count);
+
+			i = 0;
+			
+			foreach (var cp in cCount)
+			{
+				System.Diagnostics.Debug.WriteLine($"after i = {i}, c.cout = {cp.Count} inputLeft = {cLeft[i]}");
+				foreach (Form inForm in cForms[((DropWindows)cp).Index])
+				{
+					
+					inForm.Left = cLeft[i];
+					
+				}
+				i++;
+				
+			}
+		}
+
+        private void menuDescendingOrder_Click(object sender, EventArgs e)
+        {
+			List<List<Form>> cForms = new List<List<Form>>();
+
+			//数える
+			foreach (Form f in this.MdiChildren)
+			{
+				if (cForms.Count < 1)
+				{
+					List<Form> ac = new List<Form>();
+					ac.Add(f);
+					cForms.Add(ac);
+				}
+				else
+				{
+					Boolean bCheck = false;
+					foreach (var c in cForms)
+					{
+						if (c.Count > 0)
+						{
+							if (((Form)c[0]).Left == f.Left)
+							{
+								System.Diagnostics.Debug.WriteLine($"c-add c.count = {c.Count} left = {f.Left}");
+								c.Add(f);
+								bCheck = true;
+							}
+						}
+					}
+					if (bCheck == false)
+					{
+						System.Diagnostics.Debug.WriteLine($"ac-add cform.count = {cForms.Count} left = {f.Left}");
+						List<Form> ac = new List<Form>();
+						ac.Add(f);
+						cForms.Add(ac);
+					}
+				}
+			}
+
+			List<DropWindows> cCount = new List<DropWindows>();
+			List<int> cLeft = new List<int>();
+
+			int i = 0;
+			
+			foreach (var c in cForms)
+			{
+				System.Diagnostics.Debug.WriteLine($"before  i = {i} c.count = {c.Count} left= {c[0].Left}");
+				cCount.Add(new DropWindows { Index = i, Count = c.Count, Left = c[0].Left });
+				cLeft.Add(c[0].Left);
+				i++;
+			}
+			cLeft.Sort();
+			cCount.Sort((a, b) => b.Count - a.Count);
+
+			i = 0;
+
+			foreach (var cp in cCount)
+			{
+				System.Diagnostics.Debug.WriteLine($"after i = {i}, c.cout = {cp.Count} inputLeft = {cLeft[i]}");
+				foreach (Form inForm in cForms[((DropWindows)cp).Index])
+				{
+					inForm.Left = cLeft[i];
+
+				}
+				i++;
+
+			}
+		}
+    }
 }

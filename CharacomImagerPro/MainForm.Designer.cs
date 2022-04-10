@@ -40,39 +40,14 @@ namespace CharacomImagerPro
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.MainMenu = new System.Windows.Forms.MenuStrip();
             this.FileMenuItems = new System.Windows.Forms.ToolStripMenuItem();
-            this.NewFileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuCharaNew = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuStringNew = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem10 = new System.Windows.Forms.ToolStripSeparator();
-            this.menuLapNew = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuAverageNew = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem11 = new System.Windows.Forms.ToolStripSeparator();
-            this.menuCheckupNew = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuPluralNew = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuIndividualNew = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuRangeNew = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuOpen = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuImport = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuClose = new System.Windows.Forms.ToolStripMenuItem();
             this.menuCloseAll = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.menuSave = new System.Windows.Forms.ToolStripMenuItem();
             this.menuSaveAt = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuImageSave = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
-            this.menuPageSetup = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuPreview = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuPrint = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
-            this.menuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.EditMenuItems = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuUndo = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuRedo = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem9 = new System.Windows.Forms.ToolStripSeparator();
-            this.menuCopy = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuActiveWindowCopy = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuWindowCopy = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
             this.menuSource = new System.Windows.Forms.ToolStripMenuItem();
             this.menuSaisenka = new System.Windows.Forms.ToolStripMenuItem();
@@ -88,17 +63,11 @@ namespace CharacomImagerPro
             this.menuStandardImage = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrokeImage = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem8 = new System.Windows.Forms.ToolStripSeparator();
-            this.menuSetup = new System.Windows.Forms.ToolStripMenuItem();
             this.WindowMenuItems = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuUpDownAlign = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuLRAlign = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuOverAlign = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripSeparator();
             this.HelpMenuItems = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuCharacomHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.menuOnlineHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripSeparator();
-            this.menuVersion = new System.Windows.Forms.ToolStripMenuItem();
             this.ProcPanel = new System.Windows.Forms.Panel();
             this.btnWindowCopy = new System.Windows.Forms.Button();
             this.comboColor = new System.Windows.Forms.ComboBox();
@@ -126,6 +95,39 @@ namespace CharacomImagerPro
             this.openCCIDialog = new System.Windows.Forms.OpenFileDialog();
             this.openImageDlg = new System.Windows.Forms.OpenFileDialog();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.NewFileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuCharaNew = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStringNew = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem10 = new System.Windows.Forms.ToolStripSeparator();
+            this.menuLapNew = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuAverageNew = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem11 = new System.Windows.Forms.ToolStripSeparator();
+            this.menuCheckupNew = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuPluralNew = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuIndividualNew = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuRangeNew = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuOpen = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuImport = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuClose = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuSave = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuImageSave = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuPageSetup = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuPreview = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuPrint = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuUndo = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuRedo = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuCopy = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuActiveWindowCopy = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuWindowCopy = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuSetup = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuUpDownAlign = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuLRAlign = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuOverAlign = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuAscendingOrder = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuDescendingOrder = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuCharacomHelp = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuVersion = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenu.SuspendLayout();
             this.ProcPanel.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -174,117 +176,6 @@ namespace CharacomImagerPro
             this.FileMenuItems.Text = "ファイル(&F)";
             this.FileMenuItems.DropDownOpened += new System.EventHandler(this.FileMenuItemsDropDownOpened);
             // 
-            // NewFileMenuItem
-            // 
-            this.NewFileMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuCharaNew,
-            this.menuStringNew,
-            this.toolStripMenuItem10,
-            this.menuLapNew,
-            this.menuAverageNew,
-            this.toolStripMenuItem11,
-            this.menuCheckupNew,
-            this.menuPluralNew,
-            this.menuIndividualNew,
-            this.menuRangeNew});
-            this.NewFileMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("NewFileMenuItem.Image")));
-            this.NewFileMenuItem.Name = "NewFileMenuItem";
-            this.NewFileMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.NewFileMenuItem.Size = new System.Drawing.Size(184, 22);
-            this.NewFileMenuItem.Text = "新規作成(&N)";
-            // 
-            // menuCharaNew
-            // 
-            this.menuCharaNew.Name = "menuCharaNew";
-            this.menuCharaNew.Size = new System.Drawing.Size(134, 22);
-            this.menuCharaNew.Text = "個別文字";
-            this.menuCharaNew.Click += new System.EventHandler(this.MenuCharaNewClick);
-            // 
-            // menuStringNew
-            // 
-            this.menuStringNew.Name = "menuStringNew";
-            this.menuStringNew.Size = new System.Drawing.Size(134, 22);
-            this.menuStringNew.Text = "文字列";
-            this.menuStringNew.Click += new System.EventHandler(this.MenuStringNewClick);
-            // 
-            // toolStripMenuItem10
-            // 
-            this.toolStripMenuItem10.Name = "toolStripMenuItem10";
-            this.toolStripMenuItem10.Size = new System.Drawing.Size(131, 6);
-            // 
-            // menuLapNew
-            // 
-            this.menuLapNew.Name = "menuLapNew";
-            this.menuLapNew.Size = new System.Drawing.Size(134, 22);
-            this.menuLapNew.Text = "重ね合わせ";
-            this.menuLapNew.Click += new System.EventHandler(this.MenuLapNewClick);
-            // 
-            // menuAverageNew
-            // 
-            this.menuAverageNew.Name = "menuAverageNew";
-            this.menuAverageNew.Size = new System.Drawing.Size(134, 22);
-            this.menuAverageNew.Text = "特徴平均";
-            this.menuAverageNew.Click += new System.EventHandler(this.MenuAverageNewClick);
-            // 
-            // toolStripMenuItem11
-            // 
-            this.toolStripMenuItem11.Name = "toolStripMenuItem11";
-            this.toolStripMenuItem11.Size = new System.Drawing.Size(131, 6);
-            // 
-            // menuCheckupNew
-            // 
-            this.menuCheckupNew.Name = "menuCheckupNew";
-            this.menuCheckupNew.Size = new System.Drawing.Size(134, 22);
-            this.menuCheckupNew.Text = "照合";
-            this.menuCheckupNew.Click += new System.EventHandler(this.MenuCheckupNewClick);
-            // 
-            // menuPluralNew
-            // 
-            this.menuPluralNew.Name = "menuPluralNew";
-            this.menuPluralNew.Size = new System.Drawing.Size(134, 22);
-            this.menuPluralNew.Text = "組合せ照合";
-            this.menuPluralNew.Click += new System.EventHandler(this.MenuPluralNewClick);
-            // 
-            // menuIndividualNew
-            // 
-            this.menuIndividualNew.Name = "menuIndividualNew";
-            this.menuIndividualNew.Size = new System.Drawing.Size(134, 22);
-            this.menuIndividualNew.Text = "個人内変動";
-            this.menuIndividualNew.Click += new System.EventHandler(this.MenuIndividualNewClick);
-            // 
-            // menuRangeNew
-            // 
-            this.menuRangeNew.Name = "menuRangeNew";
-            this.menuRangeNew.Size = new System.Drawing.Size(134, 22);
-            this.menuRangeNew.Text = "変動比較";
-            this.menuRangeNew.Click += new System.EventHandler(this.MenuRangeNewClick);
-            // 
-            // menuOpen
-            // 
-            this.menuOpen.Image = ((System.Drawing.Image)(resources.GetObject("menuOpen.Image")));
-            this.menuOpen.Name = "menuOpen";
-            this.menuOpen.ShortcutKeyDisplayString = "Ctrl+O";
-            this.menuOpen.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.menuOpen.Size = new System.Drawing.Size(184, 22);
-            this.menuOpen.Text = "開く(&O)";
-            this.menuOpen.Click += new System.EventHandler(this.MenuOpenClick);
-            // 
-            // menuImport
-            // 
-            this.menuImport.Image = ((System.Drawing.Image)(resources.GetObject("menuImport.Image")));
-            this.menuImport.Name = "menuImport";
-            this.menuImport.Size = new System.Drawing.Size(184, 22);
-            this.menuImport.Text = "画像データのインポート";
-            this.menuImport.Click += new System.EventHandler(this.MenuImportClick);
-            // 
-            // menuClose
-            // 
-            this.menuClose.Image = ((System.Drawing.Image)(resources.GetObject("menuClose.Image")));
-            this.menuClose.Name = "menuClose";
-            this.menuClose.Size = new System.Drawing.Size(184, 22);
-            this.menuClose.Text = "閉じる(&C)";
-            this.menuClose.Click += new System.EventHandler(this.MenuCloseClick);
-            // 
             // menuCloseAll
             // 
             this.menuCloseAll.Name = "menuCloseAll";
@@ -297,16 +188,6 @@ namespace CharacomImagerPro
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(181, 6);
             // 
-            // menuSave
-            // 
-            this.menuSave.Image = ((System.Drawing.Image)(resources.GetObject("menuSave.Image")));
-            this.menuSave.Name = "menuSave";
-            this.menuSave.ShortcutKeyDisplayString = "Ctrl+S";
-            this.menuSave.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.menuSave.Size = new System.Drawing.Size(184, 22);
-            this.menuSave.Text = "上書き保存(&S)";
-            this.menuSave.Click += new System.EventHandler(this.MenuSaveClick);
-            // 
             // menuSaveAt
             // 
             this.menuSaveAt.Name = "menuSaveAt";
@@ -314,44 +195,10 @@ namespace CharacomImagerPro
             this.menuSaveAt.Text = "名前をつけて保存(&A)";
             this.menuSaveAt.Click += new System.EventHandler(this.MenuSaveAtClick);
             // 
-            // menuImageSave
-            // 
-            this.menuImageSave.Image = ((System.Drawing.Image)(resources.GetObject("menuImageSave.Image")));
-            this.menuImageSave.Name = "menuImageSave";
-            this.menuImageSave.Size = new System.Drawing.Size(184, 22);
-            this.menuImageSave.Text = "画像として保存";
-            this.menuImageSave.Click += new System.EventHandler(this.MenuImageSaveClick);
-            // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
             this.toolStripMenuItem2.Size = new System.Drawing.Size(181, 6);
-            // 
-            // menuPageSetup
-            // 
-            this.menuPageSetup.Image = ((System.Drawing.Image)(resources.GetObject("menuPageSetup.Image")));
-            this.menuPageSetup.Name = "menuPageSetup";
-            this.menuPageSetup.Size = new System.Drawing.Size(184, 22);
-            this.menuPageSetup.Text = "ページ設定(&U)";
-            this.menuPageSetup.Click += new System.EventHandler(this.MenuPageSetupClick);
-            // 
-            // menuPreview
-            // 
-            this.menuPreview.Image = ((System.Drawing.Image)(resources.GetObject("menuPreview.Image")));
-            this.menuPreview.Name = "menuPreview";
-            this.menuPreview.Size = new System.Drawing.Size(184, 22);
-            this.menuPreview.Text = "印刷プレビュー(&V)";
-            this.menuPreview.Click += new System.EventHandler(this.MenuPreviewClick);
-            // 
-            // menuPrint
-            // 
-            this.menuPrint.Image = ((System.Drawing.Image)(resources.GetObject("menuPrint.Image")));
-            this.menuPrint.Name = "menuPrint";
-            this.menuPrint.ShortcutKeyDisplayString = "Ctrl+P";
-            this.menuPrint.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-            this.menuPrint.Size = new System.Drawing.Size(184, 22);
-            this.menuPrint.Text = "印刷(&P)";
-            this.menuPrint.Click += new System.EventHandler(this.MenuPrintClick);
             // 
             // toolStripMenuItem3
             // 
@@ -362,14 +209,6 @@ namespace CharacomImagerPro
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
             this.toolStripMenuItem4.Size = new System.Drawing.Size(181, 6);
-            // 
-            // menuExit
-            // 
-            this.menuExit.Image = ((System.Drawing.Image)(resources.GetObject("menuExit.Image")));
-            this.menuExit.Name = "menuExit";
-            this.menuExit.Size = new System.Drawing.Size(184, 22);
-            this.menuExit.Text = "終了(&X)";
-            this.menuExit.Click += new System.EventHandler(this.MenuExitClick);
             // 
             // EditMenuItems
             // 
@@ -390,82 +229,41 @@ namespace CharacomImagerPro
             this.EditMenuItems.Text = "編集(&E)";
             this.EditMenuItems.DropDownOpened += new System.EventHandler(this.EditToolStripMenuItemDropDownOpened);
             // 
-            // menuUndo
-            // 
-            this.menuUndo.Image = ((System.Drawing.Image)(resources.GetObject("menuUndo.Image")));
-            this.menuUndo.Name = "menuUndo";
-            this.menuUndo.Size = new System.Drawing.Size(188, 26);
-            this.menuUndo.Text = "元に戻す";
-            this.menuUndo.Click += new System.EventHandler(this.MenuUndoClick);
-            // 
-            // menuRedo
-            // 
-            this.menuRedo.Image = ((System.Drawing.Image)(resources.GetObject("menuRedo.Image")));
-            this.menuRedo.Name = "menuRedo";
-            this.menuRedo.Size = new System.Drawing.Size(188, 26);
-            this.menuRedo.Text = "やり直し";
-            this.menuRedo.Click += new System.EventHandler(this.MenuRedoClick);
-            // 
             // toolStripMenuItem9
             // 
             this.toolStripMenuItem9.Name = "toolStripMenuItem9";
-            this.toolStripMenuItem9.Size = new System.Drawing.Size(185, 6);
-            // 
-            // menuCopy
-            // 
-            this.menuCopy.Image = ((System.Drawing.Image)(resources.GetObject("menuCopy.Image")));
-            this.menuCopy.Name = "menuCopy";
-            this.menuCopy.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.menuCopy.Size = new System.Drawing.Size(188, 26);
-            this.menuCopy.Text = "コピー(&C)";
-            this.menuCopy.Click += new System.EventHandler(this.MenuCopyClick);
-            // 
-            // menuActiveWindowCopy
-            // 
-            this.menuActiveWindowCopy.Image = ((System.Drawing.Image)(resources.GetObject("menuActiveWindowCopy.Image")));
-            this.menuActiveWindowCopy.Name = "menuActiveWindowCopy";
-            this.menuActiveWindowCopy.Size = new System.Drawing.Size(188, 26);
-            this.menuActiveWindowCopy.Text = "現在のウィンドウをコピー";
-            this.menuActiveWindowCopy.Click += new System.EventHandler(this.MenuAcitiveWindowCopy);
-            // 
-            // menuWindowCopy
-            // 
-            this.menuWindowCopy.Image = ((System.Drawing.Image)(resources.GetObject("menuWindowCopy.Image")));
-            this.menuWindowCopy.Name = "menuWindowCopy";
-            this.menuWindowCopy.Size = new System.Drawing.Size(188, 26);
-            this.menuWindowCopy.Text = "メインウィンドウをコピー";
-            this.menuWindowCopy.Click += new System.EventHandler(this.MenuWindowCopyClick);
+            this.toolStripMenuItem9.Size = new System.Drawing.Size(181, 6);
             // 
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(185, 6);
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(181, 6);
             // 
             // menuSource
             // 
             this.menuSource.Name = "menuSource";
-            this.menuSource.Size = new System.Drawing.Size(188, 26);
+            this.menuSource.Size = new System.Drawing.Size(184, 22);
             this.menuSource.Text = "原画像";
             this.menuSource.Click += new System.EventHandler(this.MenuSourceClick);
             // 
             // menuSaisenka
             // 
             this.menuSaisenka.Name = "menuSaisenka";
-            this.menuSaisenka.Size = new System.Drawing.Size(188, 26);
+            this.menuSaisenka.Size = new System.Drawing.Size(184, 22);
             this.menuSaisenka.Text = "細線化";
             this.menuSaisenka.Click += new System.EventHandler(this.MenuSaisenkaClick);
             // 
             // menuSyaei
             // 
             this.menuSyaei.Name = "menuSyaei";
-            this.menuSyaei.Size = new System.Drawing.Size(188, 26);
+            this.menuSyaei.Size = new System.Drawing.Size(184, 22);
             this.menuSyaei.Text = "射影";
             this.menuSyaei.Click += new System.EventHandler(this.MenuSyaeiClick);
             // 
             // menuThermo
             // 
             this.menuThermo.Name = "menuThermo";
-            this.menuThermo.Size = new System.Drawing.Size(188, 26);
+            this.menuThermo.Size = new System.Drawing.Size(184, 22);
             this.menuThermo.Text = "サーモグラフィ";
             this.menuThermo.Click += new System.EventHandler(this.MenuThermoClick);
             // 
@@ -490,21 +288,21 @@ namespace CharacomImagerPro
             // menuRecog
             // 
             this.menuRecog.Name = "menuRecog";
-            this.menuRecog.Size = new System.Drawing.Size(184, 26);
+            this.menuRecog.Size = new System.Drawing.Size(175, 22);
             this.menuRecog.Text = "照合";
             this.menuRecog.Click += new System.EventHandler(this.MenuRecogClick);
             // 
             // menuPluralRecog
             // 
             this.menuPluralRecog.Name = "menuPluralRecog";
-            this.menuPluralRecog.Size = new System.Drawing.Size(184, 26);
+            this.menuPluralRecog.Size = new System.Drawing.Size(175, 22);
             this.menuPluralRecog.Text = "組合せ照合";
             this.menuPluralRecog.Click += new System.EventHandler(this.MenuPluralRecogClick);
             // 
             // menuLap
             // 
             this.menuLap.Name = "menuLap";
-            this.menuLap.Size = new System.Drawing.Size(184, 26);
+            this.menuLap.Size = new System.Drawing.Size(175, 22);
             this.menuLap.Text = "重ね合わせ";
             this.menuLap.Click += new System.EventHandler(this.MenuLapClick);
             // 
@@ -512,54 +310,48 @@ namespace CharacomImagerPro
             // 
             this.menuAllImpose.Enabled = false;
             this.menuAllImpose.Name = "menuAllImpose";
-            this.menuAllImpose.Size = new System.Drawing.Size(184, 26);
+            this.menuAllImpose.Size = new System.Drawing.Size(175, 22);
             this.menuAllImpose.Text = "一括重ね合せ(個別)";
             this.menuAllImpose.Click += new System.EventHandler(this.MenuAllImposeClick);
             // 
             // menuSLap
             // 
             this.menuSLap.Name = "menuSLap";
-            this.menuSLap.Size = new System.Drawing.Size(184, 26);
+            this.menuSLap.Size = new System.Drawing.Size(175, 22);
             this.menuSLap.Text = "文字列重ね合わせ";
             this.menuSLap.Click += new System.EventHandler(this.MenuSLapClick);
             // 
             // menuDB
             // 
             this.menuDB.Name = "menuDB";
-            this.menuDB.Size = new System.Drawing.Size(184, 26);
+            this.menuDB.Size = new System.Drawing.Size(175, 22);
             this.menuDB.Text = "DB参照";
             this.menuDB.Click += new System.EventHandler(this.MenuDBClick);
             // 
             // menuStandardImage
             // 
             this.menuStandardImage.Name = "menuStandardImage";
-            this.menuStandardImage.Size = new System.Drawing.Size(184, 26);
+            this.menuStandardImage.Size = new System.Drawing.Size(175, 22);
             this.menuStandardImage.Text = "標準書体参照";
             this.menuStandardImage.Click += new System.EventHandler(this.MenuStandardImageClick);
             // 
             // menuStrokeImage
             // 
             this.menuStrokeImage.Name = "menuStrokeImage";
-            this.menuStrokeImage.Size = new System.Drawing.Size(184, 26);
+            this.menuStrokeImage.Size = new System.Drawing.Size(175, 22);
             this.menuStrokeImage.Text = "筆順画像参照";
             this.menuStrokeImage.Click += new System.EventHandler(this.MenuStrokeImageClick);
             // 
             // toolStripMenuItem8
             // 
             this.toolStripMenuItem8.Name = "toolStripMenuItem8";
-            this.toolStripMenuItem8.Size = new System.Drawing.Size(181, 6);
-            // 
-            // menuSetup
-            // 
-            this.menuSetup.Image = ((System.Drawing.Image)(resources.GetObject("menuSetup.Image")));
-            this.menuSetup.Name = "menuSetup";
-            this.menuSetup.Size = new System.Drawing.Size(184, 26);
-            this.menuSetup.Text = "設定";
-            this.menuSetup.Click += new System.EventHandler(this.MenuSetupClick);
+            this.toolStripMenuItem8.Size = new System.Drawing.Size(172, 6);
             // 
             // WindowMenuItems
             // 
             this.WindowMenuItems.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuAscendingOrder,
+            this.menuDescendingOrder,
             this.menuUpDownAlign,
             this.menuLRAlign,
             this.menuOverAlign,
@@ -569,34 +361,10 @@ namespace CharacomImagerPro
             this.WindowMenuItems.Text = "ウィンドウ(&W)";
             this.WindowMenuItems.DropDownOpened += new System.EventHandler(this.WindowMenuItemsDropDownOpened);
             // 
-            // menuUpDownAlign
-            // 
-            this.menuUpDownAlign.Image = ((System.Drawing.Image)(resources.GetObject("menuUpDownAlign.Image")));
-            this.menuUpDownAlign.Name = "menuUpDownAlign";
-            this.menuUpDownAlign.Size = new System.Drawing.Size(162, 22);
-            this.menuUpDownAlign.Text = "上下に並べて表示";
-            this.menuUpDownAlign.Click += new System.EventHandler(this.MenuUpDownAlignClick);
-            // 
-            // menuLRAlign
-            // 
-            this.menuLRAlign.Image = ((System.Drawing.Image)(resources.GetObject("menuLRAlign.Image")));
-            this.menuLRAlign.Name = "menuLRAlign";
-            this.menuLRAlign.Size = new System.Drawing.Size(162, 22);
-            this.menuLRAlign.Text = "左右に並べて表示";
-            this.menuLRAlign.Click += new System.EventHandler(this.MenuLRAlignClick);
-            // 
-            // menuOverAlign
-            // 
-            this.menuOverAlign.Image = ((System.Drawing.Image)(resources.GetObject("menuOverAlign.Image")));
-            this.menuOverAlign.Name = "menuOverAlign";
-            this.menuOverAlign.Size = new System.Drawing.Size(162, 22);
-            this.menuOverAlign.Text = "重ねて表示";
-            this.menuOverAlign.Click += new System.EventHandler(this.MenuOverAlignClick);
-            // 
             // toolStripMenuItem6
             // 
             this.toolStripMenuItem6.Name = "toolStripMenuItem6";
-            this.toolStripMenuItem6.Size = new System.Drawing.Size(159, 6);
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(190, 6);
             // 
             // HelpMenuItems
             // 
@@ -610,14 +378,6 @@ namespace CharacomImagerPro
             this.HelpMenuItems.Text = "ヘルプ(&H)";
             this.HelpMenuItems.DropDownOpened += new System.EventHandler(this.HelpMenuItemsDropDownOpened);
             // 
-            // menuCharacomHelp
-            // 
-            this.menuCharacomHelp.Image = ((System.Drawing.Image)(resources.GetObject("menuCharacomHelp.Image")));
-            this.menuCharacomHelp.Name = "menuCharacomHelp";
-            this.menuCharacomHelp.Size = new System.Drawing.Size(210, 22);
-            this.menuCharacomHelp.Text = "CharacomImagerProヘルプ";
-            this.menuCharacomHelp.Click += new System.EventHandler(this.MenuCharacomHelpClick);
-            // 
             // menuOnlineHelp
             // 
             this.menuOnlineHelp.Name = "menuOnlineHelp";
@@ -629,14 +389,6 @@ namespace CharacomImagerPro
             // 
             this.toolStripMenuItem7.Name = "toolStripMenuItem7";
             this.toolStripMenuItem7.Size = new System.Drawing.Size(207, 6);
-            // 
-            // menuVersion
-            // 
-            this.menuVersion.Image = ((System.Drawing.Image)(resources.GetObject("menuVersion.Image")));
-            this.menuVersion.Name = "menuVersion";
-            this.menuVersion.Size = new System.Drawing.Size(210, 22);
-            this.menuVersion.Text = "バージョン情報";
-            this.menuVersion.Click += new System.EventHandler(this.MenuVersionClick);
             // 
             // ProcPanel
             // 
@@ -909,6 +661,274 @@ namespace CharacomImagerPro
             // 
             this.timer1.Tick += new System.EventHandler(this.Timer1Tick);
             // 
+            // NewFileMenuItem
+            // 
+            this.NewFileMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuCharaNew,
+            this.menuStringNew,
+            this.toolStripMenuItem10,
+            this.menuLapNew,
+            this.menuAverageNew,
+            this.toolStripMenuItem11,
+            this.menuCheckupNew,
+            this.menuPluralNew,
+            this.menuIndividualNew,
+            this.menuRangeNew});
+            this.NewFileMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("NewFileMenuItem.Image")));
+            this.NewFileMenuItem.Name = "NewFileMenuItem";
+            this.NewFileMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+            this.NewFileMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.NewFileMenuItem.Text = "新規作成(&N)";
+            // 
+            // menuCharaNew
+            // 
+            this.menuCharaNew.Name = "menuCharaNew";
+            this.menuCharaNew.Size = new System.Drawing.Size(134, 22);
+            this.menuCharaNew.Text = "個別文字";
+            this.menuCharaNew.Click += new System.EventHandler(this.MenuCharaNewClick);
+            // 
+            // menuStringNew
+            // 
+            this.menuStringNew.Name = "menuStringNew";
+            this.menuStringNew.Size = new System.Drawing.Size(134, 22);
+            this.menuStringNew.Text = "文字列";
+            this.menuStringNew.Click += new System.EventHandler(this.MenuStringNewClick);
+            // 
+            // toolStripMenuItem10
+            // 
+            this.toolStripMenuItem10.Name = "toolStripMenuItem10";
+            this.toolStripMenuItem10.Size = new System.Drawing.Size(131, 6);
+            // 
+            // menuLapNew
+            // 
+            this.menuLapNew.Name = "menuLapNew";
+            this.menuLapNew.Size = new System.Drawing.Size(134, 22);
+            this.menuLapNew.Text = "重ね合わせ";
+            this.menuLapNew.Click += new System.EventHandler(this.MenuLapNewClick);
+            // 
+            // menuAverageNew
+            // 
+            this.menuAverageNew.Name = "menuAverageNew";
+            this.menuAverageNew.Size = new System.Drawing.Size(134, 22);
+            this.menuAverageNew.Text = "特徴平均";
+            this.menuAverageNew.Click += new System.EventHandler(this.MenuAverageNewClick);
+            // 
+            // toolStripMenuItem11
+            // 
+            this.toolStripMenuItem11.Name = "toolStripMenuItem11";
+            this.toolStripMenuItem11.Size = new System.Drawing.Size(131, 6);
+            // 
+            // menuCheckupNew
+            // 
+            this.menuCheckupNew.Name = "menuCheckupNew";
+            this.menuCheckupNew.Size = new System.Drawing.Size(134, 22);
+            this.menuCheckupNew.Text = "照合";
+            this.menuCheckupNew.Click += new System.EventHandler(this.MenuCheckupNewClick);
+            // 
+            // menuPluralNew
+            // 
+            this.menuPluralNew.Name = "menuPluralNew";
+            this.menuPluralNew.Size = new System.Drawing.Size(134, 22);
+            this.menuPluralNew.Text = "組合せ照合";
+            this.menuPluralNew.Click += new System.EventHandler(this.MenuPluralNewClick);
+            // 
+            // menuIndividualNew
+            // 
+            this.menuIndividualNew.Name = "menuIndividualNew";
+            this.menuIndividualNew.Size = new System.Drawing.Size(134, 22);
+            this.menuIndividualNew.Text = "個人内変動";
+            this.menuIndividualNew.Click += new System.EventHandler(this.MenuIndividualNewClick);
+            // 
+            // menuRangeNew
+            // 
+            this.menuRangeNew.Name = "menuRangeNew";
+            this.menuRangeNew.Size = new System.Drawing.Size(134, 22);
+            this.menuRangeNew.Text = "変動比較";
+            this.menuRangeNew.Click += new System.EventHandler(this.MenuRangeNewClick);
+            // 
+            // menuOpen
+            // 
+            this.menuOpen.Image = ((System.Drawing.Image)(resources.GetObject("menuOpen.Image")));
+            this.menuOpen.Name = "menuOpen";
+            this.menuOpen.ShortcutKeyDisplayString = "Ctrl+O";
+            this.menuOpen.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.menuOpen.Size = new System.Drawing.Size(184, 22);
+            this.menuOpen.Text = "開く(&O)";
+            this.menuOpen.Click += new System.EventHandler(this.MenuOpenClick);
+            // 
+            // menuImport
+            // 
+            this.menuImport.Image = ((System.Drawing.Image)(resources.GetObject("menuImport.Image")));
+            this.menuImport.Name = "menuImport";
+            this.menuImport.Size = new System.Drawing.Size(184, 22);
+            this.menuImport.Text = "画像データのインポート";
+            this.menuImport.Click += new System.EventHandler(this.MenuImportClick);
+            // 
+            // menuClose
+            // 
+            this.menuClose.Image = ((System.Drawing.Image)(resources.GetObject("menuClose.Image")));
+            this.menuClose.Name = "menuClose";
+            this.menuClose.Size = new System.Drawing.Size(184, 22);
+            this.menuClose.Text = "閉じる(&C)";
+            this.menuClose.Click += new System.EventHandler(this.MenuCloseClick);
+            // 
+            // menuSave
+            // 
+            this.menuSave.Image = ((System.Drawing.Image)(resources.GetObject("menuSave.Image")));
+            this.menuSave.Name = "menuSave";
+            this.menuSave.ShortcutKeyDisplayString = "Ctrl+S";
+            this.menuSave.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.menuSave.Size = new System.Drawing.Size(184, 22);
+            this.menuSave.Text = "上書き保存(&S)";
+            this.menuSave.Click += new System.EventHandler(this.MenuSaveClick);
+            // 
+            // menuImageSave
+            // 
+            this.menuImageSave.Image = ((System.Drawing.Image)(resources.GetObject("menuImageSave.Image")));
+            this.menuImageSave.Name = "menuImageSave";
+            this.menuImageSave.Size = new System.Drawing.Size(184, 22);
+            this.menuImageSave.Text = "画像として保存";
+            this.menuImageSave.Click += new System.EventHandler(this.MenuImageSaveClick);
+            // 
+            // menuPageSetup
+            // 
+            this.menuPageSetup.Image = ((System.Drawing.Image)(resources.GetObject("menuPageSetup.Image")));
+            this.menuPageSetup.Name = "menuPageSetup";
+            this.menuPageSetup.Size = new System.Drawing.Size(184, 22);
+            this.menuPageSetup.Text = "ページ設定(&U)";
+            this.menuPageSetup.Click += new System.EventHandler(this.MenuPageSetupClick);
+            // 
+            // menuPreview
+            // 
+            this.menuPreview.Image = ((System.Drawing.Image)(resources.GetObject("menuPreview.Image")));
+            this.menuPreview.Name = "menuPreview";
+            this.menuPreview.Size = new System.Drawing.Size(184, 22);
+            this.menuPreview.Text = "印刷プレビュー(&V)";
+            this.menuPreview.Click += new System.EventHandler(this.MenuPreviewClick);
+            // 
+            // menuPrint
+            // 
+            this.menuPrint.Image = ((System.Drawing.Image)(resources.GetObject("menuPrint.Image")));
+            this.menuPrint.Name = "menuPrint";
+            this.menuPrint.ShortcutKeyDisplayString = "Ctrl+P";
+            this.menuPrint.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
+            this.menuPrint.Size = new System.Drawing.Size(184, 22);
+            this.menuPrint.Text = "印刷(&P)";
+            this.menuPrint.Click += new System.EventHandler(this.MenuPrintClick);
+            // 
+            // menuExit
+            // 
+            this.menuExit.Image = ((System.Drawing.Image)(resources.GetObject("menuExit.Image")));
+            this.menuExit.Name = "menuExit";
+            this.menuExit.Size = new System.Drawing.Size(184, 22);
+            this.menuExit.Text = "終了(&X)";
+            this.menuExit.Click += new System.EventHandler(this.MenuExitClick);
+            // 
+            // menuUndo
+            // 
+            this.menuUndo.Image = ((System.Drawing.Image)(resources.GetObject("menuUndo.Image")));
+            this.menuUndo.Name = "menuUndo";
+            this.menuUndo.Size = new System.Drawing.Size(184, 22);
+            this.menuUndo.Text = "元に戻す";
+            this.menuUndo.Click += new System.EventHandler(this.MenuUndoClick);
+            // 
+            // menuRedo
+            // 
+            this.menuRedo.Image = ((System.Drawing.Image)(resources.GetObject("menuRedo.Image")));
+            this.menuRedo.Name = "menuRedo";
+            this.menuRedo.Size = new System.Drawing.Size(184, 22);
+            this.menuRedo.Text = "やり直し";
+            this.menuRedo.Click += new System.EventHandler(this.MenuRedoClick);
+            // 
+            // menuCopy
+            // 
+            this.menuCopy.Image = ((System.Drawing.Image)(resources.GetObject("menuCopy.Image")));
+            this.menuCopy.Name = "menuCopy";
+            this.menuCopy.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.menuCopy.Size = new System.Drawing.Size(184, 22);
+            this.menuCopy.Text = "コピー(&C)";
+            this.menuCopy.Click += new System.EventHandler(this.MenuCopyClick);
+            // 
+            // menuActiveWindowCopy
+            // 
+            this.menuActiveWindowCopy.Image = ((System.Drawing.Image)(resources.GetObject("menuActiveWindowCopy.Image")));
+            this.menuActiveWindowCopy.Name = "menuActiveWindowCopy";
+            this.menuActiveWindowCopy.Size = new System.Drawing.Size(184, 22);
+            this.menuActiveWindowCopy.Text = "現在のウィンドウをコピー";
+            this.menuActiveWindowCopy.Click += new System.EventHandler(this.MenuAcitiveWindowCopy);
+            // 
+            // menuWindowCopy
+            // 
+            this.menuWindowCopy.Image = ((System.Drawing.Image)(resources.GetObject("menuWindowCopy.Image")));
+            this.menuWindowCopy.Name = "menuWindowCopy";
+            this.menuWindowCopy.Size = new System.Drawing.Size(184, 22);
+            this.menuWindowCopy.Text = "メインウィンドウをコピー";
+            this.menuWindowCopy.Click += new System.EventHandler(this.MenuWindowCopyClick);
+            // 
+            // menuSetup
+            // 
+            this.menuSetup.Image = ((System.Drawing.Image)(resources.GetObject("menuSetup.Image")));
+            this.menuSetup.Name = "menuSetup";
+            this.menuSetup.Size = new System.Drawing.Size(175, 22);
+            this.menuSetup.Text = "設定";
+            this.menuSetup.Click += new System.EventHandler(this.MenuSetupClick);
+            // 
+            // menuUpDownAlign
+            // 
+            this.menuUpDownAlign.Image = ((System.Drawing.Image)(resources.GetObject("menuUpDownAlign.Image")));
+            this.menuUpDownAlign.Name = "menuUpDownAlign";
+            this.menuUpDownAlign.Size = new System.Drawing.Size(193, 26);
+            this.menuUpDownAlign.Text = "上下に並べて表示";
+            this.menuUpDownAlign.Click += new System.EventHandler(this.MenuUpDownAlignClick);
+            // 
+            // menuLRAlign
+            // 
+            this.menuLRAlign.Image = ((System.Drawing.Image)(resources.GetObject("menuLRAlign.Image")));
+            this.menuLRAlign.Name = "menuLRAlign";
+            this.menuLRAlign.Size = new System.Drawing.Size(193, 26);
+            this.menuLRAlign.Text = "左右に並べて表示";
+            this.menuLRAlign.Click += new System.EventHandler(this.MenuLRAlignClick);
+            // 
+            // menuOverAlign
+            // 
+            this.menuOverAlign.Image = ((System.Drawing.Image)(resources.GetObject("menuOverAlign.Image")));
+            this.menuOverAlign.Name = "menuOverAlign";
+            this.menuOverAlign.Size = new System.Drawing.Size(193, 26);
+            this.menuOverAlign.Text = "重ねて表示";
+            this.menuOverAlign.Click += new System.EventHandler(this.MenuOverAlignClick);
+            // 
+            // menuAscendingOrder
+            // 
+            this.menuAscendingOrder.Image = global::CharacomImagerPro.Properties.Resources.shape_align_top;
+            this.menuAscendingOrder.Name = "menuAscendingOrder";
+            this.menuAscendingOrder.Size = new System.Drawing.Size(193, 26);
+            this.menuAscendingOrder.Text = "列ごとに整列(少ない順)";
+            this.menuAscendingOrder.Click += new System.EventHandler(this.menuAscendingOrder_Click);
+            // 
+            // menuDescendingOrder
+            // 
+            this.menuDescendingOrder.Image = global::CharacomImagerPro.Properties.Resources.shape_align_top2;
+            this.menuDescendingOrder.Name = "menuDescendingOrder";
+            this.menuDescendingOrder.Size = new System.Drawing.Size(193, 26);
+            this.menuDescendingOrder.Text = "列ごとに整列(多い順)";
+            this.menuDescendingOrder.Click += new System.EventHandler(this.menuDescendingOrder_Click);
+            // 
+            // menuCharacomHelp
+            // 
+            this.menuCharacomHelp.Image = ((System.Drawing.Image)(resources.GetObject("menuCharacomHelp.Image")));
+            this.menuCharacomHelp.Name = "menuCharacomHelp";
+            this.menuCharacomHelp.Size = new System.Drawing.Size(210, 22);
+            this.menuCharacomHelp.Text = "CharacomImagerProヘルプ";
+            this.menuCharacomHelp.Click += new System.EventHandler(this.MenuCharacomHelpClick);
+            // 
+            // menuVersion
+            // 
+            this.menuVersion.Image = ((System.Drawing.Image)(resources.GetObject("menuVersion.Image")));
+            this.menuVersion.Name = "menuVersion";
+            this.menuVersion.Size = new System.Drawing.Size(210, 22);
+            this.menuVersion.Text = "バージョン情報";
+            this.menuVersion.Click += new System.EventHandler(this.MenuVersionClick);
+            // 
             // MainForm
             // 
             this.AllowDrop = true;
@@ -1027,5 +1047,7 @@ namespace CharacomImagerPro
 		private System.Windows.Forms.MenuStrip MainMenu;
 		private System.Windows.Forms.Button btnWindowCopy;
 		private System.Windows.Forms.ToolStripMenuItem menuWindowCopy;
-	}
+        private System.Windows.Forms.ToolStripMenuItem menuAscendingOrder;
+        private System.Windows.Forms.ToolStripMenuItem menuDescendingOrder;
+    }
 }

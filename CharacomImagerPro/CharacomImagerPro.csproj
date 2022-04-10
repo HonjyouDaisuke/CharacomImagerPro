@@ -352,6 +352,12 @@
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="画像素材\icons\shape_align_top.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="画像素材\icons\shape_align_top2.png" />
+  </ItemGroup>
   <PropertyGroup>
     <PostBuildEvent>cd "$(SolutionDir)"
 mkdir packageTmp

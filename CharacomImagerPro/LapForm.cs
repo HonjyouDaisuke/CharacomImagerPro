@@ -175,7 +175,7 @@ namespace CharacomImagerPro
 			dgv.RowHeadersVisible = false;
 			dgv.RowTemplate.Height = 80;
 			dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-			dgv.Size = new Size(275, panel1.Height - 80);
+			dgv.Size = new Size(277, panel1.Height - 80);
 			dgv.TabIndex = 1;
 			dgv.DragEnter += new DragEventHandler(this.DgvGroupDragEnter);
 			dgv.DragDrop += new DragEventHandler(this.DgvGroupDragDrop);
@@ -237,7 +237,7 @@ namespace CharacomImagerPro
 			//btnDown.Image = ((System.Drawing.Image)(resources.GetObject("btnDown.Image")));
 			btnDown.Image = imageList1.Images[1];
 			btnDown.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-			btnDown.Location = new System.Drawing.Point(153 + GroupNum * 280 - panel1.HorizontalScroll.Value, panel1.Height - 50 - panel1.VerticalScroll.Value);
+			btnDown.Location = new System.Drawing.Point(200 + GroupNum * 280 - panel1.HorizontalScroll.Value, panel1.Height - 50 - panel1.VerticalScroll.Value);
 			btnDown.Name = "btnDown" + (GroupNum + 1).ToString();
 			btnDown.Size = new System.Drawing.Size(75, 23);
 			btnDown.TabIndex = 7;
@@ -260,20 +260,19 @@ namespace CharacomImagerPro
 			btnUp.Click += new System.EventHandler(this.BtnUpClick);
 			btnUps.Add(btnUp);
 			// btnLeft
-			if (GroupNum != 0)
-			{
-				btnLeft.Image = imageList1.Images[3];
-				btnLeft.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-				btnLeft.Location = new System.Drawing.Point(3 + GroupNum * 280 - panel1.HorizontalScroll.Value, 2 - panel1.VerticalScroll.Value);
-				btnLeft.Name = "btnLeft" + (GroupNum + 1).ToString();
-				btnLeft.Size = new System.Drawing.Size(20, 20);
-				btnLeft.TabIndex = 9;
-				btnLeft.Text = "";
-				btnLeft.UseVisualStyleBackColor = true;
-				//btnLeft.Click += new System.EventHandler(this.BtnLeftClick);
-				btnLefts.Add(btnLeft);
-			}
+			btnLeft.Image = imageList1.Images[3];
+			btnLeft.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			btnLeft.Location = new System.Drawing.Point(3 + GroupNum * 280 - panel1.HorizontalScroll.Value, 2 - panel1.VerticalScroll.Value);
+			btnLeft.Name = "btnLeft" + (GroupNum + 1).ToString();
+			btnLeft.Size = new System.Drawing.Size(20, 20);
+			btnLeft.TabIndex = 9;
+			btnLeft.Text = "";
+			btnLeft.UseVisualStyleBackColor = true;
+			btnLeft.Click += new System.EventHandler(this.BtnLeftClick);
+			btnLefts.Add(btnLeft);
+			
 			// btnRight
+			/**
 			btnRight.Image = imageList1.Images[4];
 			btnRight.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			btnRight.Location = new System.Drawing.Point(207 + GroupNum * 280 - panel1.HorizontalScroll.Value, 2 - panel1.VerticalScroll.Value);
@@ -282,14 +281,15 @@ namespace CharacomImagerPro
 			btnRight.TabIndex = 10;
 			btnRight.Text = "";
 			btnRight.UseVisualStyleBackColor = true;
-			//btnRight.Click += new System.EventHandler(this.BtnRightClick);
+			btnRight.Click += new System.EventHandler(this.BtnRightClick);
 			btnRights.Add(btnRight);
+			**/
 
 			panel2.Controls.Add(btnUp);
 			panel2.Controls.Add(btnDown);
 			panel2.Controls.Add(btnDelete);
-			//if (GroupNum != 0) panel2.Controls.Add(btnLeft);
-			//panel1.Controls.Add(btnRight);
+			if (GroupNum != 0) panel2.Controls.Add(btnLeft);
+			//panel2.Controls.Add(btnRight);
 			#endregion
 			//features.Add(new ArrayList());
 			GroupNum++;
@@ -316,8 +316,6 @@ namespace CharacomImagerPro
 
 		}
 		#endregion
-
-
 
 		#region 特徴の平均の作成
 		void GetFeatureAverage(double[] kajyuAvg, double[] kajyuViewAvg, ArrayList feature)
@@ -433,27 +431,26 @@ namespace CharacomImagerPro
 			imageEffect.Noize(cif.SrcBitmapSmall);
 			//imageEffect.DrawTinning(cif.SrcBitmapSmall, cif.SrcBitmapSmall, Color.Black);
 
-
+			
 			//DataGridView用のデータを作成
 			DataGridViewRow NewRow = new DataGridViewRow();
 			NewRow.CreateCells(dgv);
 			//IntoDataGridView(NewRow, cif.ImageData.ProcImage, cif.ImageData.Filename, dgv.Rows.Count + 1);
 			((ArrayList)ImageArray[num]).Add(cif.ImageData);
 
-
 			//特徴クラスを作成してデータを挿入
 			FeatureClass thisFeature = new FeatureClass();
 			imageEffect.GetKajyu(cif.SrcBitmapSmall, thisFeature.Kajyu, thisFeature.KajyuView, mf.Setup.CharaR);
 			imageEffect.GetHaikei(cif.SrcBitmapSmall, thisFeature.Haikei, thisFeature.HaikeiView, mf.Setup.CharaR);
-
+			
 			thisFeature.SrcBitmap = cif.SrcBitmapSmall;
 			thisFeature.FileName = cif.FileName;
 			thisFeature.ViewColor = cif.dispColor;
-
+			
 			//コマンドマネージャへ
 			//CheckUpDragInCommand command = new CheckUpDragInCommand(dgv.Rows, NewRow, feature[num], thisFeature);
 			//undoManager.Action(command);
-			
+
 			System.Diagnostics.Debug.WriteLine(int.Parse(dgv.Name.Substring(8)).ToString());
 			((ArrayList)features[num]).Add(thisFeature);
 
@@ -476,6 +473,11 @@ namespace CharacomImagerPro
             }
 			
         }
+		public struct DropWindows
+		{
+			public int Index;
+			public int Count;
+		}
 
 		void DragDropAverage(AverageMaker avf, DataGridView dgv, int num)
 		{
@@ -519,12 +521,19 @@ namespace CharacomImagerPro
 				mid.ShowDialog();
 				if (mid.DialogResult == DialogResult.Yes)
 				{
+					// 「１つだけ」が選択されたとき
 					DragDropProc((CharaImageForm)e.Data.GetData(typeof(CharaImageForm)), (DataGridView)sender, num);
+					PutRewriteR((DataGridView)DataGridViews[num], (ArrayList)features[num]);
+					MakeViewBitmap();
+					LapImageBox.Invalidate();
+					MakeGraph();
+					GraphImage.Invalidate();
 					PutRewriteR((DataGridView)DataGridViews[num], (ArrayList)features[num]);
 
 				}
 				else if (mid.DialogResult == DialogResult.No)
 				{
+					//「縦一列すべて」が選択されたとき
 					CharaImageForm cif;
 					cif = (CharaImageForm)e.Data.GetData(typeof(CharaImageForm));
 					System.Diagnostics.Debug.WriteLine("Window個数=" + mf.MdiChildren.Length.ToString());
@@ -594,7 +603,122 @@ namespace CharacomImagerPro
 
 
 				}
+				else if (mid.DialogResult == DialogResult.OK)
+				{
+					// 2022.03.20 D.Honjyou
+					//「画面上すべて」が選択されたとき
+					CharaImageForm cif;
+					cif = (CharaImageForm)e.Data.GetData(typeof(CharaImageForm));
+					System.Diagnostics.Debug.WriteLine("Window個数=" + mf.MdiChildren.Length.ToString());
+					toolStripProgressBar1.Minimum = 0;
+					toolStripProgressBar1.Maximum = mf.MdiChildren.Length;
+					toolStripProgressBar1.Value = 0;
+					toolStripProgressBar1.Visible = true;
+					List<List<Form>> cForms = new List<List<Form>>();
+
+					//数える
+					foreach (Form f in mf.MdiChildren)
+					{
+						if(f.Name == "CharaImageForm")
+                        {
+							System.Diagnostics.Debug.WriteLine($"f.index = {f.Text} left = {f.Left}");
+							if (cForms.Count < 1)
+                            {
+								List<Form> ac = new List<Form>();
+								ac.Add(f);
+								cForms.Add(ac);
+                            }
+                            else
+                            {
+								Boolean bCheck = false;
+								foreach (var c in cForms)
+								{
+									System.Diagnostics.Debug.WriteLine($"c.count = {c.Count} left = {f.Left}");
+									if (c.Count > 0)
+									{
+										if (((Form)c[0]).Left == f.Left)
+										{
+											System.Diagnostics.Debug.WriteLine($"c-add c.count = {c.Count} left = {f.Left}");
+											c.Add(f);
+											bCheck = true;
+										}
+									}
+									
+								}
+								if (bCheck == false)
+								{
+									System.Diagnostics.Debug.WriteLine($"ac-add cform.count = {cForms.Count} left = {f.Left}");
+									List<Form> ac = new List<Form>();
+									ac.Add(f);
+									cForms.Add(ac);
+								}
+							}
+                        }
+						
+
+						
+					}
+
+					List<DropWindows> cCount = new List<DropWindows>();
+
+					int i = 0;
+					foreach (var c in cForms)
+                    {
+						System.Diagnostics.Debug.WriteLine($"i = {i} c.count = {c.Count}");
+						cCount.Add(new DropWindows { Index = i, Count = c.Count });
+						i++;
+                    }
+					cCount.Sort((a, b) => a.Count - b.Count);
+
+					//現在のDataGridViewをすべてチェック
+					if (GroupNum > 0)
+					{
+						for (i = 0; i < GroupNum; i++)
+						{
+							((CheckBox)chkDeletes[i]).Checked = true;
+						}
+					}
+					//チェックしたDataGridViewを削除
+					//DeleteControl();
+					i = 0;
+					foreach (var cp in cCount)
+					{
+						System.Diagnostics.Debug.WriteLine($"index = {((DropWindows)cp).Index} count = {((DropWindows)cp).Count}");
+						if(i >= GroupNum)
+                        {
+							AddControl();
+							features.Add(new ArrayList());
+							ImageArray.Add(new ArrayList());
+						}
+						foreach (Form inForm in cForms[((DropWindows)cp).Index])
+                        {
+							toolStripProgressBar1.Value += 1;
+							System.Diagnostics.Debug.WriteLine($"inForm Title = {inForm.Text}, Left = {inForm.Left}");
+							CharaImageForm m_cif;
+							m_cif = (CharaImageForm)inForm;
+							System.Diagnostics.Debug.WriteLine($"個別文字[{m_cif.Text}]");
+							System.Diagnostics.Debug.WriteLine($"色：{m_cif.dispColor}");
+							((Panel)colorPanels[i]).BackColor = m_cif.dispColor;
+							DragDropProc(m_cif, (DataGridView)DataGridViews[i], i);
+							//CheckUndoRedo();
+
+							System.Diagnostics.Debug.WriteLine(m_cif.Text);
+						}
+						i++;
+					}
+
+					MakeViewBitmap();
+					LapImageBox.Invalidate();
+					MakeGraph();
+					GraphImage.Invalidate();
+					PutRewriteR((DataGridView)DataGridViews[num], (ArrayList)features[num]);
+					toolStripProgressBar1.Value = 0;
+					toolStripProgressBar1.Visible = false;
+
+					
+				}
 			}
+
 			if (e.Data.GetDataPresent(typeof(AverageMaker)))
 			{
 				DragDropAverage((AverageMaker)e.Data.GetData(typeof(AverageMaker)), (DataGridView)sender, num);
@@ -710,13 +834,14 @@ namespace CharacomImagerPro
 			toolStripProgressBar1.Value = 0;
 			toolStripProgressBar1.Visible = true;
 
-			for (int j=0; j<GroupNum; j++)
+			for (int j= GroupNum-1 ; j > -1; j--)
             {
-				for(int i=0; i < ((ArrayList)ImageArray[j]).Count; i++)
+				for(int i= ((ArrayList)ImageArray[j]).Count -1 ; i > -1 ; i--)
                 {
-
+					
 					ImageDataClass idc = (ImageDataClass)((ArrayList)ImageArray[j])[i];
-                    if (btnChara.Checked)
+					System.Diagnostics.Debug.WriteLine($"GroupNum = {j} No. = {i} idc.Head = {idc.Filename}");
+					if (btnChara.Checked)
                     {
                         if (btnProc.Checked)
                         {
@@ -802,23 +927,39 @@ namespace CharacomImagerPro
 						((Label)lblCharas[j]).Location = ((Label)lblCharas[j - 1]).Location;
 						((Panel)colorPanels[j]).Location = ((Panel)colorPanels[j - 1]).Location;
 						((DataGridView)DataGridViews[j]).Location = ((DataGridView)DataGridViews[j - 1]).Location;
+						((Button)btnLefts[j]).Location = ((Button)btnLefts[j - 1]).Location;
+						//((Button)btnRights[j]).Location = ((Button)btnRights[j - 1]).Location;
+
 						//Name,Textをひとつずつ右のものに変更
 						((CheckBox)chkDeletes[j]).Name = ((CheckBox)chkDeletes[j - 1]).Name;
 						((Label)lblCharas[j]).Name = ((Label)lblCharas[j - 1]).Name;
 						((Label)lblCharas[j]).Text = ((Label)lblCharas[j - 1]).Text;
 						((Panel)colorPanels[j]).Name = ((Panel)colorPanels[j - 1]).Name;
 						((DataGridView)DataGridViews[j]).Name = ((DataGridView)DataGridViews[j - 1]).Name;
-
+						((Button)btnLefts[j]).Name = ((Button)btnLefts[j - 1]).Name;
+						//((Button)btnRights[j]).Name = ((Button)btnRights[j - 1]).Name;
 					}
 					//もともとの位置のchk,lbl,txt,dgvを削除
 					((CheckBox)chkDeletes[i]).Dispose();
 					chkDeletes.RemoveAt(i);
+					
 					((Label)lblCharas[i]).Dispose();
 					lblCharas.RemoveAt(i);
+					
 					((Panel)colorPanels[i]).Dispose();
 					colorPanels.RemoveAt(i);
+					
 					((DataGridView)DataGridViews[i]).Dispose();
 					DataGridViews.RemoveAt(i);
+					
+
+
+					((Button)btnLefts[i]).Dispose();
+					btnLefts.RemoveAt(i);
+					
+					//((Button)btnRights[i]).Dispose();
+					//btnRights.RemoveAt(i);
+
 					//特徴データを削除
 					features.RemoveAt(i);
 					ImageArray.RemoveAt(i);
@@ -830,11 +971,11 @@ namespace CharacomImagerPro
 					btnDowns.RemoveAt(btnDowns.Count - 1);
 					((Button)btnDeletes[btnDeletes.Count - 1]).Dispose();
 					btnDeletes.RemoveAt(btnDeletes.Count - 1);
-					if (btnLefts.Count > 0)
-					{
-						((Button)btnLefts[btnLefts.Count - 1]).Dispose();
-						btnLefts.RemoveAt(btnLefts.Count - 1);
-					}
+					//if (btnLefts.Count > 0)
+					//{
+					//	((Button)btnLefts[btnLefts.Count - 1]).Dispose();
+					//	btnLefts.RemoveAt(btnLefts.Count - 1);
+					//}
 					//((Button)btnRights[btnRights.Count - 1]).Dispose();
 					//btnRights.RemoveAt(btnRights.Count - 1);
 
@@ -850,7 +991,7 @@ namespace CharacomImagerPro
 		#endregion
 
 		#region ひとつ上へボタン処理
-		void UpDownButtonProc(DataGridView dgv, ArrayList feature, int CurrentIndex, int NextIndex)
+		void UpDownButtonProc(DataGridView dgv, ArrayList feature, ArrayList images, int CurrentIndex, int NextIndex)
 		{
 			//DataGridViewを入れ替え
 			string _filename;
@@ -879,6 +1020,123 @@ namespace CharacomImagerPro
 			fc = (FeatureClass)feature[CurrentIndex];
 			feature[CurrentIndex] = feature[NextIndex];
 			feature[NextIndex] = fc;
+			//ImageArrayを入れ替え
+			ImageDataClass idc;
+			idc = (ImageDataClass)images[CurrentIndex];
+			images[CurrentIndex] = images[NextIndex];
+			images[NextIndex] = idc;
+
+		}
+        #endregion
+
+        #region ひとつ左へボタン
+		void BtnLeftClick(object sender, EventArgs e)
+		{
+			int num = int.Parse(((Button)sender).Name.Substring(7));
+			num = num - 1;
+			if (num < 1)
+			{
+				return;
+			}
+			Panel tmpPnlColor;
+			Label tmpLblChara;
+			CheckBox tmpChkDelete;
+			DataGridView tmpDgv;
+			ArrayList tmpFeature;
+			ArrayList tmpImageArray;
+
+			System.Diagnostics.Debug.WriteLine($"一つ左へ：	GroupNum = {GroupNum} Name = {((Button)sender).Name} num = {num}");
+
+
+			//Tmpに退避
+			tmpPnlColor = (Panel)colorPanels[num];
+			tmpLblChara = (Label)lblCharas[num];
+			tmpChkDelete = (CheckBox)chkDeletes[num];
+			tmpDgv = (DataGridView)DataGridViews[num];
+			tmpFeature = (ArrayList)features[num];
+			tmpImageArray = (ArrayList)ImageArray[num];
+
+			//左のグループを右へ
+			colorPanels[num] = colorPanels[num - 1];
+			lblCharas[num] = lblCharas[num - 1];
+			chkDeletes[num] = chkDeletes[num - 1];
+			DataGridViews[num] = DataGridViews[num - 1];
+			features[num] = features[num - 1];
+			ImageArray[num] = ImageArray[num - 1];
+
+			//Tmpを左のグループへ
+			colorPanels[num - 1] = tmpPnlColor;
+			lblCharas[num - 1] = tmpLblChara;
+			chkDeletes[num - 1] = tmpChkDelete;
+			DataGridViews[num - 1] = tmpDgv;
+			features[num - 1] = tmpFeature;
+			ImageArray[num - 1] = tmpImageArray;
+
+			for(int i=0;i<GroupNum; i++)
+            {
+				System.Diagnostics.Debug.WriteLine($"count = {((ArrayList)features[i]).Count}");
+
+			}
+
+			//Location,Nameを元に戻す
+			Point lcPnlColor;
+			Point lcLblCharas;
+			Point lcChkDeletes;
+			Point lcDgv;
+			string tmpPnlColorName;
+			string tmpLblCharaName;
+			string tmpLblCharaText;
+			string tmpChkDeleteName;
+			string tmpDgvName;
+
+			//tmpに退避
+			string lbl1Name = ((Label)lblCharas[num - 1]).Name;
+			string lbl1Text = ((Label)lblCharas[num - 1]).Text;
+			string lbl2Name = ((Label)lblCharas[num]).Name;
+			string lbl2Text = ((Label)lblCharas[num]).Text;
+
+			System.Diagnostics.Debug.WriteLine(lbl1Text + "[" + lbl1Name + "]  →  " + lbl2Text + "[" + lbl2Name + "]");
+			lcPnlColor = ((Panel)colorPanels[num]).Location;
+			lcLblCharas = ((Label)lblCharas[num]).Location;
+			lcChkDeletes = ((CheckBox)chkDeletes[num]).Location;
+			lcDgv = ((DataGridView)DataGridViews[num]).Location;
+			tmpPnlColorName = ((Panel)colorPanels[num]).Name;
+			tmpLblCharaName = ((Label)lblCharas[num]).Name;
+			tmpLblCharaText = ((Label)lblCharas[num]).Text;
+			tmpChkDeleteName = ((CheckBox)chkDeletes[num]).Name;
+			tmpDgvName = ((DataGridView)DataGridViews[num]).Name;
+
+			//左のグループを右へ
+			((Panel)colorPanels[num]).Location = ((Panel)colorPanels[num - 1]).Location;
+			((Label)lblCharas[num]).Location = ((Label)lblCharas[num - 1]).Location;
+			((CheckBox)chkDeletes[num]).Location = ((CheckBox)chkDeletes[num - 1]).Location;
+			((DataGridView)DataGridViews[num]).Location = ((DataGridView)DataGridViews[num - 1]).Location;
+			((Panel)colorPanels[num]).Name = ((Panel)colorPanels[num - 1]).Name;
+			((Label)lblCharas[num]).Name = ((Label)lblCharas[num - 1]).Name;
+			((Label)lblCharas[num]).Text = ((Label)lblCharas[num - 1]).Text;
+			((CheckBox)chkDeletes[num]).Name = ((CheckBox)chkDeletes[num - 1]).Name;
+			((DataGridView)DataGridViews[num]).Name = ((DataGridView)DataGridViews[num - 1]).Name;
+
+			//tmpを左のグループへ
+			((Panel)colorPanels[num - 1]).Location = lcPnlColor;
+			((Label)lblCharas[num - 1]).Location = lcLblCharas;
+			((CheckBox)chkDeletes[num - 1]).Location = lcChkDeletes;
+			((DataGridView)DataGridViews[num - 1]).Location = lcDgv;
+			((Panel)colorPanels[num - 1]).Name = tmpPnlColorName;
+			((Label)lblCharas[num - 1]).Name = tmpLblCharaName;
+			((Label)lblCharas[num - 1]).Text = tmpLblCharaText;
+			((CheckBox)chkDeletes[num - 1]).Name = tmpChkDeleteName;
+			((DataGridView)DataGridViews[num - 1]).Name = tmpDgvName;
+
+			//重ね合わせ画像再描画
+			MakeViewBitmap();
+			LapImageBox.Invalidate();
+		}
+		#endregion
+		#region ひとつ右へボタン
+		void BtnRightClick(object sender, EventArgs e)
+		{
+
 		}
 		#endregion
 
@@ -891,7 +1149,13 @@ namespace CharacomImagerPro
 			num = num - 1;
 			if (((DataGridView)DataGridViews[num]).CurrentRow != null) {
 				if (((DataGridView)DataGridViews[num]).CurrentRow.Index > 0) {
-					UpDownButtonProc((DataGridView)DataGridViews[num], (ArrayList)features[num], ((DataGridView)DataGridViews[num]).CurrentRow.Index, ((DataGridView)DataGridViews[num]).CurrentRow.Index - 1);
+					UpDownButtonProc((DataGridView)DataGridViews[num], (ArrayList)features[num], (ArrayList)ImageArray[num], ((DataGridView)DataGridViews[num]).CurrentRow.Index, ((DataGridView)DataGridViews[num]).CurrentRow.Index - 1);
+					MakeViewBitmap();
+					LapImageBox.Invalidate();
+					//MakeGraph();
+					//GraphImage.Invalidate();
+					PutRewriteR((DataGridView)DataGridViews[num], (ArrayList)features[num]);
+
 				}
 			}
 			/**
@@ -921,7 +1185,13 @@ namespace CharacomImagerPro
 			num = num - 1;
 			if (((DataGridView)DataGridViews[num]).CurrentRow != null) {
 				if (((DataGridView)DataGridViews[num]).CurrentRow.Index < ((DataGridView)DataGridViews[num]).Rows.Count - 1) {
-					UpDownButtonProc((DataGridView)DataGridViews[num], (ArrayList)features[num], ((DataGridView)DataGridViews[num]).CurrentRow.Index, ((DataGridView)DataGridViews[num]).CurrentRow.Index + 1);
+					UpDownButtonProc((DataGridView)DataGridViews[num], (ArrayList)features[num], (ArrayList)ImageArray[num], ((DataGridView)DataGridViews[num]).CurrentRow.Index, ((DataGridView)DataGridViews[num]).CurrentRow.Index + 1);
+					MakeViewBitmap();
+					LapImageBox.Invalidate();
+					//MakeGraph();
+					//GraphImage.Invalidate();
+					PutRewriteR((DataGridView)DataGridViews[num], (ArrayList)features[num]);
+
 				}
 			}
 
@@ -957,8 +1227,6 @@ namespace CharacomImagerPro
 		#endregion
 
 		#region 削除ボタン
-		//2021.09.19 D.Honjyou
-		//重ね合わせグラフのため削除
 		void BtnDeleteClick(object sender, EventArgs e)
 		{
 			int num = int.Parse(((Button)sender).Name.Substring(9));
@@ -966,6 +1234,11 @@ namespace CharacomImagerPro
 			if (((DataGridView)DataGridViews[num]).CurrentRow != null)
 			{
 				DeleteButtonProc((DataGridView)DataGridViews[num], (ArrayList)features[num], (ArrayList)ImageArray[num], ((DataGridView)DataGridViews[num]).CurrentRow.Index);
+				MakeViewBitmap();
+				LapImageBox.Invalidate();
+				MakeGraph();
+				GraphImage.Invalidate();
+				PutRewriteR((DataGridView)DataGridViews[num], (ArrayList)features[num]);
 			}
 			/**
 			if (dgvLap.Rows.Count > 0){
@@ -1320,15 +1593,17 @@ namespace CharacomImagerPro
 			return (min);
 		}
 
-		void MakePlotData(IGraphPainter graph)
+		Boolean MakePlotData(IGraphPainter graph)
 		{
 			///2021.09.15　ここです！！！！
-			System.Diagnostics.Debug.WriteLine($"GroupNum = {GroupNum}");
+			Boolean bRet = false;
 			for(int i=0; i<GroupNum; i++)
             {
-				if(((ArrayList)features[i]).Count > 0) 
+				System.Diagnostics.Debug.WriteLine($"GroupNum = {GroupNum} featuers_count {((ArrayList)features[i]).Count}");
+				if (((ArrayList)features[i]).Count > 0) 
 				{
 					ISeriesCandleChart series;
+					bRet = true;
 					double[] MaxMinAve = GetFeatureMaxMinAve((ArrayList)features[i]);
 					series = graph.CreateSeries(DusGraph.ePlotType.CandleChart).asCandleChart;
 					series.NegativeBrush = new SolidBrush(Color.FromArgb(128, ((Panel)colorPanels[i]).BackColor));
@@ -1358,6 +1633,7 @@ namespace CharacomImagerPro
 				}
 
 			}
+			return bRet;
 		}
 
 		// 2021.10.24 D.Honjyou
@@ -1488,14 +1764,16 @@ namespace CharacomImagerPro
 			int j;
 			for (j = 0; j < GroupNum; j++)
 			{
-				foreach (FeatureClass fcd in (ArrayList)fet[j])
-				{
-					if (max < fcd.Ratio) max = fcd.Ratio;
-					if (min > fcd.Ratio) min = fcd.Ratio;
-					sum += fcd.Ratio;
-					i++;
-					System.Diagnostics.Debug.WriteLine($"縦横比 Ratio = {fcd.Ratio} ({fcd.SrcBitmap.Width}/{fcd.SrcBitmap.Height}");
+				if( ((ArrayList)fet[j]).Count > 0) { 
+					foreach (FeatureClass fcd in (ArrayList)fet[j])
+					{
+						if (max < fcd.Ratio) max = fcd.Ratio;
+						if (min > fcd.Ratio) min = fcd.Ratio;
+						sum += fcd.Ratio;
+						i++;
+						System.Diagnostics.Debug.WriteLine($"縦横比 Ratio = {fcd.Ratio} ({fcd.SrcBitmap.Width}/{fcd.SrcBitmap.Height}");
 
+					}
 				}
 			}
 
@@ -1508,14 +1786,16 @@ namespace CharacomImagerPro
 			return (arr);
 		}
 
-		void MakePlotData2(IGraphPainter graph)
+		Boolean MakePlotData2(IGraphPainter graph)
 		{
+			Boolean bRet = false;
 			///2021.09.15　ここです！！！！
 			System.Diagnostics.Debug.WriteLine($"GroupNum = {GroupNum}");
 			for (int i = 0; i < GroupNum; i++)
 			{
 				if (((ArrayList)features[i]).Count > 0)
 				{
+					bRet = true;
 					ISeriesCandleChart series;
 					double[] MaxMinAve = GetRatioMaxMinAve((ArrayList)features[i]);
 					series = graph.CreateSeries(DusGraph.ePlotType.CandleChart).asCandleChart;
@@ -1548,7 +1828,7 @@ namespace CharacomImagerPro
 				}
 
 			}
-
+			return bRet;
 		}
 
         void MakeGraph()
@@ -1584,14 +1864,15 @@ namespace CharacomImagerPro
 			#endregion
 			MakeXAxis(graph);
 			MakeYAxis(graph);
-			MakePlotData(graph);
-			graph.Draw();
-			//Graphics  g = graph.CreateGraphics();
-			Graphics g = Graphics.FromImage(GraphBmp);
-			g.FillRectangle(Brushes.White, 0, 0, GraphBmp.Width, GraphBmp.Height);
-			g.DrawImage(graph.Image, 0, 0);
+			if (MakePlotData(graph))
+			{
+				graph.Draw();
+				Graphics g = Graphics.FromImage(GraphBmp);
+				g.FillRectangle(Brushes.White, 0, 0, GraphBmp.Width, GraphBmp.Height);
+				g.DrawImage(graph.Image, 0, 0);
 
-			g.Dispose();
+				g.Dispose();
+			}
 
 			imageEffect.BitmapWhitening(GraphBmp2);
 
@@ -1624,16 +1905,19 @@ namespace CharacomImagerPro
 			#endregion
 			MakeXAxis2(graph2);
 			MakeYAxis2(graph2);
-			MakePlotData2(graph2);
-			graph2.Draw();
-			g = graph.CreateGraphics();
-			g = Graphics.FromImage(GraphBmp2);
-			g.FillRectangle(Brushes.White, 0, 0, GraphBmp2.Width, GraphBmp2.Height);
-			g.DrawImage(graph2.Image, 0, 0);
 
-			g.Dispose();
+			if (MakePlotData2(graph2))
+			{
+				graph2.Draw();
+				Graphics g = Graphics.FromImage(GraphBmp2);
+				g.FillRectangle(Brushes.White, 0, 0, GraphBmp2.Width, GraphBmp2.Height);
+				g.DrawImage(graph2.Image, 0, 0);
+
+				g.Dispose();
+			}
 			GraphImage.Invalidate();
 			GraphImage2.Invalidate();
+			
 		}
 		#endregion
 
@@ -1943,12 +2227,17 @@ namespace CharacomImagerPro
 		//ウィンドウのリサイズに対応
 		private void panel2_SizeChanged(object sender, EventArgs e)
         {
+			System.Diagnostics.Debug.WriteLine($"sizeChange GroupNum = {GroupNum}");
 			for (int i = 0; i < GroupNum; i++)
 			{
-				((Button)btnUps[i]).Location = new Point(((Button)btnUps[i]).Location.X, panel2.Height - 50);
-				((Button)btnDowns[i]).Location = new Point(((Button)btnDowns[i]).Location.X, panel2.Height - 50);
-				((Button)btnDeletes[i]).Location = new Point(((Button)btnDeletes[i]).Location.X, panel2.Height - 50);
-				((DataGridView)DataGridViews[i]).Height = panel2.Height - 80;
+                if (i < btnUps.Count)
+                {
+					((Button)btnUps[i]).Location = new Point(((Button)btnUps[i]).Location.X, panel2.Height - 50);
+					((Button)btnDowns[i]).Location = new Point(((Button)btnDowns[i]).Location.X, panel2.Height - 50);
+					((Button)btnDeletes[i]).Location = new Point(((Button)btnDeletes[i]).Location.X, panel2.Height - 50);
+					((DataGridView)DataGridViews[i]).Height = panel2.Height - 80;
+				}
+				
 			}
 		}
         #endregion
