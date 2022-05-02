@@ -19,10 +19,12 @@ using System.Reflection;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Linq;
 //using WinTabDotnet;
 
 namespace CharacomImagerPro
 {
+	
 	/// <summary>
 	/// Description of MainForm.
 	/// </summary>
@@ -208,9 +210,35 @@ namespace CharacomImagerPro
 			return(maxRight);
 		}
 		#endregion
-		
-		#region もし子ウィンドウに重ね合わせがあったら、更新
-		public void UpdateLapForm()
+
+		#region 一番近い子フォームのLeft値を返す
+		//一番近い子フォームのLeft値を返す
+		public int GetNearLeftFromMdiChildren(int x, string name)
+        {
+			int iRet = x;
+			int iNear = 100000;
+
+			if(this.MdiChildren.Length > 0)
+            {
+				foreach(Form f in this.MdiChildren)
+                {
+					if(f.Text != name)
+                    {
+						if(Math.Abs(f.Left - x) < iNear && Math.Abs(f.Left - x) < 20)
+                        {
+							iRet = f.Left;
+							iNear = Math.Abs(f.Left - x);
+                        }
+                    }
+                }
+            }
+
+			return (iRet);
+        }
+        #endregion
+
+        #region もし子ウィンドウに重ね合わせがあったら、更新
+        public void UpdateLapForm()
 		{
 			if(this.MdiChildren.Length > 0){
 				foreach(Form f in this.MdiChildren){
@@ -2133,13 +2161,8 @@ namespace CharacomImagerPro
 			lpf.MdiParent = this;
 			lpf.SetNonTitle();
 			lpf.Show();
-			
-			foreach(Form child in this.MdiChildren){
-				if(child.Name == "CharaImageForm"){
-					//lpf.InputLapForm((CharaImageForm)child);
-					//System.Diagnostics.Debug.WriteLine("インプット");
-				}
-			}
+
+			lpf.AllLapProc();
 			
 			
 		}

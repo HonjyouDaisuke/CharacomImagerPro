@@ -465,6 +465,123 @@ namespace CharacomImagerPro
 		}
         #endregion
 
+        #region　一括重ね合わせに対応
+		// 2022.05.02 D.Honjyou
+		// 一括重ね合わせは全てのフォームを一気に入れて立ち上げる
+		public void AllLapProc()
+        {
+			// 2022.03.20 D.Honjyou
+			//「画面上すべて」が選択されたとき
+			//CharaImageForm cif;
+			//cif = (CharaImageForm)e.Data.GetData(typeof(CharaImageForm));
+			System.Diagnostics.Debug.WriteLine("Window個数=" + mf.MdiChildren.Length.ToString());
+			toolStripProgressBar1.Minimum = 0;
+			toolStripProgressBar1.Maximum = mf.MdiChildren.Length;
+			toolStripProgressBar1.Value = 0;
+			toolStripProgressBar1.Visible = true;
+			List<List<Form>> cForms = new List<List<Form>>();
+
+			//数える
+			foreach (Form f in mf.MdiChildren)
+			{
+				if (f.Name == "CharaImageForm")
+				{
+					System.Diagnostics.Debug.WriteLine($"f.index = {f.Text} left = {f.Left}");
+					if (cForms.Count < 1)
+					{
+						List<Form> ac = new List<Form>();
+						ac.Add(f);
+						cForms.Add(ac);
+					}
+					else
+					{
+						Boolean bCheck = false;
+						foreach (var c in cForms)
+						{
+							System.Diagnostics.Debug.WriteLine($"c.count = {c.Count} left = {f.Left}");
+							if (c.Count > 0)
+							{
+								if (((Form)c[0]).Left == f.Left)
+								{
+									System.Diagnostics.Debug.WriteLine($"c-add c.count = {c.Count} left = {f.Left}");
+									c.Add(f);
+									bCheck = true;
+								}
+							}
+
+						}
+						if (bCheck == false)
+						{
+							System.Diagnostics.Debug.WriteLine($"ac-add cform.count = {cForms.Count} left = {f.Left}");
+							List<Form> ac = new List<Form>();
+							ac.Add(f);
+							cForms.Add(ac);
+						}
+					}
+				}
+
+
+
+			}
+
+			List<DropWindows> cCount = new List<DropWindows>();
+
+			int i = 0;
+			foreach (var c in cForms)
+			{
+				System.Diagnostics.Debug.WriteLine($"i = {i} c.count = {c.Count}");
+				cCount.Add(new DropWindows { Index = i, Count = c.Count });
+				i++;
+			}
+			cCount.Sort((a, b) => a.Count - b.Count);
+
+			//現在のDataGridViewをすべてチェック
+			if (GroupNum > 0)
+			{
+				for (i = 0; i < GroupNum; i++)
+				{
+					((CheckBox)chkDeletes[i]).Checked = true;
+				}
+			}
+			//チェックしたDataGridViewを削除
+			//DeleteControl();
+			i = 0;
+			foreach (var cp in cCount)
+			{
+				System.Diagnostics.Debug.WriteLine($"index = {((DropWindows)cp).Index} count = {((DropWindows)cp).Count}");
+				if (i >= GroupNum)
+				{
+					AddControl();
+					features.Add(new ArrayList());
+					ImageArray.Add(new ArrayList());
+				}
+				foreach (Form inForm in cForms[((DropWindows)cp).Index])
+				{
+					toolStripProgressBar1.Value += 1;
+					System.Diagnostics.Debug.WriteLine($"inForm Title = {inForm.Text}, Left = {inForm.Left}");
+					CharaImageForm m_cif;
+					m_cif = (CharaImageForm)inForm;
+					System.Diagnostics.Debug.WriteLine($"個別文字[{m_cif.Text}]");
+					System.Diagnostics.Debug.WriteLine($"色：{m_cif.dispColor}");
+					((Panel)colorPanels[i]).BackColor = m_cif.dispColor;
+					DragDropProc(m_cif, (DataGridView)DataGridViews[i], i);
+					//CheckUndoRedo();
+
+					System.Diagnostics.Debug.WriteLine(m_cif.Text);
+				}
+				i++;
+			}
+
+			MakeViewBitmap();
+			LapImageBox.Invalidate();
+			MakeGraph();
+			GraphImage.Invalidate();
+			//PutRewriteR((DataGridView)DataGridViews[num], (ArrayList)features[num]);
+			toolStripProgressBar1.Value = 0;
+			toolStripProgressBar1.Visible = false;
+		}
+        #endregion
+
         void PutRewriteR(DataGridView dgv, ArrayList fcs)
         {
 			for(int i=0; i<fcs.Count; i++)

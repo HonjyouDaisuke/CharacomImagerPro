@@ -406,6 +406,10 @@ namespace CharacomImagerPro
 			
 			//2値化(判別分析法)
 			imageEffect.ChrMonotoneProc(srcBitmapSmall);
+
+			//2022.05.02 D.Honjyou
+			//ノイズ除去
+			imageEffect.Median(srcBitmapSmall);
 			
 			//前処理(大きさ変換)
     		if(mf.Setup.CharaNormalize == true){
@@ -1815,10 +1819,18 @@ namespace CharacomImagerPro
 			}
 		}
 		#endregion
-		
-		#region 右画の列と入れ替える
-		//2020.01.18 D.Honjyou
-		void ChangeLeftMenuItemClick(object sender, EventArgs e)
+
+		#region ウィンドウが移動したとき
+		//ウィンドウが移動したとき（その他の子ウィンドウに近い場合は、x座標を合わせる）
+		private void CharaImageForm_ResizeEnd(object sender, EventArgs e)
+        {
+			this.Left = mf.GetNearLeftFromMdiChildren(this.Left, this.Text);
+		}
+        #endregion
+
+        #region 右画の列と入れ替える
+        //2020.01.18 D.Honjyou
+        void ChangeLeftMenuItemClick(object sender, EventArgs e)
 		{
 			List<WindowSort> winList = new List<WindowSort>(new WindowSort[0] );
 			CharaImageForm cif = this;

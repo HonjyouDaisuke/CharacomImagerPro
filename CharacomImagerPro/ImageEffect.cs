@@ -13,9 +13,37 @@ using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
 using System.Collections;
 using System.IO;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CharacomImagerPro
 {
+	public static class EnumerableExtension
+	{
+		public static double Median(this IEnumerable<double> source)
+		{
+			if (source is null || !source.Any())
+			{
+				throw new InvalidOperationException("Cannot compute median for a null or empty set.");
+			}
+
+			var sortedList =
+				source.OrderBy(number => number).ToList();
+
+			int itemIndex = sortedList.Count / 2;
+
+			if (sortedList.Count % 2 == 0)
+			{
+				// Even number of items.
+				return (sortedList[itemIndex] + sortedList[itemIndex - 1]) / 2;
+			}
+			else
+			{
+				// Odd number of items.
+				return sortedList[itemIndex];
+			}
+		}
+	}
 	/// <summary>
 	/// Description of ImageEffect.
 	/// </summary>
@@ -531,6 +559,37 @@ namespace CharacomImagerPro
 		#endregion
 		
 		#region ノイズ除去
+		public void Median(Bitmap srcBmp)
+        {
+			double[] data = new double[25];
+			Bitmap outBmp = new Bitmap(srcBmp.Width, srcBmp.Height);
+			BitmapCopy(srcBmp, outBmp);
+
+			for (int m = 2; m < srcBmp.Height - 2; m++)
+			{
+				for (int n = 2; n < srcBmp.Width - 2; n++)
+				{
+					for (int j = 0; j < 5; j++)
+					{
+						for (int i = 0; i < 5; i++)
+						{
+							data[5 * j + i] = ColorCompare(srcBmp.GetPixel(i + n - 2, j + m - 2), Color.White) ? 0 : 1;
+						}
+					}
+					if (data.Median() > 0)
+                    {
+						outBmp.SetPixel(n, m, Color.Black);
+					}
+                    else
+                    {
+						outBmp.SetPixel(n, m, Color.White);
+					}
+				}
+
+			}
+			System.Diagnostics.Debug.WriteLine($"Median = {data.Median()}");
+			BitmapCopy(outBmp, srcBmp);
+		}
 		public void Noize(Bitmap srcBmp)
 		{
 			int j,k,l,m,sum;
