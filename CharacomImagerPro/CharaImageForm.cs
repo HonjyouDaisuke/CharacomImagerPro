@@ -147,6 +147,10 @@ namespace CharacomImagerPro
 		}
 		#endregion
 		
+		/// <summary>
+		/// 初期インスタンスの作成
+		/// </summary>
+		/// <param name="mainForm"></param>
 		public CharaImageForm(MainForm mainForm)
 		{
 			//
@@ -1094,45 +1098,84 @@ namespace CharacomImagerPro
 			ImageBox.Invalidate();
 		}
 		
+		public void StopComboBox()
+        {
+			System.Diagnostics.Debug.WriteLine($"停止--{this.Text} :: {this.Name}");
+			comboColor.ComboBox.SelectedIndexChanged -= new EventHandler(ComboColorSelectedIndexChanged);
+		}
+		public void StartComboBox()
+        {
+			System.Diagnostics.Debug.WriteLine($"開始--{this.Text}");
+			comboColor.ComboBox.SelectedIndexChanged += new EventHandler(ComboColorSelectedIndexChanged);
+		}
 		void ComboColorSelectedIndexChanged(object sender, EventArgs e)
 		{
 			//ImageProcessSwitcher();
 			comboColor.ComboBox.SelectedIndexChanged -= new EventHandler(ComboColorSelectedIndexChanged);
+			System.Diagnostics.Debug.WriteLine($"--Frame = {ActiveFrameNo}");
 			Bitmap bmp = new Bitmap(35, 16);
 			imageEffect.BitmapWhitening(bmp);
 								
 			//if(btnPencil.Checked == false){
-				if(ActiveFrameNo >= 0){
-					Regex r = new Regex("System.Windows.Forms.ToolStripComboBox*");
-					Match m = r.Match(sender.ToString());
-					if(!m.Success){
-						FrameDataClass fdc = (FrameDataClass)imageData.FrameData[ActiveFrameNo];
-						//コマンドマネージャでUndo実装
-						imageEffect.BmpColorChange(bmp, mf.Setup.DisplayColor[comboColor.SelectedIndex]);
-						//FrameColorChangeCommand command = new FrameColorChangeCommand(procBitmap, fdc, mf.Setup.DisplayColor[comboColor.SelectedIndex], (Bitmap)dgvFrameData.Rows[ActiveFrameNo].Cells[0].Value, (Bitmap)colorImageList.Images[comboColor.SelectedIndex]);
-						FrameColorChangeCommand command = new FrameColorChangeCommand(procBitmap, fdc, mf.Setup.DisplayColor[comboColor.SelectedIndex], (Bitmap)dgvFrameData.Rows[ActiveFrameNo].Cells[0].Value, bmp);
-						undoManager.Action(command);
-						imageEffect.BitmapCopy(procBitmap, viewBitmap);
-						dgvFrameData.Refresh();
-						CheckUndoRedo();
-						dispColor = mf.Setup.DisplayColor[comboColor.SelectedIndex];
-						System.Diagnostics.Debug.WriteLine("ColorChange="+dispColor.Name);
-					}
-					
-				}else{
-					Regex r = new Regex("System.Windows.Forms.ToolStripComboBox*");
-					Match m = r.Match(sender.ToString());
-					if(!m.Success){
-						//コマンドマネージャでUndo実装
-						//2012.02.13 D.Honjyou
-						ImageColorChangeCommand command = new ImageColorChangeCommand(procBitmap, mf.Setup.DisplayColor[comboColor.SelectedIndex]);
-						undoManager.Action(command);
-						imageEffect.BitmapCopy(procBitmap, viewBitmap);
-						ImageBox.Invalidate();
-						dispColor = mf.Setup.DisplayColor[comboColor.SelectedIndex];
-						CheckUndoRedo();
-					}
+			if(ActiveFrameNo >= 0){
+				//フレームを選択されているとき（鉛筆マークがONの時）
+				Regex r = new Regex("System.Windows.Forms.ToolStripComboBox*");
+				Match m = r.Match(sender.ToString());
+				if(!m.Success){
+					FrameDataClass fdc = (FrameDataClass)imageData.FrameData[ActiveFrameNo];
+					//コマンドマネージャでUndo実装
+					imageEffect.BmpColorChange(bmp, mf.Setup.DisplayColor[comboColor.SelectedIndex]);
+					//FrameColorChangeCommand command = new FrameColorChangeCommand(procBitmap, fdc, mf.Setup.DisplayColor[comboColor.SelectedIndex], (Bitmap)dgvFrameData.Rows[ActiveFrameNo].Cells[0].Value, (Bitmap)colorImageList.Images[comboColor.SelectedIndex]);
+					FrameColorChangeCommand command = new FrameColorChangeCommand(procBitmap, fdc, mf.Setup.DisplayColor[comboColor.SelectedIndex], (Bitmap)dgvFrameData.Rows[ActiveFrameNo].Cells[0].Value, bmp);
+					undoManager.Action(command);
+					imageEffect.BitmapCopy(procBitmap, viewBitmap);
+					dgvFrameData.Refresh();
+					CheckUndoRedo();
+					dispColor = mf.Setup.DisplayColor[comboColor.SelectedIndex];
+					System.Diagnostics.Debug.WriteLine("ColorChange="+dispColor.Name);
 				}
+					
+			}else{
+				Regex r = new Regex("System.Windows.Forms.ToolStripComboBox*");
+				Match m = r.Match(sender.ToString());
+				if(!m.Success){
+					// 2022.05.08 色変更で一列全て変更できるようにする。
+					bool bAll = false;
+					if(mf.CheckSameX(this.Text, this.Name, this.Left) && mf.AllColorChanging == false)
+                    {
+						System.Diagnostics.Debug.WriteLine($"x = {this.Left}  mf.check = {mf.CheckSameX(this.Text, this.Name, this.Left)} -- Name {this.Text} e={e.ToString()}");
+						//白キャンバスがあった場合
+						DialogResult msg;
+						msg = MessageBox.Show("一列全ての色を変更しますか？", "Characom Imager Pro", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+						if (msg == DialogResult.Yes)
+						{
+							bAll = true;
+						}
+						else if (msg == DialogResult.Cancel)
+						{
+							return;
+						}
+					}
+					//コマンドマネージャでUndo実装
+					//2012.02.13 D.Honjyou
+					ImageColorChangeCommand command = new ImageColorChangeCommand(procBitmap, mf.Setup.DisplayColor[comboColor.SelectedIndex]);
+					undoManager.Action(command);
+					imageEffect.BitmapCopy(procBitmap, viewBitmap);
+					ImageBox.Invalidate();
+					dispColor = mf.Setup.DisplayColor[comboColor.SelectedIndex];
+					CheckUndoRedo();
+
+                    if (bAll)
+                    {
+						System.Diagnostics.Debug.WriteLine("全ての色変更スタート");
+						mf.AllColorChanging = true;
+						mf.ChangeAllCharaImageFormColor(this.Text, this.Name, this.Left, dispColor);
+						System.Diagnostics.Debug.WriteLine("全ての色変更終了・・・");
+						mf.AllColorChanging = false;
+					}
+
+				}
+			}
 			//}
 			
 			UpdateImageData();

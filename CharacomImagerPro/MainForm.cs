@@ -39,7 +39,9 @@ namespace CharacomImagerPro
 		private ImageEffect imageEffect = new ImageEffect();
 		private WindowListClass windowsList = new WindowListClass();
 		
-		private bool _network = true;		
+		private bool _network = true;
+
+		public bool AllColorChanging = false;
 		public bool Network {
 			get { return _network; }
 			set { _network = value; }
@@ -1729,7 +1731,53 @@ namespace CharacomImagerPro
 			rc.Show();
 		}
 		#endregion
+
+		/// <summary>
+		/// 同じx座標のウインドウがあるかどうかの確認
+		/// </summary>
+		/// <param name="sTitle">ウィンドウのタイトル</param>
+		/// <param name="sName">フォームの名前</param>
+		/// <param name="x">左上のx座標</param>
+		/// <returns></returns>
+		public bool CheckSameX(string sTitle, string sName, int x)
+        {
+			bool bRet = false;
+
+			foreach (Form forms in this.MdiChildren)
+			{
+				//個別文字の場合
+				if (forms.Name == sName && forms.Text != sTitle)
+				{
+					if(forms.Left == x)
+                    {
+						bRet = true;
+                    }
+				}
+			}	
+			return (bRet);
 		
+		}
+
+		public void ChangeAllCharaImageFormColor(string sTitle, string sName, int x, Color c)
+        {
+			if (sName != "CharaImageForm") return;
+			foreach (Form forms in this.MdiChildren)
+			{
+				//個別文字の場合
+				if (forms.Name == sName && forms.Text != sTitle)
+				{
+					if (forms.Left == x)
+					{
+						CharaImageForm cif = new CharaImageForm(this);
+						cif = (CharaImageForm)forms;
+						System.Diagnostics.Debug.WriteLine($"ALL -- {cif.Text}");
+						//cif.StopComboBox();
+						cif.SetColor(c);
+						//cif.StartComboBox();
+					}
+				}
+			}
+		}
 		#region メインメニューの【ファイル】が開かれたとき
 		void FileMenuItemsDropDownOpened(object sender, EventArgs e)
 		{
