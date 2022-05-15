@@ -103,7 +103,7 @@ namespace CharacomImagerPro
 			imageEffect.Noize(SrcBitmapSmall);
 			imageEffect.BitmapCopy(srcBitmapSmall, viewImageBmp);
 			imageEffect.GetHaikei(SrcBitmapSmall, haikei, haikeiView, mf.Setup.CharaR);
-			
+			imageEffect.DrawEdgeFollowing(viewImageBmp, viewImageBmp, Color.Red);
 			int i,j,k,n;
 			int w,h;
 			
@@ -329,16 +329,34 @@ namespace CharacomImagerPro
 		
 		void ImageBoxPaint(object sender, PaintEventArgs e)
 		{
-			imageEffect.BitmapDrawFrame(viewImageBmp);
-			e.Graphics.DrawImage(viewImageBmp,0,0);
+			Bitmap dBmp = new Bitmap(viewImageBmp.Width, viewImageBmp.Height);
+			imageEffect.BitmapWhitening(dBmp);
+			imageEffect.BitmapCopy(viewImageBmp, dBmp);
+			imageEffect.BitmapDrawFrame(dBmp);
+			if (btnGridLine.Checked == true)
+			{
+				imageEffect.Draw8x8Line(dBmp, Color.LightGray);
+				imageEffect.DrawCenterLine(dBmp, Color.Blue);
+			}
+
+			e.Graphics.DrawImage(dBmp, 0, 0);
+
 		}
-		
+
 		void FeatureBoxPaint(object sender, PaintEventArgs e)
 		{
-			imageEffect.BitmapDrawFrame(viewFeatureBmp);
-			e.Graphics.DrawImage(viewFeatureBmp,0,0);
+			Bitmap dBmp = new Bitmap(viewFeatureBmp.Width, viewFeatureBmp.Height);
+			imageEffect.BitmapWhitening(dBmp);
+			imageEffect.BitmapCopy(viewFeatureBmp, dBmp);
+			imageEffect.BitmapDrawFrame(dBmp);
+			if (btnGridLine.Checked == true)
+			{
+				imageEffect.Draw8x8Line(dBmp, Color.LightGray);
+				imageEffect.DrawCenterLine(dBmp, Color.Blue);
+			}
+			e.Graphics.DrawImage(dBmp, 0, 0);
 		}
-		
+
 		#region ウィンドウが開かれたら
 		void HaikeiDenpanFormLoad(object sender, EventArgs e)
 		{
@@ -602,5 +620,27 @@ namespace CharacomImagerPro
 		{
 			e.Graphics.DrawImage(viewGraphBmp,0,0);
 		}
-	}
+
+        //2022.05.15 D.Honjyou
+		//グリッドラインの表示、CSVボタンのメニュー化、画面コピーに対応
+		private void btnCopyWindow_Click(object sender, EventArgs e)
+        {
+			//フォームからスクリーンショットを撮る　
+			Bitmap clipBmp = new Bitmap(this.Width, this.Height);
+			this.DrawToBitmap(clipBmp, new Rectangle(0, 0, this.Width, this.Height));
+			Clipboard.SetImage(clipBmp);
+			clipBmp.Dispose();
+		}
+
+        private void btnGridLine_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnSaveToCSV_Click(object sender, EventArgs e)
+        {
+			BtnCSVSaveClick(sender, e);
+
+		}
+    }
 }

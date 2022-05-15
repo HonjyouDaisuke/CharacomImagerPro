@@ -546,7 +546,7 @@ namespace CharacomImagerPro
 					
 				case CharaImageForm.ProcFeature:
 					FeatureForm ff = new FeatureForm((MainForm)this.MdiParent);
-					imageEffect.BitmapStretchCopy(srcBitmap, ff.SrcBitmapSmall);
+					imageEffect.BitmapStretchCopy(srcBitmapSmall, ff.SrcBitmapSmall);
 					ff.MakeFeature();
 					ff.MakeGraph();
 					ff.MdiParent = this.MdiParent;
@@ -556,7 +556,7 @@ namespace CharacomImagerPro
 					
 				case CharaImageForm.ProcHaikei:
 					HaikeiDenpanForm hf = new HaikeiDenpanForm((MainForm)this.MdiParent);
-					imageEffect.BitmapStretchCopy(srcBitmap, hf.SrcBitmapSmall);
+					imageEffect.BitmapStretchCopy(srcBitmapSmall, hf.SrcBitmapSmall);
 					hf.MakeFeature();
 					hf.MakeGraph();
 					hf.MdiParent = this.MdiParent;

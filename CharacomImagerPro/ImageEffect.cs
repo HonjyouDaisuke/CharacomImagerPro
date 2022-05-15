@@ -856,9 +856,9 @@ namespace CharacomImagerPro
 			
 			//if(cif != null)cif.StatusProgressBarChange(5);
 			
-		}		
+		}
 		#endregion
-		
+
 		#region ラベリングを行う
 		private void LabelingProc(Color [,] work, int size_x, int size_y, int x, int y, Color c, int proc)
 		{
