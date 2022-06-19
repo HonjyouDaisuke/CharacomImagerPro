@@ -936,8 +936,8 @@ namespace CharacomImagerPro
 				fs.Dispose();
 				return;
 			}
-			
-			sComment = (string)bf.Deserialize(fs);
+			//System.Diagnostics.Debug.WriteLine($"VerName = {VerName}");
+			//sComment = (string)bf.Deserialize(fs);
 			//txtComment.Text = sComment;
 			//panel内をきれいにする
 			for(int i=0; i<chkDeletes.Count; i++){
