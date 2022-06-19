@@ -41,7 +41,8 @@ namespace CharacomImagerPro
 			CharaR = 38.0;
 			StringNormalize = true;
 			StringR = 152.0;
-			
+			BMadian = true;
+
 			//自動更新
 			BAutoUpdate = true;
 			BForceUpdate = false;
@@ -388,9 +389,18 @@ namespace CharacomImagerPro
 			set { _stringR = value; }
 		}
 		#endregion
-		
-		#region データベースアドレス
-		private string _strDBDir;		
+
+		#region 取り込み時雑音除去
+		private bool _bMedian;
+		public bool BMadian
+        {
+            get { return _bMedian; }
+			set { _bMedian = value; }
+        }
+        #endregion
+
+        #region データベースアドレス
+        private string _strDBDir;		
 		public string StrDBDir {
 			get { return _strDBDir; }
 			set { _strDBDir = value; }

@@ -413,10 +413,13 @@ namespace CharacomImagerPro
 
 			//2022.05.02 D.Honjyou
 			//ノイズ除去
-			imageEffect.Median(srcBitmapSmall);
-			
-			//前処理(大きさ変換)
-    		if(mf.Setup.CharaNormalize == true){
+			if (mf.Setup.BMadian == true)
+			{
+				imageEffect.Median(srcBitmapSmall);
+			}
+
+            //前処理(大きさ変換)
+            if (mf.Setup.CharaNormalize == true){
     			imageEffect.Normalize(srcBitmapSmall, mf.Setup.CharaR);
     		}
     		imageEffect.BitmapStretchCopy(srcBitmapSmall, srcBitmap);

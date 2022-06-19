@@ -207,6 +207,8 @@ namespace CharacomImagerPro
 			
 			setup.CharaNormalize = rdoCharaNormalize.Checked;
 			setup.StringNormalize = rdoStringNormalize.Checked;
+
+			setup.BMadian = rdoMedian.Checked;
 			double r;
 			
 			if(double.TryParse(txtCharaR.Text, out r)){
@@ -331,7 +333,9 @@ namespace CharacomImagerPro
 			
 			rdoCharaNormalize.Checked = setup.CharaNormalize;
 			rdoStringNormalize.Checked = setup.StringNormalize;
-			
+
+			rdoMedian.Checked = setup.BMadian;
+
 			//2020.05.31 自動更新追加
 			ckbAutoUpdate.Checked = setup.BAutoUpdate;
 			ckbForceUpdate.Checked = setup.BForceUpdate;
